@@ -98,3 +98,24 @@ Prevents a cascading failure by "opening" the circuit when a downstream service 
 Don't just retry immediately. You might cause a "thundering herd" effect.
 - **Backoff**: Wait longer between each retry (2s, 4s, 8s...).
 - **Jitter**: Add a random small amount of time to the wait so all clients don't retry at the exact same millisecond.
+
+---
+
+## 6. IP Addressing: IPv4 vs. IPv6
+
+Every device on a network needs an address.
+
+- **IPv4**: 32-bit addresses (e.g., `192.168.1.1`). Limited to ~4.3 billion addresses. We ran out years ago, leading to the use of **NAT (Network Address Translation)**.
+- **IPv6**: 128-bit addresses (e.g., `2001:0db8:85a3:0000:0000:8a2e:0370:7334`). Provides an astronomical number of addresses ($2^{128}$), eliminating the need for NAT and improving security.
+
+---
+
+## 7. HTTP Evolution: Optimization and Speed
+
+| Version | Key Features | Performance Impact |
+| :--- | :--- | :--- |
+| **HTTP/1.1** | Persistent connections, Pipelining. | **Head-of-Line (HOL) Blocking**: One slow request blocks the entire TCP connection. |
+| **HTTP/2** | Multiplexing, Binary protocol, Header compression (HPACK). | Solves application-layer HOL blocking but still suffers from TCP-level HOL blocking. |
+| **HTTP/3** | Built on **QUIC** (UDP-based). | Solves TCP HOL blocking. Faster connection migration (perfect for mobile users switching from Wi-Fi to 5G). |
+
+> **Senior Tip**: In interviews, when asked about "Latency," mention **BDP (Bandwidth-Delay Product)**. For high-latency links (like satellite), a large TCP window is required to keep the "pipe" full.
