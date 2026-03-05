@@ -1,8 +1,6 @@
 # ACID Properties - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **ACID exists** to provide reliable transaction processing guarantees in database systems
 - **Critical at scale** when data consistency and integrity become paramount for business operations
 - **System design impact** - influences database selection, transaction boundaries, and system architecture
@@ -12,9 +10,7 @@
 - **Business transaction support** - enables complex business operations with multiple steps
 - **Compliance essential** - required for financial, healthcare, and regulatory systems
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Concurrent database access causing data corruption
 - Partial transaction failures leaving inconsistent data
@@ -41,9 +37,7 @@
 - Healthcare system had patient record corruption
 - Financial trading system had settlement errors
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Atomicity (A):**
 - **All-or-Nothing**: All operations in transaction succeed or none do
@@ -114,9 +108,7 @@
 - **Point-in-Time Recovery**: Recovery to specific point in time
 - **Media Recovery**: Recovery from media failures
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No ACID):**
 ```csharp
@@ -644,9 +636,7 @@ public class PaymentProcessingException : Exception
 - **ADO.NET**: Low-level database transaction management
 - **IDbTransaction**: Database transaction interface
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### ACID Properties Overview
 ```mermaid
@@ -834,9 +824,7 @@ graph TB
 - Log I/O becomes bottleneck at high throughput
 - Memory usage increases with active transactions
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed Transaction Architecture
 ```mermaid
@@ -987,9 +975,7 @@ graph TB
 - Partition handling becomes critical
 - Consistency models must consider geographic distribution
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### ACID Monitoring Architecture
 ```mermaid
@@ -1147,9 +1133,7 @@ graph TD
 - Memory allocation optimization
 - Connection pool tuning
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Eventual Consistency**: Sacrifice immediate consistency for availability
@@ -1195,9 +1179,7 @@ graph TD
 - **Operational Cost**: Monitoring and maintenance overhead
 - **Performance Cost**: Reduced throughput for consistency
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **ACID Security Benefits:**
 - Transaction integrity prevents data tampering
@@ -1234,9 +1216,7 @@ graph TD
 - Implement database auditing
 - Use secure connections for distributed transactions
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Distributed Transactions:**
 - Two-phase commit protocol
@@ -1287,9 +1267,7 @@ graph TD
 - Read-your-writes consistency
 - Causal consistency
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "ACID stands for Atomicity, Consistency, Isolation, and Durability. Atomicity means all operations succeed or fail together. Consistency means the database stays in a valid state. Isolation means transactions don't interfere with each other. Durability means committed changes persist."
@@ -1321,9 +1299,7 @@ graph TD
 5. Cover performance implications and tradeoffs
 6. Discuss when to relax ACID requirements
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Financial Trading Platform**
 
@@ -1552,9 +1528,7 @@ public class OptimizedTradingService
 - Sub-second trade execution latency
 - 99.999% uptime with automatic recovery
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Database Fundamentals**: Understanding of database systems and SQL

@@ -1,8 +1,6 @@
 # 2FA (Two-Factor Authentication) - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **2FA exists** to provide an additional layer of security beyond passwords by requiring a second factor for authentication
 - **Critical at scale** when protecting high-value accounts and sensitive data from credential theft and unauthorized access
 - **System design impact** - transforms authentication flows to support multiple verification methods
@@ -12,9 +10,7 @@
 - **Risk mitigation** - significantly reduces risk of account takeover and data breaches
 - **Enterprise security** - fundamental for enterprise-grade security posture
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Password-only authentication vulnerable to credential theft
 - Account takeover attacks through phishing and malware
@@ -41,9 +37,7 @@
 - Healthcare system had patient data breach through compromised credentials
 - Enterprise email system suffered business email compromise
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **2FA Fundamentals:**
 - **Something You Know**: Password, PIN, security questions
@@ -117,9 +111,7 @@
 - **TOTP**: No additional network calls
 - **Hardware Tokens**: USB or network-based communication
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No 2FA):**
 ```csharp
@@ -983,9 +975,7 @@ public class BackupCodesResponse
 - **SendGrid**: Email service implementation
 - **OtpNet**: TOTP implementation
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### 2FA Authentication Flow
 ```mermaid
@@ -1161,9 +1151,7 @@ graph TB
 - Challenge database for storage
 - Verification service for validation
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed 2FA Architecture
 ```mermaid
@@ -1350,9 +1338,7 @@ graph TB
 - **Data Replication**: 2FA data replication
 - **Service Availability**: 2FA service availability
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### 2FA Monitoring Architecture
 ```mermaid
@@ -1556,9 +1542,7 @@ graph TD
 - Security policy enforcement
 - Risk assessment algorithms
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Single-Factor Authentication**: Password-only authentication
@@ -1607,9 +1591,7 @@ graph TD
 - **Operational Cost**: Higher support and maintenance cost
 - **User Experience Cost**: Training and support costs
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Defense in Depth**: Multiple authentication factors
@@ -1660,9 +1642,7 @@ graph TD
 - **Continuous Monitoring**: Continuous security monitoring
 - **Regular Audits**: Regular security audits
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Device Trust Management:**
 - Device fingerprint generation and validation
@@ -1720,9 +1700,7 @@ graph TD
 - API gateway integration
 - Mobile app integration
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "2FA adds a second layer of security beyond passwords. Common methods include SMS codes, authenticator apps, and hardware tokens. It requires users to provide both something they know (password) and something they have (phone, token)."
@@ -1754,9 +1732,7 @@ graph TD
 5. Cover adaptive authentication
 6. Discuss security and compliance aspects
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Financial Institution**
 
@@ -1942,9 +1918,7 @@ public class OptimizedTwoFactorService
 - 40% improvement in security posture
 - 85% user satisfaction with adaptive 2FA
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Authentication Fundamentals**: Understanding of authentication concepts

@@ -1,8 +1,6 @@
 # WebSockets - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **WebSockets exist** to provide persistent, bidirectional communication between clients and servers over a single TCP connection
 - **Critical at scale** when applications require real-time updates, low-latency communication, or high-frequency data exchange
 - **System design impact** - transforms request-response architecture to event-driven real-time communication
@@ -12,9 +10,7 @@
 - **Resource efficiency** - reduces network overhead compared to HTTP polling
 - **User experience** - enables responsive, interactive applications
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Real-time collaboration features requiring instant updates
 - Live notifications and alerts without polling overhead
@@ -41,9 +37,7 @@
 - Live sports platform couldn't handle peak traffic
 - Collaboration tool had connection management problems
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **WebSocket Fundamentals:**
 - **Persistent Connection**: Single TCP connection maintained over time
@@ -118,9 +112,7 @@
 - **Firewall Issues**: WebSocket firewall compatibility
 - **Proxy Support**: WebSocket proxy support requirements
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No WebSockets):**
 ```csharp
@@ -868,9 +860,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### WebSocket Connection Flow
 ```mermaid
@@ -1078,9 +1068,7 @@ graph TB
 - CPU processing limits
 - Network bandwidth constraints
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Multi-Region WebSocket Architecture
 ```mermaid
@@ -1293,9 +1281,7 @@ graph TD
 - **Failover Handling**: Region failover procedures
 - **Data Synchronization**: Cross-region data sync
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### WebSocket Monitoring Architecture
 ```mermaid
@@ -1485,9 +1471,7 @@ graph TD
 - Load balancing
 - Resource optimization
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **HTTP Polling**: Regular HTTP requests for updates
@@ -1538,9 +1522,7 @@ graph TD
 - **Scalability Cost**: Load balancing and clustering
 - **Performance Benefits**: Reduced network overhead
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Persistent Connection**: Reduced attack surface for authentication
@@ -1591,9 +1573,7 @@ graph TD
 - **Rate Limiting**: Connection and message rate limiting
 - **Monitoring**: Comprehensive security monitoring
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Connection Management:**
 - Connection pooling and reuse
@@ -1630,9 +1610,7 @@ graph TD
 - CPU optimization
 - Network optimization
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "WebSockets provide persistent, bidirectional communication between clients and servers. I've implemented basic WebSocket connections using ASP.NET Core that allow clients to connect and exchange messages in real-time. The implementation includes connection management and message broadcasting."
@@ -1664,9 +1642,7 @@ graph TD
 5. Cover security considerations
 6. Discuss monitoring and observability
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Real-time Trading Platform with 100k+ Concurrent Users**
 
@@ -2085,9 +2061,7 @@ public class OptimizedWebSocketService
 - 80% reduction in network overhead
 - 60% improvement in user trading experience
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Network Programming**: Understanding of TCP/IP and HTTP

@@ -1,8 +1,6 @@
 # Data Encryption - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Data Encryption exists** to protect sensitive data through cryptographic transformation
 - **Critical at scale** when applications handle sensitive information and regulatory compliance
 - **System design impact** - transforms data handling from plaintext to encrypted storage and transmission
@@ -12,9 +10,7 @@
 - **Trust foundation** - builds trust with customers and stakeholders
 - **Risk mitigation** - reduces data breach impact and liability
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Data breaches and unauthorized access to sensitive information
 - Compliance violations and regulatory penalties
@@ -41,9 +37,7 @@
 - E-commerce platform had customer data theft from database
 - Government agency had classified data leak due to missing encryption
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Data Encryption Fundamentals:**
 - **Symmetric Encryption**: Single key for encryption and decryption
@@ -99,9 +93,7 @@
 - **Key Generation**: 10-1000ms
 - **Key Rotation**: 100ms-10s
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No Encryption):**
 ```csharp
@@ -946,9 +938,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Data Encryption Architecture
 ```mermaid
@@ -1053,9 +1043,7 @@ stateDiagram-v2
 - **Storage Layer**: Encrypted data storage
 - **Monitoring & Audit**: Security monitoring and compliance
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 MB/day:**
 - Single encryption service sufficient
@@ -1075,9 +1063,7 @@ stateDiagram-v2
 - Advanced key management required
 - High-performance audit system
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Encryption/decryption operation counts
@@ -1099,9 +1085,7 @@ stateDiagram-v2
 - Key rotation failures
 - Audit log corruption
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Application-Level Encryption**: Application-managed encryption
@@ -1130,9 +1114,7 @@ stateDiagram-v2
 - **Cloud Encryption**: 100-1000 MB/s
 - **HSM Encryption**: 1-10 MB/s
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Data Confidentiality**: Protects sensitive data
@@ -1148,9 +1130,7 @@ stateDiagram-v2
 - **Key Security**: Protecting encryption keys
 - **Recovery**: Key recovery and data recovery
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Encryption Features:**
 - **Homomorphic Encryption**: Computation on encrypted data
@@ -1166,9 +1146,7 @@ stateDiagram-v2
 - **Hardware Security Modules**: Hardware-based key protection
 - **Cloud Key Management**: Cloud-based key services
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Data encryption is about converting plaintext to ciphertext to protect sensitive information. I use AES for symmetric encryption and RSA for asymmetric encryption. I also hash passwords and use digital signatures for authentication."
@@ -1192,9 +1170,7 @@ stateDiagram-v2
 - "Do all applications need the same encryption level?" (No, depends on data sensitivity)
 - "Is key management the hardest part of encryption?" (Often yes)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Healthcare Platform with 10M+ Patient Records**
 
@@ -1213,9 +1189,7 @@ stateDiagram-v2
 - 80% improvement in audit efficiency
 - 99.95% uptime during encryption operations
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Cryptography**: Understanding of cryptographic principles

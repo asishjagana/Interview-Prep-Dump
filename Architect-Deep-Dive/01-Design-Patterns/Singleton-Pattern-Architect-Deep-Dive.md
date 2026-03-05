@@ -1,8 +1,6 @@
 # Singleton Pattern - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Singleton exists** to ensure exactly one instance of a class exists globally, providing a single point of access
 - **Critical at scale** for managing shared resources like configuration caches, connection pools, and logging infrastructure
 - **System design impact** - introduces global state but enables efficient resource utilization and consistent behavior
@@ -12,9 +10,7 @@
 - **Lifecycle management** - must handle initialization order and proper cleanup
 - **Cloud considerations** - affects containerization, scaling, and distributed system behavior
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Multiple database connection pools exhausting server resources
 - Configuration loaded multiple times causing inconsistency
@@ -39,9 +35,7 @@
 - SaaS platform exceeded AWS RDS connection limits and was throttled
 - Microservices deployment failed due to port conflicts from multiple instances
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - Private constructor prevents external instantiation
 - Static field holds the single instance reference
@@ -102,9 +96,7 @@
 - Async initialization patterns for expensive singletons
 - Awaitable singleton factory methods
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 **Naive Implementation:**
 ```csharp
 // Thread-unsafe singleton - DO NOT USE IN PRODUCTION
@@ -302,9 +294,7 @@ public static class ServiceCollectionExtensions
 - **Kestrel**: Server options as singleton for web server configuration
 - **HttpClientFactory**: HttpClient handlers managed as singleton
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Singleton Pattern Implementation
 ```mermaid
@@ -445,9 +435,7 @@ graph TB
 - Memory usage fixed regardless of load
 - Thread safety required for concurrent access
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Performance Scaling Visualization
 ```mermaid
@@ -559,9 +547,7 @@ graph TB
 - Conflict resolution for regional state differences
 - Disaster recovery through state replication
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Singleton Monitoring Architecture
 ```mermaid
@@ -680,9 +666,7 @@ stateDiagram-v2
 - [ ] Use async patterns for I/O operations
 - [ ] Consider object pooling for expensive operations
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Dependency Injection**: Framework-managed singletons
@@ -721,9 +705,7 @@ stateDiagram-v2
 - **Operational Cost**: Low memory overhead, efficient resource usage
 - **Testing Cost**: High due to test pollution and setup complexity
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface Introduced:**
 - Global state accessible from entire application
@@ -758,9 +740,7 @@ stateDiagram-v2
 - Regular security reviews of singleton implementations
 - Memory sanitization for sensitive data
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Race Conditions:**
 - Double-checked locking without volatile
@@ -810,9 +790,7 @@ stateDiagram-v2
 - Fallback patterns in singleton methods
 - Recovery strategies after circuit opens
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Singleton is a pattern that ensures only one instance of a class exists. You make the constructor private and have a static Instance property that returns the single object."
@@ -844,9 +822,7 @@ stateDiagram-v2
 5. Discuss testing strategies and alternatives
 6. Cover real-world use cases and pitfalls
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Trading Platform Processing 100k TPS**
 
@@ -967,9 +943,7 @@ public class ResilientTradingEngine
 - 70% reduction in memory usage through efficient caching
 - Zero data loss through distributed coordination
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Object Lifecycle**: Understanding of instance creation and disposal

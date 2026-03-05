@@ -1,8 +1,6 @@
 # CAP Theorem - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **CAP Theorem exists** to define fundamental tradeoffs in distributed systems under network partitions
 - **Critical at scale** when systems must remain operational despite network failures and partial outages
 - **System design impact** - forces architects to choose between consistency and availability during partitions
@@ -12,9 +10,7 @@
 - **Business impact** - directly affects user experience, data integrity, and system reliability
 - **Operational complexity** - requires sophisticated partition detection and recovery mechanisms
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Network partitions causing split-brain scenarios in distributed databases
 - Inconsistent data across nodes during network failures
@@ -41,9 +37,7 @@
 - E-commerce site lost orders during database partition
 - Healthcare system had inconsistent patient records across regions
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - **Consistency (C)**: All nodes see same data simultaneously
 - **Availability (A)**: Every request receives a response (success/failure)
@@ -113,9 +107,7 @@
 - DNS resolution failures
 - Load balancer failures
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Ignores CAP):**
 ```csharp
@@ -475,9 +467,7 @@ public class TimestampConflictResolver : IConflictResolver
 - **Distributed Cache**: Cache aside pattern for AP systems
 - **Message Queues**: Eventual consistency through messaging
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### CAP Theorem Tradeoffs
 ```mermaid
@@ -638,9 +628,7 @@ graph TB
 - Hybrid systems require careful boundary design
 - Geographic distribution affects partition probability
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Geo-Distributed CAP Architecture
 ```mermaid
@@ -759,9 +747,7 @@ graph LR
 - Consistency requirements drive replication strategy
 - Conflict resolution complexity increases
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### CAP Monitoring Architecture
 ```mermaid
@@ -894,9 +880,7 @@ graph TD
 - Consistency verification processes
 - Performance recovery monitoring
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **PACELC Theorem**: Extends CAP for latency and consistency
@@ -942,9 +926,7 @@ graph TD
 - **Hybrid Systems**: Highest overall cost
 - **Cloud Services**: Managed costs vs operational costs
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface:**
 - Partition injection attacks
@@ -982,9 +964,7 @@ graph TD
 - Tamper-evident logging
 - Regular consistency audits
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Network Partitions:**
 - Asymmetric partitions (partial connectivity)
@@ -1035,9 +1015,7 @@ graph TD
 - Conflict resolution across regions
 - Regulatory compliance across borders
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "CAP theorem says you can only have two out of three: consistency, availability, and partition tolerance. Since partitions happen, you have to choose between consistency and availability."
@@ -1069,9 +1047,7 @@ graph TD
 5. Explain hybrid approaches
 6. Cover real-world examples and tradeoffs
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Financial Trading Platform**
 
@@ -1239,9 +1215,7 @@ public class FailureHandler
 - Successful handling of multiple network partitions
 - Regulatory compliance with full audit trails
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Distributed Systems**: Basic concepts of distributed computing

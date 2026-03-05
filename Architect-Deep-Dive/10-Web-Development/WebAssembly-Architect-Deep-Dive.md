@@ -1,8 +1,6 @@
 # WebAssembly - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **WebAssembly exists** to enable high-performance, near-native code execution in web browsers
 - **Critical at scale** when applications need computational performance beyond JavaScript capabilities
 - **System design impact** - transforms web applications from script-based to compiled-code execution
@@ -12,9 +10,7 @@
 - **Security sandbox** - provides secure execution environment
 - **Future of web** - enables next-generation web applications
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - JavaScript performance limitations for compute-intensive tasks
 - Cross-platform code duplication and maintenance overhead
@@ -41,9 +37,7 @@
 - Data visualization tool was slow with large datasets
 - Financial modeling application had computation bottlenecks
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **WebAssembly Fundamentals:**
 - **Binary Format**: Efficient binary instruction format
@@ -96,9 +90,7 @@
 - **Performance Registry**: Performance metrics and profiling
 - **Error Registry**: Error handling and logging
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (JavaScript Only):**
 ```javascript
@@ -753,9 +745,7 @@ public class GlueRequest
 - **JavaScript Interop**: JavaScript-WASM communication
 - **Performance Monitoring**: Performance metrics collection
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### WebAssembly Architecture
 ```mermaid
@@ -862,9 +852,7 @@ graph TD
 - **Performance**: Monitoring and optimization
 - **Memory Management**: Linear memory allocation
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **Small Applications:**
 - Single WASM module sufficient
@@ -884,9 +872,7 @@ graph TD
 - Load time 200-1000ms
 - Memory usage 200MB-1GB
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Compilation time and success rate
@@ -908,9 +894,7 @@ graph TD
 - Browser compatibility problems
 - Performance degradation
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Pure JavaScript**: Traditional web development
@@ -940,9 +924,7 @@ graph TD
 - **Server-Side**: Network latency overhead
 - **Native Applications**: Best performance, platform-specific
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Sandboxed Execution**: Secure execution environment
@@ -958,9 +940,7 @@ graph TD
 - **Debugging**: Limited debugging capabilities
 - **Obfuscation**: Code obfuscation challenges
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced WebAssembly Features:**
 - **Multi-threading**: SharedArrayBuffer and Atomics
@@ -976,9 +956,7 @@ graph TD
 - **Service Workers**: Offline functionality
 - **Progressive Web Apps**: Enhanced web applications
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "WebAssembly is a binary format that allows running C++ and other languages in the browser. I use it for performance-critical tasks like image processing or gaming where JavaScript is too slow."
@@ -1002,9 +980,7 @@ graph TD
 - "Do all browsers support WebAssembly?" (Most modern browsers do)
 - "Is WebAssembly only for games?" (No, for any compute-intensive task)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Financial Trading Platform with Real-Time Analytics**
 
@@ -1022,9 +998,7 @@ graph TD
 - 99.99% uptime during high-volume trading
 - 70% reduction in server load through client-side processing
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Programming Languages**: Understanding of C#, C++, Rust

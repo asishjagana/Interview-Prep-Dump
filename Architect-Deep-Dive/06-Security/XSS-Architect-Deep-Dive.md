@@ -1,8 +1,6 @@
 # XSS (Cross-Site Scripting) - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **XSS exists** to prevent malicious scripts from being injected into web pages and executed in users' browsers
 - **Critical at scale** when applications accept user-generated content and serve dynamic content
 - **System design impact** - transforms input validation and output encoding strategies
@@ -12,9 +10,7 @@
 - **User trust** - maintains user confidence in application security
 - **Attack mitigation** - prevents various attack vectors through script injection
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Malicious script injection through form inputs
 - User session hijacking through stolen cookies
@@ -41,9 +37,7 @@
 - Banking application had XSS vulnerability leading to financial loss
 - Healthcare platform had XSS breach exposing patient data
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **XSS Fundamentals:**
 - **Attack Vector**: Malicious script injection into web pages
@@ -124,9 +118,7 @@
 - **CSP Headers**: Content-Security-Policy headers
 - **Cookie Security**: Additional cookie attributes
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No XSS Protection):**
 ```csharp
@@ -1145,9 +1137,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### XSS Attack Vectors
 ```mermaid
@@ -1346,9 +1336,7 @@ graph TD
 - CSP rule complexity
 - Security monitoring capacity
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed XSS Protection Architecture
 ```mermaid
@@ -1565,9 +1553,7 @@ graph TD
 - **Performance Impact**: Cross-region latency
 - **Failover Handling**: Region failover procedures
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### XSS Protection Monitoring Architecture
 ```mermaid
@@ -1769,9 +1755,7 @@ graph TD
 - Machine learning model updates
 - Security event correlation
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **No XSS Protection**: No input validation or encoding
@@ -1824,9 +1808,7 @@ graph TD
 - **Compliance Cost**: Compliance management and auditing
 - **Performance Benefits**: Security incident prevention
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Data Protection**: Prevents unauthorized data access
@@ -1884,9 +1866,7 @@ graph TD
 - **Incident Response**: Security incident response plan
 - **Third-Party Security**: Third-party component security
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced XSS Vectors:**
 - **DOM Clobbering**: DOM manipulation attacks
@@ -1927,9 +1907,7 @@ graph TD
 - **Safe Rendering**: Safe rendering techniques
 - **Content Security**: Content security integration
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "XSS is when attackers inject malicious scripts into web pages that execute in users' browsers. I've implemented basic XSS protection by using HTML encoding for user input and adding security headers like X-XSS-Protection. This prevents basic XSS attacks by encoding special characters."
@@ -1962,9 +1940,7 @@ graph TD
 5. Cover CSP implementation
 6. Discuss monitoring and alerting
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Social Media Platform with 100M+ Users**
 
@@ -2313,9 +2289,7 @@ public class OptimizedXssProtectionService
 - 60% improvement in user trust
 - 40% reduction in security incident costs
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Web Security**: Understanding of web security principles

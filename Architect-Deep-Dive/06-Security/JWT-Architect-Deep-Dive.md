@@ -1,8 +1,6 @@
 # JWT (JSON Web Tokens) - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **JWT exists** to provide stateless authentication and authorization for distributed systems
 - **Critical at scale** when systems need to authenticate across multiple services without session state
 - **System design impact** - transforms authentication from stateful to stateless architecture
@@ -12,9 +10,7 @@
 - **Scalability foundation** - enables horizontal scaling without session affinity
 - **Security enhancement** - provides cryptographic signature verification
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Session management complexity in distributed systems
 - Cross-service authentication challenges
@@ -41,9 +37,7 @@
 - Microservices authentication complexity without JWT
 - Single sign-on implementation challenges
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **JWT Fundamentals:**
 - **JSON Web Token**: Compact, URL-safe means of representing claims
@@ -137,9 +131,7 @@
 - **HTTPS Required**: Encrypted transmission mandatory
 - **CDN Friendly**: Stateless nature helps CDN
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No JWT):**
 ```csharp
@@ -1114,9 +1106,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### JWT Token Structure
 ```mermaid
@@ -1284,9 +1274,7 @@ stateDiagram-v2
 - Key storage security
 - Network latency for distributed validation
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed JWT Architecture
 ```mermaid
@@ -1495,9 +1483,7 @@ graph TD
 - **Performance Impact**: Cross-region latency
 - **Failover Handling**: Region failover procedures
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### JWT Monitoring Architecture
 ```mermaid
@@ -1697,9 +1683,7 @@ graph TD
 - Security event correlation
 - Automated response
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Session-Based Authentication**: Server-side session storage
@@ -1750,9 +1734,7 @@ graph TD
 - **Security Cost**: Key management, security audits
 - **Performance Benefits**: Stateless scaling benefits
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Stateless Authentication**: No server-side session storage
@@ -1803,9 +1785,7 @@ graph TD
 - **HTTPS Only**: Enforce HTTPS
 - **Monitoring**: Comprehensive security monitoring
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Token Revocation:**
 - Blacklist management
@@ -1863,9 +1843,7 @@ graph TD
 - Behavioral analysis
 - Anomaly detection
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "JWT is a JSON web token used for authentication. It contains three parts: header, payload, and signature. The server signs the token with a secret key, and the client sends it in the Authorization header. The server verifies the signature to authenticate the user."
@@ -1897,9 +1875,7 @@ graph TD
 5. Cover security considerations
 6. Discuss performance optimization
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Financial Platform with 5M+ Active Users**
 
@@ -2264,9 +2240,7 @@ public class OptimizedJwtService
 - 99.999% compliance with financial regulations
 - 40% improvement in user authentication experience
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Cryptography**: Understanding of encryption and signing

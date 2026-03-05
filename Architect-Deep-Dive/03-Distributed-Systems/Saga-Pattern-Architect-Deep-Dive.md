@@ -1,8 +1,6 @@
 # Saga Pattern - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Saga Pattern exists** to manage distributed transactions across multiple microservices without using two-phase commit
 - **Critical at scale** when business transactions span multiple services and require eventual consistency
 - **System design impact** - transforms distributed transaction management from synchronous to asynchronous patterns
@@ -12,9 +10,7 @@
 - **Scalability foundation** - enables independent scaling of participating services
 - **Microservices essential** - fundamental pattern for distributed system coordination
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Distributed transactions across multiple microservices
 - Need for atomic operations across service boundaries
@@ -41,9 +37,7 @@
 - Travel booking system had partial booking failures
 - Healthcare system had inconsistent patient records across services
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Saga Pattern Fundamentals:**
 - **Choreography**: Event-driven coordination without central orchestrator
@@ -121,9 +115,7 @@
 - **Compensation**: Async compensation actions
 - **Timeout Handling**: Async timeout management
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No Saga):**
 ```csharp
@@ -976,9 +968,7 @@ public class SagaRepository : ISagaRepository
 - **ASP.NET Core**: Web API and dependency injection
 - **Dapper**: High-performance data access
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Saga Pattern Overview
 ```mermaid
@@ -1144,9 +1134,7 @@ graph TB
 - Compensation processing scales with failure rate
 - State management scales with saga complexity
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed Saga Architecture
 ```mermaid
@@ -1316,9 +1304,7 @@ graph TB
 - **State Replication**: Saga state replication
 - **Compensation Coordination**: Cross-region compensation
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Saga Monitoring Architecture
 ```mermaid
@@ -1505,9 +1491,7 @@ graph TD
 - Compensation performance optimization
 - Compensation consistency verification
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Two-Phase Commit**: Traditional distributed transaction
@@ -1553,9 +1537,7 @@ graph TD
 - **Operational Cost**: Higher complexity management cost
 - **Maintenance Cost**: Higher compensation logic maintenance
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Transaction Isolation**: Sagas provide transaction isolation
@@ -1594,9 +1576,7 @@ graph TD
 - **Security Monitoring**: Security event monitoring
 - **Compensation Security**: Secure compensation operations
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Saga Orchestration:**
 - Complex saga orchestration patterns
@@ -1647,9 +1627,7 @@ graph TD
 - Business metrics tracking
 - Alerting and notification
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Saga pattern is a way to manage distributed transactions across multiple services. Instead of using two-phase commit, it uses compensating actions to undo operations if something fails. Each step in the saga either completes successfully or gets compensated."
@@ -1681,9 +1659,7 @@ graph TD
 5. Cover state management and persistence
 6. Discuss failure handling and recovery
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Travel Booking Platform**
 
@@ -1993,9 +1969,7 @@ public class OptimizedSagaOrchestrator
 - 40% reduction in booking failures
 - 60% improvement in customer satisfaction
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Distributed Systems**: Understanding of distributed computing challenges

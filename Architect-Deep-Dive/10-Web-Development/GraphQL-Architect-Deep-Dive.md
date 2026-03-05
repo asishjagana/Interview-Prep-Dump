@@ -1,8 +1,6 @@
 # GraphQL - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **GraphQL exists** to provide a flexible query language for APIs that allows clients to request exactly what they need
 - **Critical at scale** when applications need to reduce over-fetching and under-fetching problems of REST APIs
 - **System design impact** - transforms API design from REST endpoints to flexible schema-based queries
@@ -12,9 +10,7 @@
 - **Mobile optimization** - ideal for mobile applications with bandwidth constraints
 - **API evolution** - enables backward-compatible API evolution
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Over-fetching in REST APIs (getting more data than needed)
 - Under-fetching (multiple roundtrips to get related data)
@@ -41,9 +37,7 @@
 - E-commerce platform had API versioning challenges
 - Analytics dashboard was slow due to multiple data requests
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **GraphQL Fundamentals:**
 - **Query Language**: Flexible query language for data fetching
@@ -129,9 +123,7 @@
 - **HTTP/2**: Multiplexing support
 - **CDN Friendly**: Cacheable responses
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (REST API):**
 ```csharp
@@ -882,9 +874,7 @@ public class Startup
 - **GraphQL.Server.Transports.AspNetCore**: ASP.NET Core integration
 - **GraphQL.Server.Ui.Playground**: Development playground
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### GraphQL Query Structure
 ```mermaid
@@ -1071,9 +1061,7 @@ graph TB
 - Caching strategies
 - Database query optimization
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed GraphQL Architecture
 ```mermaid
@@ -1281,9 +1269,7 @@ graph TD
 - **Performance Impact**: Cross-region latency
 - **Failover Handling**: Region failover
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### GraphQL Monitoring Architecture
 ```mermaid
@@ -1476,9 +1462,7 @@ graph TD
 - Authorization validation
 - Security event correlation
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **REST API**: Traditional REST endpoints
@@ -1529,9 +1513,7 @@ graph TD
 - **Training Cost**: GraphQL training for team
 - **Performance Benefits**: Reduced network overhead
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Query Validation**: Schema-based validation
@@ -1582,9 +1564,7 @@ graph TD
 - **Rate Limiting**: Implement per-query limits
 - **Security Monitoring**: Comprehensive security monitoring
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Query Optimization:**
 - Query complexity analysis
@@ -1636,9 +1616,7 @@ graph TD
 - Automated response
 - Security logging
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "GraphQL is a query language for APIs that allows clients to request exactly what they need. It uses a schema to define types and resolvers to fetch data. GraphQL eliminates over-fetching and under-fetching problems of REST APIs by allowing clients to specify their data requirements in a single query."
@@ -1670,9 +1648,7 @@ graph TD
 5. Cover subscription implementation
 6. Discuss performance optimization
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global E-commerce Platform with 10M+ Products**
 
@@ -2067,9 +2043,7 @@ public class OptimizedGraphQLService
 - 99.9% uptime during peak traffic
 - 40% reduction in bandwidth usage
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **API Design**: Understanding of API design principles

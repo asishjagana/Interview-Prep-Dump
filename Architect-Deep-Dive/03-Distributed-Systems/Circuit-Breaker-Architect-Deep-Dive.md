@@ -1,8 +1,6 @@
 # Circuit Breaker - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Circuit Breaker exists** to prevent cascade failures in distributed systems by automatically detecting and isolating failing services
 - **Critical at scale** when microservices communicate over unreliable networks and partial failures become common
 - **System design impact** - transforms brittle synchronous systems into resilient, self-healing architectures with graceful degradation
@@ -12,9 +10,7 @@
 - **Cloud-native essential** - fundamental for containerized, auto-scaling environments
 - **Cost optimization** - reduces wasted compute resources on failed calls
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Database connection pool exhaustion during database failures
 - API timeouts causing cascading failures across microservices
@@ -40,9 +36,7 @@
 - Financial trading system halted when market data feed had latency spikes
 - SaaS provider outage when authentication service had database issues
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - State machine tracks circuit state (Closed, Open, Half-Open)
 - Failure counter tracks consecutive failures
@@ -105,9 +99,7 @@
 - Async state change notifications
 - ConfigureAwait patterns for library code
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 **Naive Implementation:**
 ```csharp
 // No circuit breaker - vulnerable to failures
@@ -457,9 +449,7 @@ public static class ServiceCollectionExtensions
 - **Kestrel**: Connection limits act as circuit breakers
 - **EF Core**: Connection pool timeout as circuit breaker
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Circuit Breaker State Machine
 ```mermaid
@@ -645,9 +635,7 @@ graph TB
 - State transition frequency affects performance
 - Metrics collection rate impacts system overhead
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Circuit Breaker Scaling Patterns
 ```mermaid
@@ -788,9 +776,7 @@ graph TB
 - Geographic load balancing with circuit breaking
 - Disaster recovery with circuit breaker coordination
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Circuit Breaker Monitoring Architecture
 ```mermaid
@@ -916,9 +902,7 @@ graph TD
 - Automated threshold adjustment
 - Circuit breaker performance benchmarking
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Retry Pattern**: Simple retry without circuit breaking
@@ -957,9 +941,7 @@ graph TD
 - **Infrastructure Cost**: Prevents resource waste, reduces costs by 30-50%
 - **Maintenance Cost**: Medium due to monitoring and tuning requirements
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface Introduced:**
 - Circuit breaker state manipulation attacks
@@ -993,9 +975,7 @@ graph TD
 - Audit circuit breaker state changes
 - Implement proper access controls for circuit breaker operations
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Race Conditions:**
 - Concurrent state transitions
@@ -1045,9 +1025,7 @@ graph TD
 - Hierarchical circuit breaker architectures
 - Circuit breaker and retry pattern conflicts
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Circuit breaker is a pattern that stops calling a service when it fails too many times. It has three states: closed, open, and half-open."
@@ -1079,9 +1057,7 @@ graph TD
 5. Cover monitoring and alerting requirements
 6. Discuss distributed coordination challenges
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: E-commerce Platform Processing 200k Orders/Minute**
 
@@ -1317,9 +1293,7 @@ public class ResilientOrderProcessor
 - 80% improvement in user experience during partial failures
 - 60% reduction in operational incident response time
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Distributed Systems**: Understanding of service communication and failures

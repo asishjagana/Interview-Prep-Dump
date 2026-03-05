@@ -1,8 +1,6 @@
 # Async/Await - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Async/await exists** to enable efficient I/O-bound operations without blocking threads, critical for scalable systems
 - **Critical at scale** when handling thousands of concurrent I/O operations (database calls, HTTP requests, file operations)
 - **System design impact** - transforms thread-per-request models to asynchronous I/O, reducing resource consumption dramatically
@@ -12,9 +10,7 @@
 - **Cloud-native essential** - fundamental for serverless and containerized environments
 - **Performance foundation** - enables high-throughput, low-latency systems
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Thread pool exhaustion under load causing request timeouts
 - Database connection pools exhausted due to blocking I/O operations
@@ -40,9 +36,7 @@
 - Financial trading system missed market opportunities due to blocking I/O
 - Mobile app became unresponsive during network operations
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - Compiler transforms async methods into state machine classes
 - State machine captures method locals and execution context
@@ -105,9 +99,7 @@
 - Async streams enable data processing pipelines
 - Async disposable for resource cleanup
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 **Naive Implementation:**
 ```csharp
 // Synchronous implementation - BLOCKS THREADS
@@ -346,9 +338,7 @@ public class OrdersController : ControllerBase
 - **HttpClient**: SendAsync for non-blocking HTTP calls
 - **Kestrel**: Async socket I/O for high performance
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Async/Await Execution Flow
 ```mermaid
@@ -478,9 +468,7 @@ graph TB
 - I/O bandwidth becomes limiting factor at scale
 - SynchronizationContext overhead in UI scenarios
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Performance Scaling Visualization
 ```mermaid
@@ -598,9 +586,7 @@ graph TB
 - Async retry patterns handle transient network failures
 - Circuit breakers prevent cascade failures across regions
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Async Performance Monitoring
 ```mermaid
@@ -726,9 +712,7 @@ graph TD
 - [ ] Implement proper exception handling patterns
 - [ ] Use async disposable for resource cleanup
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Synchronous I/O**: Simple but blocking
@@ -767,9 +751,7 @@ graph TD
 - **Maintenance Cost**: Higher due to debugging complexity
 - **Operational Cost**: Lower due to better resource utilization
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface Introduced:**
 - Async continuation hijacking
@@ -804,9 +786,7 @@ graph TD
 - Implement proper exception handling
 - Monitor async operation patterns for abuse
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Race Conditions:**
 - Multiple async operations modifying shared state
@@ -856,9 +836,7 @@ graph TD
 - Fallback patterns in async operations
 - Recovery strategies after circuit opens
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Async/await is a way to write asynchronous code without blocking. You use async keyword on methods and await to wait for operations to complete."
@@ -890,9 +868,7 @@ graph TD
 5. Cover exception handling and propagation
 6. Discuss scaling benefits and resource efficiency
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Real-time Trading Platform Processing 500k TPS**
 
@@ -1119,9 +1095,7 @@ public class AsyncCircuitBreaker
 - 80% reduction in thread count compared to synchronous
 - Zero data loss through async persistence patterns
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Threading Basics**: Thread pools, synchronization, context

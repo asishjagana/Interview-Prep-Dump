@@ -1,8 +1,6 @@
 # Performance Monitoring - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Performance Monitoring exists** to provide comprehensive visibility into system performance and health
 - **Critical at scale** when applications need to maintain optimal performance under load
 - **System design impact** - transforms system from opaque to observable with real-time insights
@@ -12,9 +10,7 @@
 - **User experience** - ensures optimal user experience through performance monitoring
 - **Operational excellence** - enables data-driven operational decisions
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Performance issues detected by users instead of systems
 - Lack of visibility into system performance and bottlenecks
@@ -41,9 +37,7 @@
 - Financial system had transaction processing delays
 - Gaming platform had poor performance affecting user experience
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Performance Monitoring Fundamentals:**
 - **Metrics Collection**: System performance data collection
@@ -103,9 +97,7 @@
 - **Alert Latency**: 1-60 seconds
 - **Dashboard Refresh**: 1-60 seconds
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No Monitoring):**
 ```csharp
@@ -953,9 +945,7 @@ public class Startup
 - **ASP.NET Core**: Web framework with middleware
 - **Dependency Injection**: Service registration
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Performance Monitoring Architecture
 ```mermaid
@@ -1059,9 +1049,7 @@ stateDiagram-v2
 - **Visualization Layer**: Dashboards and reporting
 - **Storage Layer**: Data storage and archiving
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **Small Applications (1k RPS):**
 - Single monitoring instance sufficient
@@ -1081,9 +1069,7 @@ stateDiagram-v2
 - Storage throughput 10k-100000 points/second
 - Dashboard refresh 30-60 seconds
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - System performance metrics (CPU, memory, disk, network)
@@ -1106,9 +1092,7 @@ stateDiagram-v2
 - Monitoring system failures and data loss
 - Alert fatigue and notification issues
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Agent-based Monitoring**: Agent-based metrics collection
@@ -1137,9 +1121,7 @@ stateDiagram-v2
 - **Infrastructure Monitoring**: Moderate cost, infrastructure focus
 - **Business Intelligence**: Higher cost, business focus
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Access Control**: Controlled access to monitoring data
@@ -1155,9 +1137,7 @@ stateDiagram-v2
 - **Monitoring Security**: Securing monitoring systems
 - **Compliance**: Regulatory compliance requirements
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Monitoring Features:**
 - **Machine Learning**: AI-powered anomaly detection
@@ -1173,9 +1153,7 @@ stateDiagram-v2
 - **Capacity Planning**: Resource capacity planning
 - **Cost Optimization**: Monitoring cost optimization
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Performance monitoring is about collecting metrics like response time and error rates. I use logging and metrics to track application performance and set up alerts when things go wrong."
@@ -1199,9 +1177,7 @@ stateDiagram-v2
 - "Do all applications need the same monitoring level?" (No, depends on criticality)
 - "Is real-time monitoring always necessary?" (No, depends on requirements)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global E-commerce Platform with 10M+ Users**
 
@@ -1219,9 +1195,7 @@ stateDiagram-v2
 - 99.99% uptime during peak shopping seasons
 - 60% improvement in user experience metrics
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **System Architecture**: Understanding of system design

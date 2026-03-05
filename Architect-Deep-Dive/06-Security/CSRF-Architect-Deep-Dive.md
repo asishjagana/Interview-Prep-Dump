@@ -1,8 +1,6 @@
 # CSRF (Cross-Site Request Forgery) - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **CSRF exists** to prevent malicious websites from making unauthorized requests on behalf of authenticated users
 - **Critical at scale** when applications handle sensitive operations and user sessions
 - **System design impact** - transforms request validation and token management strategies
@@ -12,9 +10,7 @@
 - **Compliance requirement** - mandatory for security standards and regulations
 - **Attack mitigation** - prevents various attack vectors through request forgery
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Unauthorized actions performed by malicious websites
 - Session hijacking through forged requests
@@ -41,9 +37,7 @@
 - E-commerce site had unauthorized purchases through CSRF
 - Healthcare platform had CSRF breach affecting patient data
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **CSRF Fundamentals:**
 - **Attack Vector**: Malicious website making requests to target site
@@ -123,9 +117,7 @@
 - **HTTP Headers**: Additional security headers
 - **Cross-Origin**: Cross-origin request handling
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No CSRF Protection):**
 ```csharp
@@ -1124,9 +1116,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### CSRF Attack Flow
 ```mermaid
@@ -1269,9 +1259,7 @@ graph TD
 - Request processing capacity
 - Security logging capacity
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed CSRF Protection Architecture
 ```mermaid
@@ -1472,9 +1460,7 @@ graph TD
 - **Performance Impact**: Cross-region latency
 - **Failover Handling**: Region failover procedures
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### CSRF Protection Monitoring Architecture
 ```mermaid
@@ -1665,9 +1651,7 @@ graph TD
 - Security event correlation
 - Automated response
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **No CSRF Protection**: No protection against CSRF attacks
@@ -1720,9 +1704,7 @@ graph TD
 - **Compliance Cost**: Compliance management and auditing
 - **Security Benefits**: Attack prevention and user trust
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Attack Prevention**: Prevents CSRF attacks
@@ -1780,9 +1762,7 @@ graph TD
 - **Incident Response**: Security incident response plan
 - **Third-Party Security**: Third-party component security
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced CSRF Vectors:**
 - **JSON CSRF**: JSON-based CSRF attacks
@@ -1821,9 +1801,7 @@ graph TD
 - **Security Analytics**: Security analytics and reporting
 - **Compliance Monitoring**: Compliance monitoring
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "CSRF is when malicious websites make requests to your site on behalf of authenticated users. I've implemented basic CSRF protection using anti-forgery tokens in ASP.NET Core. The tokens are generated and validated for each request to prevent unauthorized actions."
@@ -1855,9 +1833,7 @@ graph TD
 5. Cover security monitoring
 6. Discuss performance optimization
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Banking Platform with 10M+ Users**
 
@@ -2250,9 +2226,7 @@ public class OptimizedCsrfProtectionService
 - 60% improvement in user trust
 - 40% reduction in security incident costs
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Web Security**: Understanding of web security principles

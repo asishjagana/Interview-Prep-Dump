@@ -1,8 +1,6 @@
 # Docker - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Docker exists** to enable containerization of applications for consistent deployment and scaling
 - **Critical at scale** when applications need to run consistently across different environments
 - **System design impact** - transforms application packaging and deployment from VM-based to container-based
@@ -12,9 +10,7 @@
 - **Portability** - enables application portability across different environments
 - **Microservices enabler** - essential for microservices architecture
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Environment inconsistencies across development, staging, and production
 - Application dependency conflicts and "works on my machine" issues
@@ -41,9 +37,7 @@
 - Financial system had slow deployment processes
 - Gaming platform had poor resource utilization
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Docker Fundamentals:**
 - **Containerization**: Application packaging with dependencies
@@ -104,9 +98,7 @@
 - **Resource Overhead**: 1-5% overhead
 - **Network Latency**: 1-10ms (container)
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No Docker):**
 ```csharp
@@ -817,9 +809,7 @@ ENTRYPOINT ["dotnet", "MyApp.dll"]
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Docker Architecture
 ```mermaid
@@ -929,9 +919,7 @@ graph TB
 - **Isolation**: Namespaces, cgroups, security
 - **Networking**: Container networking and external access
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 Containers:**
 - Single Docker host sufficient
@@ -951,9 +939,7 @@ graph TB
 - Resource overhead 5-15%
 - Network latency 5-20ms
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Container status and health
@@ -974,9 +960,7 @@ graph TB
 - Network connectivity issues
 - Image build and deployment failures
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Virtual Machines**: Full OS virtualization
@@ -1006,9 +990,7 @@ graph TB
 - **LXC/LXD**: System containers, medium overhead
 - **Singularity**: HPC optimized, security focused
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Process Isolation**: Container process isolation
@@ -1024,9 +1006,7 @@ graph TB
 - **Network Security**: Container networking security
 - **Secrets Management**: Secret distribution challenges
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Docker Features:**
 - **Multi-Stage Builds**: Optimized image builds
@@ -1042,9 +1022,7 @@ graph TB
 - **Network Optimization**: Network performance
 - **Storage Optimization**: Storage performance
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Docker is a containerization platform that packages applications with their dependencies. I use Docker to create consistent environments and deploy applications. It solves the 'works on my machine' problem by packaging everything together."
@@ -1068,9 +1046,7 @@ graph TB
 - "Do all applications benefit from Docker?" (No, depends on use case)
 - "Is Docker secure by default?" (No, requires security configuration)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global E-commerce Platform with 10M+ Users**
 
@@ -1089,9 +1065,7 @@ graph TB
 - 60% improvement in development productivity
 - 50% reduction in infrastructure costs
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Linux Fundamentals**: Understanding of Linux systems

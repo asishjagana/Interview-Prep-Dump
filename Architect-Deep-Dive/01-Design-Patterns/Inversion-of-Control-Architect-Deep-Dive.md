@@ -1,8 +1,6 @@
 # Inversion of Control - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **IoC exists** to eliminate compile-time dependencies and enable runtime composition of complex systems
 - **Critical at scale** when you need to swap implementations, test in isolation, and deploy microservices independently
 - **System design impact** - transforms tightly-coupled monoliths into loosely-coupled, testable, and maintainable architectures
@@ -12,9 +10,7 @@
 - **Performance consideration** - introduces indirection overhead but enables optimization opportunities
 - **Cloud-native essential** - fundamental for containerized, scalable, and observable systems
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Tightly-coupled systems where changing one component requires recompiling and redeploying the entire application
 - Impossible to unit test business logic in isolation from infrastructure concerns
@@ -37,9 +33,7 @@
 - Financial services firm failed regulatory audit because they couldn't prove test coverage of critical business logic
 - SaaS company lost enterprise customers because they couldn't support per-customer customizations
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - Container maintains a registry of services with their lifetimes and dependencies
 - Dependency graph is built at startup through reflection or explicit registration
@@ -98,9 +92,7 @@
 - Scoped async contexts maintain dependency consistency
 - Async factory methods for expensive service initialization
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 **Naive Implementation:**
 ```csharp
 // Tightly coupled - violates IoC
@@ -233,9 +225,7 @@ app.Run();
 - **EF Core**: DbContext registered as scoped for unit of work pattern
 - **Middleware Pipeline**: Built using DI for request processing chain
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### IoC Container Flow
 ```mermaid
@@ -365,9 +355,7 @@ graph TB
 - Memory usage grows with service complexity
 - Thread pool utilization impacts concurrent resolution
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Performance Scaling Visualization
 ```mermaid
@@ -478,9 +466,7 @@ graph TB
 - Configuration per region via DI abstraction
 - Failover through service replacement, not code changes
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Monitoring Dashboard Architecture
 ```mermaid
@@ -624,9 +610,7 @@ graph TD
 - [ ] Use lazy initialization for heavy singletons
 - [ ] Implement proper async disposal patterns
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Service Locator Pattern**: Runtime dependency resolution
@@ -664,9 +648,7 @@ graph TD
 - **Testing Cost**: Reduces testing complexity by 50%
 - **Cloud Cost**: Minimal direct impact, enables optimization
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface Introduced:**
 - Dynamic assembly loading for compiled expressions
@@ -700,9 +682,7 @@ graph TD
 - Implement service activation timeouts
 - Use secure defaults for external service connections
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Race Conditions:**
 - Singleton initialization in multi-threaded startup
@@ -752,9 +732,7 @@ graph TD
 - Fallback service implementations
 - Circuit state propagation through dependency graph
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "IoC is when you use a framework like Spring or .NET Core to inject dependencies instead of creating them with 'new'. It makes your code more testable."
@@ -788,9 +766,7 @@ graph TD
 7. Address scaling concerns
 8. Cover distributed system implications
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Payment System Processing 50k TPS**
 
@@ -869,9 +845,7 @@ builder.Services.AddScoped<IPaymentProvider, ResilientPaymentProvider>(sp =>
 - 40% reduction in deployment time due to independent service updates
 - 60% improvement in test coverage through dependency injection
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Interface Segregation**: Clean boundaries for injection

@@ -1,8 +1,6 @@
 # Load Balancing - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Load Balancing exists** to distribute incoming network traffic across multiple servers to ensure no single server becomes a bottleneck
 - **Critical at scale** when applications need to handle high traffic volumes and maintain availability
 - **System design impact** - transforms single-server architecture into distributed, scalable systems
@@ -12,9 +10,7 @@
 - **Cost efficiency** - enables efficient resource utilization and cost optimization
 - **Reliability enhancement** - provides fault tolerance and graceful degradation
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Single server overload during traffic spikes
 - Poor resource utilization across multiple servers
@@ -41,9 +37,7 @@
 - Financial system had downtime during market peaks
 - News website crashed during breaking news events
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Load Balancing Fundamentals:**
 - **Traffic Distribution**: Distribute incoming traffic across servers
@@ -108,9 +102,7 @@
 - **Protocol Overhead**: Protocol processing overhead
 - **Bandwidth Usage**: Additional bandwidth for load balancer
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No Load Balancing):**
 ```csharp
@@ -1000,9 +992,7 @@ public class Startup
 - **Logging**: Structured logging
 - **Metrics**: Performance metrics collection
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Load Balancing Algorithms Comparison
 ```mermaid
@@ -1144,9 +1134,7 @@ sequenceDiagram
 - SSL termination adds latency
 - Connection pooling limits throughput
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Multi-Region Load Balancing Architecture
 ```mermaid
@@ -1338,9 +1326,7 @@ graph TB
 - **Data Locality**: Data locality optimization
 - **Failover Coordination**: Cross-region failover
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Load Balancer Monitoring Architecture
 ```mermaid
@@ -1561,9 +1547,7 @@ graph TD
 - Recovery processes
 - Failover testing
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **DNS Round Robin**: DNS-based load balancing
@@ -1613,9 +1597,7 @@ graph TD
 - **Maintenance Cost**: Ongoing maintenance overhead
 - **Performance Benefits**: Significant performance improvements
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **DDoS Protection**: Absorb and distribute DDoS attacks
@@ -1668,9 +1650,7 @@ graph TD
 - **Intrusion Detection**: Deploy IDS/IPS
 - **Regular Audits**: Regular security audits
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Global Load Balancing:**
 - Multi-region load balancing
@@ -1721,9 +1701,7 @@ graph TD
 - Alerting and notification
 - Analytics and reporting
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Load balancing distributes traffic across multiple servers to prevent overload. Common algorithms include round robin, least connections, and IP hash. Load balancers also do health checking and failover. They improve performance and availability."
@@ -1755,9 +1733,7 @@ graph TD
 5. Cover session affinity and SSL termination
 6. Discuss global load balancing and auto-scaling
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Streaming Platform with 10M Concurrent Users**
 
@@ -2238,9 +2214,7 @@ public class OptimizedLoadBalancer
 - 60% improvement in resource utilization
 - 40% improvement in user satisfaction
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Network Programming**: Understanding of HTTP and TCP/IP

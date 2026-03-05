@@ -1,8 +1,6 @@
 # API Security - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **API Security exists** to protect application programming interfaces from unauthorized access and attacks
 - **Critical at scale** when APIs are the primary interface for applications and services
 - **System design impact** - transforms API development from functional to security-first approach
@@ -12,9 +10,7 @@
 - **Compliance requirement** - mandatory for security standards and regulations
 - **Business continuity** - maintains API availability and integrity
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Unauthorized API access and data breaches
 - API abuse and rate limiting violations
@@ -41,9 +37,7 @@
 - Healthcare platform had patient data exposure through API
 - Social media platform had API abuse and data scraping
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **API Security Fundamentals:**
 - **Authentication**: Verifying API client identity
@@ -97,9 +91,7 @@
 - **Rate Limiting**: 1-3ms
 - **Security Monitoring**: 1-10ms
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Insecure API):**
 ```csharp
@@ -937,9 +929,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### API Security Architecture
 ```mermaid
@@ -1083,9 +1073,7 @@ graph TD
 - **Data Layer**: Data storage and security logging
 - **External Services**: Token service and threat intelligence
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 RPS:**
 - Single API gateway sufficient
@@ -1108,9 +1096,7 @@ graph TD
 - Rate limiting < 0.5ms
 - Input validation < 0.5ms
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Authentication success and failure rates
@@ -1132,9 +1118,7 @@ graph TD
 - Input validation false positives
 - Security monitoring overload
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **API Gateway**: Centralized security management
@@ -1163,9 +1147,7 @@ graph TD
 - **WAF Only**: 1-5ms overhead
 - **Application Security**: 1-3ms overhead
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Comprehensive Protection**: Multi-layer security
@@ -1181,9 +1163,7 @@ graph TD
 - **False Positives**: Legitimate requests blocked
 - **Coverage Gaps**: New attack vectors
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced API Security Features:**
 - **OAuth 2.0**: Advanced authorization flows
@@ -1199,9 +1179,7 @@ graph TD
 - **Zero Trust**: Zero-trust architecture
 - **API Discovery**: Automated API discovery
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "API security is about protecting APIs from unauthorized access. I use JWT tokens for authentication and check user permissions for authorization. I also validate input and implement rate limiting to prevent abuse."
@@ -1225,9 +1203,7 @@ graph TD
 - "Do all APIs need the same security level?" (No, depends on sensitivity)
 - "Is API security only about authentication?" (No, multiple layers)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Banking Platform with 10M+ API Calls/Day**
 
@@ -1246,9 +1222,7 @@ graph TD
 - 70% reduction in false positives
 - 99.95% uptime during security events
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Web Development**: Understanding of web protocols and APIs

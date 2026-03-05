@@ -1,8 +1,6 @@
 # Event Sourcing - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Event Sourcing exists** to persist all state changes as a sequence of events rather than current state
 - **Critical at scale** when audit trails, temporal queries, and system reconstruction become essential
 - **System design impact** - transforms state-based persistence into event-based persistence
@@ -12,9 +10,7 @@
 - **Business intelligence** - provides rich data for analytics and reporting
 - **System resilience** - enables system recovery from any point in time
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Inability to audit system state changes over time
 - Difficulty reproducing bugs and system states
@@ -41,9 +37,7 @@
 - E-commerce platform couldn't analyze customer behavior over time
 - Banking system failed regulatory audit due to incomplete audit trail
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Event Sourcing Fundamentals:**
 - **Event Store**: Append-only log of all domain events
@@ -122,9 +116,7 @@
 - **Snapshot Creation**: Async snapshot generation
 - **Event Replay**: Async event replay for debugging
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (State-Based):**
 ```csharp
@@ -997,9 +989,7 @@ public class OrderReadModelProjection :
 - **Redis**: Caching for performance optimization
 - **ASP.NET Core**: Web API and dependency injection
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Event Sourcing Architecture Overview
 ```mermaid
@@ -1139,9 +1129,7 @@ graph TD
 - Caching improves read performance
 - Event streaming enables real-time processing
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed Event Sourcing Architecture
 ```mermaid
@@ -1326,9 +1314,7 @@ graph TB
 - **Snapshot Replication**: Cross-region snapshot replication
 - **Read Model Consistency**: Multi-region consistency
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Event Sourcing Monitoring Architecture
 ```mermaid
@@ -1495,9 +1481,7 @@ graph TD
 - Archival strategies
 - Performance impact analysis
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **State-Based Persistence**: Traditional database persistence
@@ -1543,9 +1527,7 @@ graph TD
 - **Operational Cost**: Higher monitoring and maintenance cost
 - **Maintenance Cost**: Higher complexity maintenance
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Immutable Audit Trail**: Events cannot be modified
@@ -1584,9 +1566,7 @@ graph TD
 - **Data Retention**: Event retention policies
 - **Security Monitoring**: Event security monitoring
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Event Versioning:**
 - Event schema evolution strategies
@@ -1637,9 +1617,7 @@ graph TD
 - Performance testing
 - Snapshot testing
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Event sourcing is when you store all the changes to your data as events instead of just the current state. You can replay these events to reconstruct the state at any point in time. It provides a complete audit trail and enables temporal queries."
@@ -1671,9 +1649,7 @@ graph TD
 5. Cover projection and read model updates
 6. Discuss event replay and debugging capabilities
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Financial Trading Platform**
 
@@ -1974,9 +1950,7 @@ public class OptimizedEventStore
 - 99.999% system uptime with event replay recovery
 - 40% improvement in audit and compliance processes
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Domain-Driven Design**: Understanding of aggregates and domain events

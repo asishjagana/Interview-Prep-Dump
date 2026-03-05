@@ -1,8 +1,6 @@
 # SQL Injection - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **SQL Injection exists** to prevent malicious SQL code injection through user input
 - **Critical at scale** when applications handle database operations with user input
 - **System design impact** - transforms input validation and database access patterns
@@ -12,9 +10,7 @@
 - **Attack mitigation** - prevents various attack vectors through SQL injection
 - **Business continuity** - maintains data integrity and system availability
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Unauthorized data access through malicious SQL queries
 - Data modification and deletion through injection attacks
@@ -41,9 +37,7 @@
 - Healthcare platform had patient data exposure
 - Government agency had classified data leak
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **SQL Injection Fundamentals:**
 - **Input Manipulation**: Malicious SQL code in user input
@@ -87,9 +81,7 @@
 - **Network Overhead**: Slightly larger queries
 - **Database Load**: Slightly increased load
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Vulnerable):**
 ```csharp
@@ -426,9 +418,7 @@ public class SqlAttempt
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### SQL Injection Attack Flow
 ```mermaid
@@ -503,9 +493,7 @@ graph TB
 - **Database Security**: Database-level security controls
 - **Monitoring**: Real-time attack detection and monitoring
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 RPS:**
 - Single database server sufficient
@@ -525,9 +513,7 @@ graph TB
 - Advanced query optimization
 - Read replicas and sharding
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - SQL injection attempts
@@ -548,9 +534,7 @@ graph TB
 - Database connection exhaustion
 - Input validation bypass attempts
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Parameterized Queries**: Safe parameter binding
@@ -573,9 +557,7 @@ graph TB
 - **Input Validation**: 1-5ms overhead
 - **WAF**: 10-50ms overhead
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Data Protection**: Prevents unauthorized data access
@@ -591,9 +573,7 @@ graph TB
 - **False Positives**: Legitimate queries blocked
 - **Coverage Gaps**: New attack vectors
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Attack Vectors:**
 - **Second-Order SQLi**: Indirect injection
@@ -609,9 +589,7 @@ graph TB
 - **Real-time Detection**: Real-time attack detection
 - **Automated Response**: Automated security response
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "SQL injection is when attackers input malicious SQL code to manipulate database queries. I use parameterized queries to prevent it by separating SQL code from user input."
@@ -635,9 +613,7 @@ graph TB
 - "Do all applications need SQL injection protection?" (Yes, if using databases)
 - "Is input validation enough to prevent SQL injection?" (No, need parameterized queries)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Banking Platform with 10M+ Customers**
 
@@ -657,9 +633,7 @@ graph TB
 - 99.95% uptime during attack waves
 - 60% improvement in compliance scores
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Database Fundamentals**: Understanding of SQL and databases

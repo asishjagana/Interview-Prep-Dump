@@ -1,8 +1,6 @@
 # CQRS - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **CQRS exists** to separate read and write operations for optimal performance, scalability, and maintainability
 - **Critical at scale** when read/write patterns differ significantly and require independent optimization
 - **System design impact** - transforms monolithic data models into specialized read/write models
@@ -12,9 +10,7 @@
 - **Cloud-native essential** - fundamental for microservices and event-driven architectures
 - **Business agility** - enables faster evolution of read and write models independently
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Read queries slowing down write operations due to shared data model
 - Different data access patterns for reporting vs transaction processing
@@ -40,9 +36,7 @@
 - Social media platform had poor user experience due to feed query complexity
 - Analytics platform couldn't provide real-time insights without impacting data ingestion
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **How it works internally:**
 - **Command Side**: Handles write operations with domain-focused data model
@@ -105,9 +99,7 @@
 - Query handlers optimized for fast responses
 - Projection updates use async for scalability
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No CQRS):**
 ```csharp
@@ -495,9 +487,7 @@ public class Mediator : IMediator
 - **MassTransit**: Event bus for domain events
 - **Dapper**: Optimized read model queries
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### CQRS Architecture Overview
 ```mermaid
@@ -655,9 +645,7 @@ graph TB
 - Event bus scales with event volume
 - Read models scale independently of write models
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Microservices CQRS Architecture
 ```mermaid
@@ -792,9 +780,7 @@ graph TB
 - Conflict resolution for concurrent updates
 - Disaster recovery through event replay
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### CQRS Monitoring Architecture
 ```mermaid
@@ -923,9 +909,7 @@ sequenceDiagram
 - Projection retry mechanisms
 - Dead letter queue handling
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Traditional CRUD**: Single model for reads and writes
@@ -964,9 +948,7 @@ sequenceDiagram
 - **Operational Cost**: Higher monitoring and maintenance
 - **Performance Benefit**: 10-100x read performance improvement
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface:**
 - Command validation and authorization
@@ -1004,9 +986,7 @@ sequenceDiagram
 - Regular security audits of read models
 - Monitor for unusual access patterns
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Event Ordering:**
 - Concurrent command execution
@@ -1057,9 +1037,7 @@ sequenceDiagram
 - Distributed transaction handling
 - Consistency verification
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "CQRS separates read and write operations. You have different models for commands and queries. Commands change data, queries read data."
@@ -1091,9 +1069,7 @@ sequenceDiagram
 5. Cover scaling benefits
 6. Discuss implementation challenges and solutions
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Large E-commerce Platform with 10M Products**
 
@@ -1303,9 +1279,7 @@ public class OptimizedEventProcessor
 - 10x improvement in recommendation relevance
 - Successful handling of Black Friday traffic spikes
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Domain-Driven Design**: Understanding of domain events and aggregates

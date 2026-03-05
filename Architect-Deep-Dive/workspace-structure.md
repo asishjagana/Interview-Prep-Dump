@@ -218,95 +218,69 @@ Each topic follows this consistent structure:
 ```
 # Topic Name - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - 5-8 bullet points
 - Why this concept exists
 - When it becomes critical at scale
 - How it impacts system design decisions
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 - Real production problems solved
 - What breaks without it
 - Scale importance
 - Failure stories
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 - How it works internally
 - Lifecycle, memory, threading
 - Performance characteristics
 - Hidden costs
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 - Naive vs Production code
 - Clean Architecture examples
 - Framework integration
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 - Multiple Mermaid diagrams
 - Flow analysis and bottlenecks
 - Scaling boundaries
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 - 100 RPS → 10k RPS → 1M RPS
 - CAP theorem relevance
 - Microservices impact
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 - Monitoring and alerting
 - Debugging strategies
 - Performance tuning
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 - Competing approaches
 - When NOT to use
 - Cost implications
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 - Attack surface
 - Hardening recommendations
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 - Race conditions, deadlocks
 - Thundering herd problems
 - Circuit breaker interactions
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 - Junior vs Senior vs Architect answers
 - Trick questions
 - Whiteboard strategy
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 - Hypothetical but realistic
 - Design decisions and compromises
 - Results and metrics
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 - Prerequisites and dependencies
 - Connections to other concepts
 ```

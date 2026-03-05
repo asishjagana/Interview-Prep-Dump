@@ -1,8 +1,6 @@
 # Law of Demeter - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Law of Demeter exists** to minimize coupling between components by limiting knowledge about internal structures
 - **Critical at scale** when complex object graphs create maintenance nightmares and testing complexity
 - **System design impact** - transforms tightly-coupled systems into loosely-coupled, maintainable architectures
@@ -12,9 +10,7 @@
 - **Performance considerations** - may introduce additional method calls but improves maintainability
 - **Team productivity** - reduces cognitive load and onboarding time for developers
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Fragile code that breaks when internal object structures change
 - Cascading modifications throughout codebase due to tight coupling
@@ -40,9 +36,7 @@
 - SaaS platform couldn't add new payment methods without touching 50+ files
 - Healthcare system had critical bugs when patient record structure evolved
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - Restricts method calls to immediate dependencies only
 - Prevents "train wreck" chains of method calls
@@ -110,9 +104,7 @@
 - Simplified exception handling
 - Improved testability of async code
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 **Naive Implementation (Violates Law of Demeter):**
 ```csharp
 public class OrderProcessor
@@ -326,9 +318,7 @@ public class Address
 - **MediatR**: Mediator pattern enforces Law of Demeter for command/query handling
 - **AutoMapper**: Projection prevents deep object graph traversal
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Law of Demeter Violation vs Compliance
 ```mermaid
@@ -462,9 +452,7 @@ graph TB
 - Reduced coupling allows independent deployment
 - Better test isolation at scale
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Microservices Communication Patterns
 ```mermaid
@@ -555,9 +543,7 @@ graph LR
 - Law of Demeter prevents direct cross-region database access
 - Better disaster recovery through service isolation
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Service Monitoring Architecture
 ```mermaid
@@ -660,9 +646,7 @@ sequenceDiagram
 - Predictive scaling based on service metrics
 - Chaos engineering for service boundaries
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Data Transfer Objects**: Reduce coupling but increase complexity
@@ -701,9 +685,7 @@ sequenceDiagram
 - **Operational Cost**: Better service utilization and scaling
 - **Team Productivity**: Improves developer velocity by 30-40%
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface Reduction:**
 - Limited object graph traversal reduces data exposure
@@ -737,9 +719,7 @@ sequenceDiagram
 - Monitor for unusual service access patterns
 - Use service mesh for mTLS between services
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Race Conditions:**
 - Concurrent access to shared services
@@ -783,9 +763,7 @@ sequenceDiagram
 - Breaking change management
 - Deprecation policies
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Law of Demeter means you shouldn't chain method calls like `obj.getA().getB().getC()`. You should only talk to your immediate friends."
@@ -817,9 +795,7 @@ sequenceDiagram
 5. Discuss tradeoffs and performance considerations
 6. Cover real-world examples and anti-patterns
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Large E-commerce Platform Refactoring**
 
@@ -956,9 +932,7 @@ public class OrderProcessor
 - 3x faster feature development
 - Successful migration to microservices architecture
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Encapsulation**: Understanding of information hiding

@@ -1,8 +1,6 @@
 # CI/CD Pipeline - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **CI/CD exists** to automate software delivery from code commit to production deployment
 - **Critical at scale** when applications need rapid, reliable, and frequent releases
 - **System design impact** - transforms software delivery from manual to automated pipelines
@@ -12,9 +10,7 @@
 - **DevOps integration** - integrates development and operations workflows
 - **Risk reduction** - reduces deployment risks through automation and testing
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Manual deployment processes and human errors
 - Slow release cycles and time-to-market delays
@@ -41,9 +37,7 @@
 - Financial system had downtime during manual deployments
 - Gaming platform had slow release cycles
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **CI/CD Fundamentals:**
 - **Continuous Integration**: Automated build and integration
@@ -96,9 +90,7 @@
 - **Pipeline Latency**: 10-120 minutes
 - **Success Rate**: 90-99%
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Manual Deployment):**
 ```csharp
@@ -1005,9 +997,7 @@ stages:
 - **System.Text.Json**: JSON serialization
 - **Dependency Injection**: Service registration
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### CI/CD Pipeline Architecture
 ```mermaid
@@ -1142,9 +1132,7 @@ graph TD
 - **Quality Gates**: Quality checks and validation
 - **Monitoring**: Pipeline monitoring and feedback
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **10 Builds/Day:**
 - Single build agent sufficient
@@ -1164,9 +1152,7 @@ graph TD
 - Test time 2-10 minutes
 - Deployment time 30 seconds-2 minutes
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Build success rate and duration
@@ -1188,9 +1174,7 @@ graph TD
 - Deployment failures due to configuration issues
 - Rollback failures due to backup issues
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Manual Deployment**: Manual build and deployment
@@ -1219,9 +1203,7 @@ graph TD
 - **GitOps**: Fast, declarative
 - **Progressive Delivery**: Fast, safe
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Automated Security**: Integrated security scanning
@@ -1237,9 +1219,7 @@ graph TD
 - **Supply Chain Security**: Third-party dependencies
 - **Environment Security**: Environment access control
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced CI/CD Features:**
 - **Multi-Branch Pipelines**: Parallel branch pipelines
@@ -1255,9 +1235,7 @@ graph TD
 - **Resource Optimization**: Resource management
 - **Pipeline Optimization**: Performance tuning
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "CI/CD is automated build and deployment. I use Azure DevOps to create pipelines that build code, run tests, and deploy to production. It helps catch errors early and deploy faster."
@@ -1281,9 +1259,7 @@ graph TD
 - "Do all applications benefit from CI/CD?" (Most do, but depends on complexity)
 - "Is CI/CD the same as DevOps?" (No, CI/CD is part of DevOps)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Financial Platform with 1M+ Users**
 
@@ -1302,9 +1278,7 @@ graph TD
 - 99.99% uptime during deployments
 - 70% improvement in release velocity
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Version Control**: Understanding of Git and version control

@@ -1,8 +1,6 @@
 # Kubernetes - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Kubernetes exists** to automate deployment, scaling, and management of containerized applications
 - **Critical at scale** when applications need to run across multiple nodes with high availability
 - **System design impact** - transforms application deployment from manual to automated orchestration
@@ -12,9 +10,7 @@
 - **Cloud readiness** - enables cloud-native application deployment
 - **Resource efficiency** - optimizes resource utilization and cost
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Manual container deployment and management
 - Scaling applications manually across multiple nodes
@@ -41,9 +37,7 @@
 - Financial system had downtime during updates
 - Gaming platform had poor resource utilization
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Kubernetes Fundamentals:**
 - **Container Orchestration**: Automated container management
@@ -103,9 +97,7 @@
 - **Update Time**: 1-5 minutes
 - **Network Latency**: 1-10ms (cluster)
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Manual Deployment):**
 ```csharp
@@ -738,9 +730,7 @@ public class PodInfo
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Kubernetes Architecture
 ```mermaid
@@ -874,9 +864,7 @@ graph TB
 - **Networking**: Cluster networking and external access
 - **Storage**: Persistent storage management
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 Pods:**
 - Single Kubernetes cluster sufficient
@@ -896,9 +884,7 @@ graph TB
 - Scaling time 60-120 seconds
 - Resource utilization 80-95%
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Pod status and health
@@ -919,9 +905,7 @@ graph TB
 - Network partition and connectivity issues
 - Storage failures and data loss
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Docker Swarm**: Simple container orchestration
@@ -951,9 +935,7 @@ graph TB
 - **Nomad**: Good performance, simpler than K8s
 - **Mesos**: Best for very large clusters
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Pod Isolation**: Container isolation and security
@@ -969,9 +951,7 @@ graph TB
 - **Network Security**: Complex network policies
 - **Secrets Management**: Secret distribution challenges
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Kubernetes Features:**
 - **Custom Resources**: Custom Kubernetes resources
@@ -987,9 +967,7 @@ graph TB
 - **Rolling Updates**: Automated updates
 - **Multi-Cluster**: Cross-cluster deployment
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Kubernetes is a container orchestration platform that automates deployment and scaling. I use it to deploy Docker containers and manage them across multiple nodes. It provides load balancing and self-healing capabilities."
@@ -1013,9 +991,7 @@ graph TB
 - "Do all containers need to run in Kubernetes?" (No, depends on use case)
 - "Is Kubernetes secure by default?" (No, requires security configuration)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global SaaS Platform with 50M+ Users**
 
@@ -1034,9 +1010,7 @@ graph TB
 - 70% reduction in operational overhead
 - 60% improvement in deployment frequency
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Container Technology**: Understanding of Docker and containers

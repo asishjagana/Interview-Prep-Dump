@@ -1,8 +1,6 @@
 # CDN (Content Delivery Network) - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **CDN exists** to distribute content globally through edge servers for improved performance
 - **Critical at scale** when applications serve global audiences with high performance requirements
 - **System design impact** - transforms content delivery from centralized to distributed architecture
@@ -12,9 +10,7 @@
 - **Reliability improvement** - enhances availability and fault tolerance
 - **Cost optimization** - reduces bandwidth costs and infrastructure load
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Slow content delivery for global users
 - High latency and poor user experience
@@ -41,9 +37,7 @@
 - SaaS application had poor performance across regions
 - Gaming platform had high latency affecting gameplay
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **CDN Fundamentals:**
 - **Edge Caching**: Content caching at edge locations
@@ -103,9 +97,7 @@
 - **Content Delivery Speed**: 2-10x faster
 - **Bandwidth Savings**: 40-80%
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No CDN):**
 ```csharp
@@ -756,9 +748,7 @@ public class Startup
 - **System.Text.Json**: JSON serialization
 - **Dependency Injection**: Service registration
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### CDN Architecture
 ```mermaid
@@ -871,9 +861,7 @@ stateDiagram-v2
 - **Origin Infrastructure**: Primary content sources
 - **Cache Management**: Intelligent caching and invalidation
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **1k Requests/Minute:**
 - Single edge location sufficient
@@ -893,9 +881,7 @@ stateDiagram-v2
 - Latency reduction 5-10x
 - Bandwidth savings 70-90%
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Cache hit ratio and miss ratio
@@ -917,9 +903,7 @@ stateDiagram-v2
 - DNS resolution issues
 - Content delivery failures
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Self-Hosted CDN**: Self-managed CDN
@@ -948,9 +932,7 @@ stateDiagram-v2
 - **Regional Caching**: Moderate cost, limited reach
 - **Origin Optimization**: Low cost, limited benefits
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **DDoS Protection**: Distributed denial of service protection
@@ -966,9 +948,7 @@ stateDiagram-v2
 - **Cache Poisoning**: Preventing cache poisoning attacks
 - **SSL Management**: Managing SSL certificates
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced CDN Features:**
 - **Edge Computing**: Compute at the edge
@@ -984,9 +964,7 @@ stateDiagram-v2
 - **Progressive Loading**: Progressive content loading
 - **Predictive Caching**: AI-powered caching
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "CDN is a content delivery network that caches content at edge locations closer to users. I use CDN to serve static files like images, CSS, and JavaScript faster to users around the world."
@@ -1010,9 +988,7 @@ stateDiagram-v2
 - "Is CDN only for static content?" (No, can handle dynamic content)
 - "Does CDN eliminate the need for origin servers?" (No, origin servers are still needed)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Media Platform with 100M+ Users**
 
@@ -1031,9 +1007,7 @@ stateDiagram-v2
 - 60% improvement in user experience
 - 99.99% availability during peak traffic
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Web Development**: Understanding of web protocols and content delivery

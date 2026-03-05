@@ -1,8 +1,6 @@
 # Database Indexing - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Database indexing exists** to enable fast data retrieval by avoiding full table scans through organized data structures
 - **Critical at scale** when query performance becomes bottleneck and data volumes exceed millions of rows
 - **System design impact** - transforms O(n) scans into O(log n) lookups, enabling real-time analytics and responsive applications
@@ -12,9 +10,7 @@
 - **Cloud cost impact** - directly affects storage costs and query performance pricing
 - **Scalability foundation** - essential for horizontal scaling and distributed database performance
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Full table scans causing query timeouts at 10M+ rows
 - Reports taking hours instead of minutes due to poor query performance
@@ -40,9 +36,7 @@
 - Social media platform became unusable as user posts grew
 - Healthcare system couldn't access patient records quickly during emergencies
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 **How it works internally:**
 - B-tree structure maintains sorted key-value pairs for fast lookup
 - Leaf nodes contain actual data pointers or indexed values
@@ -105,9 +99,7 @@
 - Index statistics collection may be asynchronous
 - Index maintenance operations can be scheduled
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 **Naive Implementation:**
 ```csharp
 // No indexing considerations - poor performance at scale
@@ -462,9 +454,7 @@ public class ApplicationDbContext : DbContext
 - **Entity Framework**: Change tracking updates indexes automatically
 - **ADO.NET**: Command batching for index maintenance operations
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### B-Tree Index Structure
 ```mermaid
@@ -626,9 +616,7 @@ stateDiagram-v2
 - Write throughput limited by index maintenance
 - Query performance limited by index selectivity
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Index Scaling Patterns
 ```mermaid
@@ -750,9 +738,7 @@ graph TB
 - Cross-region query optimization
 - Index synchronization latency
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Index Monitoring Architecture
 ```mermaid
@@ -882,9 +868,7 @@ graph TD
 - Index performance benchmarking
 - Cross-database index comparison
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Full-Text Search**: Specialized indexing for text data
@@ -923,9 +907,7 @@ graph TD
 - **Maintenance Cost**: Regular rebuild and statistics updates
 - **Performance Cost**: Write latency increase of 10-50%
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface Introduced:**
 - Index enumeration revealing data patterns
@@ -959,9 +941,7 @@ graph TD
 - Implement proper access controls on index metadata
 - Audit index creation and modification operations
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Race Conditions:**
 - Concurrent index updates causing inconsistency
@@ -1011,9 +991,7 @@ graph TD
 - Query circuit breaker affecting index usage
 - Index creation circuit breaker for protection
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Indexes make queries faster by creating a sorted list of values. You create them on columns that you use in WHERE clauses."
@@ -1045,9 +1023,7 @@ graph TD
 5. Cover index selection strategy
 6. Discuss scaling and distributed considerations
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: E-commerce Platform with 100M Products and 1B Orders**
 
@@ -1286,9 +1262,7 @@ public class ResilientIndexService
 - 80% improvement in order processing throughput
 - 60% reduction in database CPU utilization
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Database Fundamentals**: Tables, queries, and data relationships

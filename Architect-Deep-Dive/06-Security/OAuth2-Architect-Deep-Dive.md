@@ -1,8 +1,6 @@
 # OAuth2 - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **OAuth2 exists** to enable secure delegated authorization without sharing credentials between services
 - **Critical at scale** when multiple applications need to access user data across different domains
 - **System design impact** - transforms monolithic authentication into distributed authorization architecture
@@ -12,9 +10,7 @@
 - **Compliance essential** - required for regulatory compliance and data protection
 - **Scalability enabler** - allows independent scaling of authentication and authorization concerns
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Users sharing passwords with third-party applications
 - Inconsistent authentication experiences across services
@@ -41,9 +37,7 @@
 - Healthcare system exposed patient data through insecure API access
 - SaaS platform couldn't provide enterprise-grade security without OAuth2
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **How it works internally:**
 - **Authorization Server**: Issues access tokens after user authentication
@@ -106,9 +100,7 @@
 - Refresh token operations are async
 - User authentication flows are async
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No OAuth2):**
 ```csharp
@@ -506,9 +498,7 @@ public class TokenInfo
 - **JWT Bearer Authentication**: Token validation middleware
 - **HttpClientFactory**: HTTP client management for token requests
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### OAuth2 Authorization Code Flow
 ```mermaid
@@ -651,9 +641,7 @@ sequenceDiagram
 - Token caching improves validation performance
 - Load balancing essential for high availability
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed OAuth2 Architecture
 ```mermaid
@@ -790,9 +778,7 @@ graph TB
 - Global logout implementation
 - Regional authorization server deployment
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### OAuth2 Monitoring Architecture
 ```mermaid
@@ -921,9 +907,7 @@ graph TD
 - Network latency reduction
 - Load balancing configuration
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Session-based Authentication**: Server-side session management
@@ -962,9 +946,7 @@ graph TD
 - **Operational Cost**: Security monitoring and compliance
 - **Maintenance Cost**: Key rotation and updates
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface:**
 - Authorization code interception
@@ -1002,9 +984,7 @@ graph TD
 - Regular security audits
 - Monitor for anomalous behavior
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Token Revocation:**
 - Cross-region token invalidation
@@ -1055,9 +1035,7 @@ graph TD
 - Privacy controls
 - Regulatory reporting
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "OAuth2 is a way to let applications access user data without sharing passwords. It uses access tokens and refresh tokens. The user logs in and grants permission, then the app gets a token to access APIs."
@@ -1089,9 +1067,7 @@ graph TD
 5. Cover security considerations and best practices
 6. Discuss scaling and implementation challenges
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global Banking Platform with 10M Users**
 
@@ -1356,9 +1332,7 @@ public class EnhancedSecurityService
 - Full regulatory compliance
 - Zero security breaches in production
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **HTTP/HTTPS**: Understanding of secure communication

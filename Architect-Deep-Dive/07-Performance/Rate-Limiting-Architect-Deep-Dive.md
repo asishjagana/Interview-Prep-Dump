@@ -1,8 +1,6 @@
 # Rate Limiting - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Rate Limiting exists** to protect systems from abuse and ensure fair resource allocation by controlling request rates
 - **Critical at scale** when systems face high traffic volumes and potential abuse scenarios
 - **System design impact** - transforms system architecture to include protection layers and quota management
@@ -12,9 +10,7 @@
 - **Business continuity** - maintains service quality during traffic spikes
 - **Cost optimization** - controls infrastructure costs through traffic management
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - DDoS attacks overwhelming system resources
 - API abuse by automated clients
@@ -41,9 +37,7 @@
 - E-commerce platform had inventory manipulation through rapid requests
 - Gaming platform experienced DDoS attacks
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Rate Limiting Fundamentals:**
 - **Request Rate Control**: Limit requests per time window
@@ -125,9 +119,7 @@
 - **Bandwidth**: Minimal impact
 - **Latency**: Processing overhead
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (No Rate Limiting):**
 ```csharp
@@ -836,9 +828,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Rate Limiting Algorithms Comparison
 ```mermaid
@@ -996,9 +986,7 @@ graph TD
 - Cache hit ratio
 - Network bandwidth
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Multi-Region Rate Limiting
 ```mermaid
@@ -1184,9 +1172,7 @@ graph TD
 - **Performance Impact**: Cross-region latency
 - **Failover Handling**: Region failover
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Rate Limiting Monitoring Architecture
 ```mermaid
@@ -1377,9 +1363,7 @@ graph TD
 - Failover handling
 - Cross-region coordination
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **No Rate Limiting**: No rate limiting protection
@@ -1430,9 +1414,7 @@ graph TD
 - **Maintenance Cost**: Rule management overhead
 - **Performance Benefits**: Reduced infrastructure costs
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **DDoS Protection**: Protection against DDoS attacks
@@ -1483,9 +1465,7 @@ graph TD
 - **Behavioral Analysis**: User behavior monitoring
 - **Regular Audits**: Regular security audits
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Rate Limit Evasion:**
 - IP address rotation
@@ -1543,9 +1523,7 @@ graph TD
 - Health checking
 - Automatic recovery
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Rate limiting is about limiting how many requests users can make. I've implemented basic rate limiting using a counter that resets every minute. When the limit is exceeded, we return a 429 status code. This prevents abuse and protects the system."
@@ -1577,9 +1555,7 @@ graph TD
 5. Cover monitoring and observability
 6. Discuss integration with other systems
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global API Gateway with 10M+ Daily Requests**
 
@@ -1977,9 +1953,7 @@ public class OptimizedRateLimitingService
 - 99.99% uptime during traffic spikes
 - 40% improvement in user experience
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **HTTP Protocol**: Understanding of HTTP requests and responses

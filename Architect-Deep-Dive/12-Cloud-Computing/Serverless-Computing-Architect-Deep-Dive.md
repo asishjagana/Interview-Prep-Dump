@@ -1,8 +1,6 @@
 # Serverless Computing - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Serverless exists** to enable event-driven, pay-per-use computing without server management
 - **Critical at scale** when applications need to handle unpredictable workloads with cost efficiency
 - **System design impact** - transforms application architecture from always-on to event-driven
@@ -12,9 +10,7 @@
 - **Cloud readiness** - enables cloud-native application development
 - **Event-driven architecture** - essential for modern event-driven systems
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Over-provisioned resources and wasted costs
 - Manual scaling and capacity management
@@ -41,9 +37,7 @@
 - Financial system had complex infrastructure management
 - Gaming platform had slow deployment cycles
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Serverless Fundamentals:**
 - **Function as a Service (FaaS)**: Event-driven function execution
@@ -95,9 +89,7 @@
 - **Throughput**: 100-1000+ requests/second
 - **Latency**: 10-100ms (warm)
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Traditional Server):**
 ```csharp
@@ -653,9 +645,7 @@ public class ServerlessMetrics
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Serverless Architecture
 ```mermaid
@@ -762,9 +752,7 @@ graph TD
 - **Monitoring**: Comprehensive observability
 - **Scaling**: Automatic scaling behavior
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 Requests/Minute:**
 - Single function instance sufficient
@@ -784,9 +772,7 @@ graph TD
 - Warm execution 10-100ms
 - Cost optimization maximum
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Function invocation count and duration
@@ -807,9 +793,7 @@ graph TD
 - Throttling and rate limiting
 - Configuration and deployment issues
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Traditional Servers**: Always-on servers
@@ -839,9 +823,7 @@ graph TD
 - **PaaS**: Predictable cost, managed services
 - **IaaS**: Variable cost, full control
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Managed Security**: Platform-managed security
@@ -857,9 +839,7 @@ graph TD
 - **Access Control**: Function access control
 - **Compliance**: Regulatory compliance
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Serverless Features:**
 - **Durable Functions**: Long-running workflows
@@ -875,9 +855,7 @@ graph TD
 - **Batch Processing**: Efficient batch processing
 - **Event Sourcing**: Event-driven architecture
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Serverless computing is a cloud model where you don't manage servers. Functions run in response to events and you pay only for what you use. I use Azure Functions to create HTTP endpoints and process queue messages."
@@ -901,9 +879,7 @@ graph TD
 - "Do all applications benefit from serverless?" (No, depends on use case)
 - "Is serverless completely stateless?" (No, with external state management)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global E-commerce Platform with 10M+ Users**
 
@@ -922,9 +898,7 @@ graph TD
 - 80% improvement in scalability
 - 99.99% uptime during peak shopping seasons
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Cloud Computing**: Understanding of cloud services

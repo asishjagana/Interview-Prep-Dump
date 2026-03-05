@@ -1,8 +1,6 @@
 # Event-Driven Architecture - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Event-Driven Architecture exists** to enable loose coupling between services through asynchronous event communication
 - **Critical at scale** when systems need to handle high throughput, maintain resilience, and support independent scaling
 - **System design impact** - transforms synchronous request/response systems into asynchronous, event-based ecosystems
@@ -12,9 +10,7 @@
 - **Microservices essential** - fundamental pattern for distributed system communication
 - **Business agility** - enables rapid addition of new event consumers and producers
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - Tight coupling between services causing cascading failures
 - Synchronous communication creating bottlenecks and latency
@@ -41,9 +37,7 @@
 - Social media platform became unavailable when notification service failed
 - Logistics system couldn't handle peak season due to synchronous inventory updates
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **How it works internally:**
 - **Event Producers**: Generate events when state changes occur
@@ -104,9 +98,7 @@
 - Async event publishing
 - Parallel event consumption
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Synchronous):**
 ```csharp
@@ -669,9 +661,7 @@ public class OrderProcessingSaga :
 - **Entity Framework Core**: Event store and saga state persistence
 - **System.Reactive**: Reactive extensions for event streams
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Event-Driven Architecture Overview
 ```mermaid
@@ -829,9 +819,7 @@ graph TB
 - Event store scales with partitioning
 - Read models scale independently
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 ### Distributed Event-Driven Architecture
 ```mermaid
@@ -979,9 +967,7 @@ graph TB
 - Cross-region saga coordination
 - Disaster recovery through event replay
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 ### Event-Driven System Monitoring
 ```mermaid
@@ -1130,9 +1116,7 @@ graph TD
 - Saga completion analysis
 - Distributed transaction debugging
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Request/Response**: Synchronous communication patterns
@@ -1171,9 +1155,7 @@ graph TD
 - **Operational Cost**: Monitoring and management overhead
 - **Maintenance Cost**: Event schema evolution and consumer management
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Attack Surface:**
 - Event injection and tampering
@@ -1210,9 +1192,7 @@ graph TD
 - Network security for event communication
 - Regular security audits of event flows
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Event Ordering:**
 - Maintaining order across partitions
@@ -1263,9 +1243,7 @@ graph TD
 - Event archiving and replay
 - Replay performance optimization
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Event-driven architecture is when services send events to each other instead of calling each other directly. It uses a message broker to route events. Services can process events asynchronously."
@@ -1297,9 +1275,7 @@ graph TD
 5. Cover event sourcing and replay capabilities
 6. Discuss scaling and resilience benefits
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global E-commerce Platform with 10M Daily Orders**
 
@@ -1463,9 +1439,7 @@ public class OptimizedEventPublisher
 - Sub-second event processing latency
 - Successful handling of peak season traffic
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites (Must understand before):**
 - **Message Queuing**: Understanding of message brokers and queues

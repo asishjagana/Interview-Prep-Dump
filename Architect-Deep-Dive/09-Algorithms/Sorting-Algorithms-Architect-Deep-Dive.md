@@ -1,8 +1,6 @@
 # Sorting Algorithms - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **Sorting Algorithms exist** to organize data in a specific order for efficient processing and retrieval
 - **Critical at scale** when applications need to process large datasets efficiently
 - **System design impact** - transforms data processing from unsorted to optimized ordered operations
@@ -12,9 +10,7 @@
 - **User experience** - provides faster data access and better application performance
 - **Resource optimization** - reduces computational complexity and resource usage
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 
 **Real production problem solved:**
 - Slow data processing due to unsorted data
@@ -42,9 +38,7 @@
 - Financial system had slow transaction processing
 - Search engine had poor search performance
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **Sorting Fundamentals:**
 - **Comparison-based Sorting**: Algorithms that compare elements
@@ -95,9 +89,7 @@
 - **Swap Count**: Number of element swaps
 - **Adaptivity**: Performance on partially sorted data
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (Inefficient):**
 ```csharp
@@ -908,9 +900,7 @@ public class Startup
 - **Microsoft.Extensions.Logging**: Logging framework
 - **Dependency Injection**: Service registration
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### Sorting Algorithm Architecture
 ```mermaid
@@ -1023,9 +1013,7 @@ graph TD
 - **Utility Layer**: Common utility functions
 - **Monitoring Layer**: Performance monitoring and analysis
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **Small Arrays (1K elements):**
 - Single algorithm sufficient
@@ -1045,9 +1033,7 @@ graph TD
 - Memory usage significant
 - CPU usage 60-95%
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Sort operation count and duration
@@ -1069,9 +1055,7 @@ graph TD
 - Performance degradation from wrong algorithm selection
 - Parallel execution issues
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **Quick Sort**: Fast average case, unstable
@@ -1094,9 +1078,7 @@ graph TD
 - **Insertion Sort**: O(n) best, O(n²) worst
 - **Counting Sort**: O(n) time, O(k) space
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Input Validation**: Array bounds checking
@@ -1112,9 +1094,7 @@ graph TD
 - **Integer Overflow**: Overflow protection
 - **Resource Limits**: Resource usage limits
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced Sorting Features:**
 - **External Sorting**: Sorting large datasets
@@ -1130,9 +1110,7 @@ graph TD
 - **GPU Sorting**: GPU-accelerated sorting
 - **Quantum Sorting**: Quantum algorithm approaches
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "Sorting algorithms arrange data in order. I know quicksort is fast with O(n log n) average time, and I can implement bubble sort, insertion sort, and merge sort. I choose the algorithm based on the data size and requirements."
@@ -1156,9 +1134,7 @@ graph TD
 - "Do all sorting algorithms have the same time complexity?" (No, varies widely)
 - "Is stability always important?" (No, depends on use case)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Financial Trading Platform with Real-Time Data Processing**
 
@@ -1176,9 +1152,7 @@ graph TD
 - 99.99% uptime during peak trading
 - 70% reduction in infrastructure costs
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **Data Structures**: Understanding of arrays, linked lists, trees

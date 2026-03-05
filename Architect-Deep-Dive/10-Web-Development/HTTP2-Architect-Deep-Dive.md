@@ -1,8 +1,6 @@
 # HTTP/2 - Architect Deep Dive
 
-============================================================
-0. Executive Summary (Architect View)
-============================================================
+**0. Executive Summary (Architect View)**
 - **HTTP/2 exists** to improve web performance through multiplexing, header compression, and server push
 - **Critical at scale** when applications need high-performance web communication
 - **System design impact** - transforms web communication protocols and performance optimization
@@ -12,9 +10,7 @@
 - **Resource efficiency** - reduces bandwidth usage and server load
 - **Modern web** - enables modern web applications and APIs
 
-============================================================
-1. Problem Framing
-============================================================
+**1. Problem Framing**
 **Real production problem solved:**
 - HTTP/1.1 connection limits and head-of-line blocking
 - High latency from multiple TCP connections
@@ -41,9 +37,7 @@
 - SaaS application had high latency issues
 - Mobile app had poor performance on slow networks
 
-============================================================
-2. Deep Internal Mechanics
-============================================================
+**2. Deep Internal Mechanics**
 
 **HTTP/2 Fundamentals:**
 - **Binary Protocol**: Binary framing instead of text-based
@@ -81,9 +75,7 @@
 - **Flow Control Window**: Flow control management
 - **Connection State**: Connection state management
 
-============================================================
-3. .NET Production Implementation
-============================================================
+**3. .NET Production Implementation**
 
 **Naive Implementation (HTTP/1.1):**
 ```csharp
@@ -619,9 +611,7 @@ public class Startup
 - **Dependency Injection**: Service registration
 - **Configuration**: Configuration management
 
-============================================================
-4. Architecture-Level Diagram (Mermaid)
-============================================================
+**4. Architecture-Level Diagram (Mermaid)**
 
 ### HTTP/2 vs HTTP/1.1 Comparison
 ```mermaid
@@ -692,9 +682,7 @@ sequenceDiagram
 - **Stream Priority**: Stream prioritization
 - **Flow Control**: Stream-level flow control
 
-============================================================
-5. Scaling & Distributed Systems Impact
-============================================================
+**5. Scaling & Distributed Systems Impact**
 
 **100 RPS:**
 - Single HTTP/2 server sufficient
@@ -714,9 +702,7 @@ sequenceDiagram
 - 70-95% latency reduction
 - 50-70% bandwidth reduction
 
-============================================================
-6. Production Engineering View
-============================================================
+**6. Production Engineering View**
 
 **Monitoring Metrics:**
 - Active connections and streams
@@ -737,9 +723,7 @@ sequenceDiagram
 - Header compression problems
 - Stream priority conflicts
 
-============================================================
-7. Tradeoffs & Alternatives
-============================================================
+**7. Tradeoffs & Alternatives**
 
 **Competing Approaches:**
 - **HTTP/1.1**: Traditional HTTP protocol
@@ -768,9 +752,7 @@ sequenceDiagram
 - **WebSocket**: Real-time performance
 - **gRPC**: High-performance RPC
 
-============================================================
-8. Security Implications
-============================================================
+**8. Security Implications**
 
 **Security Benefits:**
 - **Header Compression**: Reduced attack surface
@@ -786,9 +768,7 @@ sequenceDiagram
 - **Compatibility**: Compatibility issues
 - **Attack Vectors**: New attack vectors
 
-============================================================
-9. Advanced Edge Cases
-============================================================
+**9. Advanced Edge Cases**
 
 **Advanced HTTP/2 Features:**
 - **Stream Dependencies**: Stream dependency management
@@ -804,9 +784,7 @@ sequenceDiagram
 - **Stream Reset**: Stream reset handling
 - **Connection Pooling**: Connection pooling
 
-============================================================
-10. Interview & Staff-Level Deep Dive
-============================================================
+**10. Interview & Staff-Level Deep Dive**
 
 **What a junior answers:**
 "HTTP/2 is a newer version of HTTP that's faster than HTTP/1.1. It uses multiplexing to send multiple requests over one connection and compresses headers to reduce overhead."
@@ -830,9 +808,7 @@ sequenceDiagram
 - "Do all applications benefit from HTTP/2?" (Most do, but depends on use case)
 - "Is server push always beneficial?" (No, can cause overhead)
 
-============================================================
-11. Real Enterprise Case Study
-============================================================
+**11. Real Enterprise Case Study**
 
 **Scenario: Global E-commerce Platform with 10M+ Users**
 
@@ -850,9 +826,7 @@ sequenceDiagram
 - 50% reduction in bandwidth costs
 - 99.95% uptime during peak shopping seasons
 
-============================================================
-12. Dependency Graph
-============================================================
+**12. Dependency Graph**
 
 **Prerequisites:**
 - **HTTP Protocol**: Understanding of HTTP fundamentals
