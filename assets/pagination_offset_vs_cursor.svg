@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="pgbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .cell{fill:#334155}
+      .scan{fill:#f87171}
+      .keep{fill:#34d399}
+    </style>
+  </defs>
+  <rect width="760" height="410" rx="16" fill="url(#pgbg)"/>
+  <text x="30" y="38" class="t">OFFSET vs CURSOR pagination (page 50,000)</text>
+
+  <!-- OFFSET row -->
+  <text x="30" y="76" class="h" fill="#f87171">OFFSET 1,000,000 LIMIT 10 — DB reads &amp; throws away a million rows</text>
+  <g>
+    <!-- many small scanned cells -->
+    <g>
+      <rect x="40" y="92" width="560" height="26" rx="4" class="scan" opacity="0.25"/>
+      <rect x="40" y="92" width="0" height="26" rx="4" class="scan">
+        <animate attributeName="width" values="0;560" dur="2.5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="600" y="92" width="60" height="26" rx="4" class="keep"/>
+    </g>
+    <text x="40" y="136" class="note" fill="#fca5a5">scan + discard 1,000,000 rows ......................................</text>
+    <text x="610" y="136" class="note" fill="#86efac">keep 10</text>
+    <text x="40" y="156" class="note">cost grows with offset → O(N). "Deep pages" get painfully slow.</text>
+  </g>
+
+  <!-- CURSOR row -->
+  <text x="30" y="208" class="h" fill="#34d399">WHERE id &gt; last_seen_id LIMIT 10 — index jumps straight there</text>
+  <g>
+    <rect x="40" y="224" width="560" height="26" rx="4" class="cell" opacity="0.4"/>
+    <!-- pointer jumps to the right -->
+    <polygon points="590,221 610,237 590,253" fill="#fbbf24">
+      <animate attributeName="points" values="40,221 60,237 40,253;590,221 610,237 590,253" dur="1s" repeatCount="indefinite"/>
+    </polygon>
+    <rect x="600" y="224" width="60" height="26" rx="4" class="keep"/>
+    <text x="40" y="268" class="note">B-tree index seeks directly to last_seen_id ................</text>
+    <text x="610" y="268" class="note" fill="#86efac">read 10</text>
+    <text x="40" y="288" class="note">cost is constant → O(log N). Same speed on page 1 or page 50,000.</text>
+  </g>
+
+  <rect x="30" y="312" width="700" height="80" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="338" fill="#f8fafc" font-size="13" font-weight="700">Bonus: cursors are also stable under inserts/deletes</text>
+  <text x="46" y="360" class="note">Offset shifts when rows are added/removed mid-paging → users see duplicates or skips.</text>
+  <text x="46" y="380" class="note">Cursor anchors to a real row id → no gaps, no repeats. Trade-off: no random "jump to page N".</text>
+</svg>

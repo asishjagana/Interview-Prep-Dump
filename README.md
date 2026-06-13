@@ -13,9 +13,10 @@ Building the blueprint. Requirements, estimation, reliability, and trade-offs.
 - Interview Process, Requirement Gathering, Constraints & Assumptions, Back-of-the-Envelope Estimation, Latency Numbers, QPS/TPS, Capacity Planning, Cost & FinOps, SLA/SLO/SLI, Availability & Reliability Math, CAP & PACELC, Trade-off Analysis.
 - *Fully expanded with animated diagrams, practice drills, interview Q&A, and staff-level deep dives.*
 
-### [02. API & Interface Design](./02_API_Interface_Design/)
+### [02. API & Interface Design](./02_API_Interface_Design/) — 📖 [Section Index](./02_API_Interface_Design/README.md)
 The contract between services.
-- REST, GraphQL, gRPC, API Versioning, Error Handling, Documentation.
+- API Design Fundamentals, REST, GraphQL, gRPC, API Versioning, Pagination & Filtering, Idempotency, Authentication, Authorization, Rate Limiting, API Gateway.
+- *Fully expanded with animated diagrams, practice drills, interview Q&A, and staff-level deep dives.*
 
 ### [03. High-Level Design (HLD)](./03_High_Level_Design/)
 The bird's eye view.

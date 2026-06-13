@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="rvbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .verb{font-size:14px;font-weight:700;fill:#0f172a}
+      .path{font-family:monospace;font-size:13px;fill:#e2e8f0}
+      .desc{fill:#94a3b8;font-size:12px}
+      .row{opacity:0}
+      .sc{font-family:monospace;font-size:12px}
+    </style>
+  </defs>
+  <rect width="760" height="430" rx="16" fill="url(#rvbg)"/>
+  <text x="30" y="40" class="t">REST = Resources (nouns) × Verbs (HTTP methods)</text>
+
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.4s" fill="freeze"/>
+    <rect x="30" y="64" width="80" height="30" rx="5" fill="#34d399"/><text x="70" y="85" text-anchor="middle" class="verb">GET</text>
+    <text x="125" y="85" class="path">/books/42</text>
+    <text x="320" y="85" class="desc">read a resource — safe &amp; idempotent</text>
+    <text x="640" y="85" class="sc" fill="#86efac">→ 200 OK</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.4s" fill="freeze"/>
+    <rect x="30" y="104" width="80" height="30" rx="5" fill="#60a5fa"/><text x="70" y="125" text-anchor="middle" class="verb">POST</text>
+    <text x="125" y="125" class="path">/books</text>
+    <text x="320" y="125" class="desc">create — NOT idempotent (use idempotency key!)</text>
+    <text x="640" y="125" class="sc" fill="#bae6fd">→ 201 Created</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.4s" fill="freeze"/>
+    <rect x="30" y="144" width="80" height="30" rx="5" fill="#fbbf24"/><text x="70" y="165" text-anchor="middle" class="verb">PUT</text>
+    <text x="125" y="165" class="path">/books/42</text>
+    <text x="320" y="165" class="desc">replace whole resource — idempotent</text>
+    <text x="640" y="165" class="sc" fill="#fde68a">→ 200 / 204</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.4s" fill="freeze"/>
+    <rect x="30" y="184" width="80" height="30" rx="5" fill="#c084fc"/><text x="70" y="205" text-anchor="middle" class="verb">PATCH</text>
+    <text x="125" y="205" class="path">/books/42</text>
+    <text x="320" y="205" class="desc">partial update — modify some fields</text>
+    <text x="640" y="205" class="sc" fill="#e9d5ff">→ 200 OK</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.4s" fill="freeze"/>
+    <rect x="30" y="224" width="80" height="30" rx="5" fill="#f87171"/><text x="70" y="245" text-anchor="middle" class="verb">DELETE</text>
+    <text x="125" y="245" class="path">/books/42</text>
+    <text x="320" y="245" class="desc">remove — idempotent</text>
+    <text x="640" y="245" class="sc" fill="#fecaca">→ 204 No Content</text>
+  </g>
+
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="278" width="700" height="120" rx="10" fill="#0b1220" stroke="#334155"/>
+    <text x="46" y="304" fill="#f8fafc" font-size="14" font-weight="700">Status code families (let proxies &amp; clients reason automatically)</text>
+    <text x="46" y="330" class="sc" fill="#86efac">2xx success</text><text x="170" y="330" class="desc">200 OK · 201 Created · 204 No Content</text>
+    <text x="46" y="352" class="sc" fill="#93c5fd">3xx redirect</text><text x="170" y="352" class="desc">301 Moved · 304 Not Modified (caching)</text>
+    <text x="46" y="374" class="sc" fill="#fde68a">4xx client err</text><text x="170" y="374" class="desc">400 Bad · 401 Unauthenticated · 403 Forbidden · 404 · 429 Too Many</text>
+    <text x="46" y="392" class="sc" fill="#fca5a5">5xx server err</text><text x="170" y="392" class="desc">500 Internal · 502 Bad Gateway · 503 Unavailable</text>
+  </g>
+</svg>

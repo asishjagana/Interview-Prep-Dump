@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="rlbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{font-size:14px;font-weight:700}
+      .tok{fill:#fbbf24}
+    </style>
+  </defs>
+  <rect width="760" height="410" rx="16" fill="url(#rlbg)"/>
+  <text x="30" y="38" class="t">Token Bucket — allow bursts, cap the sustained rate</text>
+
+  <!-- refill drip -->
+  <text x="120" y="74" class="note" fill="#86efac">refill: +1 token / sec</text>
+  <circle r="5" class="tok" cx="170" cy="90"><animate attributeName="cy" values="90;150" dur="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="1s" repeatCount="indefinite"/></circle>
+
+  <!-- bucket -->
+  <path d="M120,150 L240,150 L225,300 L135,300 Z" fill="none" stroke="#64748b" stroke-width="3"/>
+  <text x="180" y="325" text-anchor="middle" class="note">bucket · capacity 10</text>
+  <!-- tokens in bucket -->
+  <g fill="#fbbf24">
+    <circle cx="155" cy="280" r="7"/><circle cx="180" cy="282" r="7"/><circle cx="205" cy="280" r="7"/>
+    <circle cx="165" cy="262" r="7"/><circle cx="192" cy="262" r="7"/><circle cx="178" cy="244" r="7"/>
+  </g>
+
+  <!-- requests arriving -->
+  <text x="430" y="74" class="h" fill="#e2e8f0">each request takes 1 token</text>
+  <circle r="8" cx="300" cy="200" fill="#34d399"><animate attributeName="cx" values="300;430" dur="0.8s" repeatCount="indefinite"/></circle>
+  <rect x="430" y="170" width="120" height="60" rx="8" fill="#14532d" stroke="#34d399"/><text x="490" y="205" text-anchor="middle" class="note" fill="#bbf7d0">token left → ALLOW</text>
+
+  <text x="430" y="266" class="h" fill="#f87171">bucket empty → reject</text>
+  <circle r="8" cx="300" cy="300" fill="#f87171"><animate attributeName="cx" values="300;430" dur="0.8s" begin="0.4s" repeatCount="indefinite"/></circle>
+  <rect x="430" y="270" width="160" height="60" rx="8" fill="#3b1d1d" stroke="#f87171"/><text x="510" y="298" text-anchor="middle" class="note" fill="#fca5a5">429 Too Many Requests</text><text x="510" y="316" text-anchor="middle" class="note" fill="#fca5a5">+ Retry-After header</text>
+
+  <rect x="30" y="350" width="700" height="46" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="370" class="note" fill="#e2e8f0">Token Bucket allows short bursts (drain the bucket) then throttles to the refill rate. Distributed? Keep the count in Redis —</text>
+  <text x="46" y="388" class="note">but watch the hot-key bottleneck. Alternatives: Leaky Bucket (no bursts), Fixed/Sliding Window. Always return 429, never 500.</text>
+</svg>

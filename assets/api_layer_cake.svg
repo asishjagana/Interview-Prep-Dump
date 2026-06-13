@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="albg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .lbl{fill:#0f172a;font-size:15px;font-weight:700}
+      .sub{fill:#1e293b;font-size:11px}
+      .layer{opacity:0}
+      .pkt{fill:#fde68a}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#albg)"/>
+  <text x="30" y="40" class="t">The API Layer Cake — a request's journey</text>
+
+  <g class="layer"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.4s" fill="freeze"/>
+    <rect x="120" y="70" width="520" height="44" rx="8" fill="#818cf8"/>
+    <text x="140" y="98" class="lbl">Client (web / mobile / 3rd-party)</text>
+    <text x="500" y="98" class="sub" fill="#1e1b4b">speaks the CONTRACT only</text>
+  </g>
+  <g class="layer"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.4s" fill="freeze"/>
+    <rect x="120" y="124" width="520" height="44" rx="8" fill="#22d3ee"/>
+    <text x="140" y="152" class="lbl">API Gateway — routing · TLS · throttling</text>
+  </g>
+  <g class="layer"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.4s" fill="freeze"/>
+    <rect x="120" y="178" width="520" height="44" rx="8" fill="#34d399"/>
+    <text x="140" y="206" class="lbl">AuthN + AuthZ — who are you? what can you do?</text>
+  </g>
+  <g class="layer"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.4s" fill="freeze"/>
+    <rect x="120" y="232" width="520" height="44" rx="8" fill="#fbbf24"/>
+    <text x="140" y="260" class="lbl">Business Logic — the actual work</text>
+  </g>
+  <g class="layer"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.4s" fill="freeze"/>
+    <rect x="120" y="286" width="520" height="44" rx="8" fill="#f87171"/>
+    <text x="140" y="314" class="lbl">Database — internals HIDDEN from client</text>
+  </g>
+
+  <!-- request packet traveling down then up -->
+  <circle r="9" class="pkt" cx="90" cy="92">
+    <animate attributeName="cy" values="92;92;146;200;254;308;254;200;146;92;92" keyTimes="0;0.2;0.32;0.44;0.56;0.66;0.74;0.82;0.9;0.98;1" dur="5s" begin="2.6s" repeatCount="indefinite"/>
+  </circle>
+
+  <g class="layer"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <text x="380" y="360" text-anchor="middle" fill="#94a3b8" font-size="13">Each layer adds one concern. The client never sees the DB — so you can rewrite the</text>
+    <text x="380" y="380" text-anchor="middle" fill="#94a3b8" font-size="13">backend in any language without breaking a single consumer. That decoupling IS the API.</text>
+  </g>
+</svg>

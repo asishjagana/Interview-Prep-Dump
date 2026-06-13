@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="aubg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:15px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px}
+      .note{fill:#94a3b8;font-size:11px}
+      .dot{fill:#fde68a}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#aubg)"/>
+  <text x="30" y="38" class="t">Session (stateful) vs JWT (stateless)</text>
+
+  <!-- SESSION -->
+  <text x="30" y="74" class="h" fill="#60a5fa">Session — server remembers you</text>
+  <rect x="40" y="86" width="90" height="40" rx="6" class="box"/><text x="85" y="111" text-anchor="middle" class="bl">Client</text>
+  <rect x="250" y="86" width="100" height="40" rx="6" class="box"/><text x="300" y="111" text-anchor="middle" class="bl">App server</text>
+  <rect x="250" y="150" width="100" height="40" rx="6" class="box" fill="#3b1d1d"/><text x="300" y="175" text-anchor="middle" class="bl">Session store (Redis)</text>
+  <line x1="130" y1="106" x2="250" y2="106" stroke="#475569" stroke-width="1.5"/>
+  <text x="135" y="100" class="note">cookie: sid=xyz</text>
+  <line x1="300" y1="126" x2="300" y2="150" stroke="#475569" stroke-width="1.5"/>
+  <text x="358" y="142" class="note">look up sid on EVERY request</text>
+  <text x="40" y="212" class="note" fill="#93c5fd">+ easy revoke/expire · − server holds state → needs shared store to scale</text>
+
+  <!-- JWT -->
+  <text x="30" y="256" class="h" fill="#34d399">JWT — the token carries the claims, signed</text>
+  <rect x="40" y="268" width="90" height="40" rx="6" class="box"/><text x="85" y="293" text-anchor="middle" class="bl">Client</text>
+  <rect x="250" y="268" width="100" height="40" rx="6" class="box"/><text x="300" y="293" text-anchor="middle" class="bl">App server</text>
+  <line x1="130" y1="288" x2="250" y2="288" stroke="#475569" stroke-width="1.5"/>
+  <text x="135" y="282" class="note">Bearer eyJ... (header.payload.signature)</text>
+  <text x="358" y="285" class="note" fill="#86efac">verify SIGNATURE locally —</text>
+  <text x="358" y="300" class="note" fill="#86efac">no DB call, stateless</text>
+  <text x="40" y="330" class="note" fill="#86efac">+ scales effortlessly (no shared state) · − hard to revoke before expiry → keep TTL short + refresh tokens</text>
+
+  <rect x="30" y="348" width="700" height="56" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="372" class="note" fill="#e2e8f0">Store JWTs in HttpOnly cookies, NOT localStorage (XSS risk). Always hash passwords with bcrypt/argon2 + salt.</text>
+  <text x="46" y="392" class="note">AuthN = "who are you?" (this page). AuthZ = "what can you do?" comes next. Never roll your own crypto.</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="grbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .lane{stroke:#334155;stroke-width:18;stroke-linecap:round}
+    </style>
+  </defs>
+  <rect width="760" height="430" rx="16" fill="url(#grbg)"/>
+  <text x="30" y="38" class="t">Why gRPC is fast: HTTP/2 multiplexing + Protobuf</text>
+
+  <!-- HTTP/1.1: head of line blocking -->
+  <text x="30" y="72" class="h" fill="#f87171">HTTP/1.1 (REST) — one request at a time, head-of-line blocking</text>
+  <line x1="60" y1="100" x2="700" y2="100" class="lane"/>
+  <circle r="9" cy="100" fill="#f87171" cx="80"><animate attributeName="cx" values="80;320;320;560;560;700" keyTimes="0;0.3;0.4;0.7;0.8;1" dur="4s" repeatCount="indefinite"/></circle>
+  <text x="60" y="130" class="note">req A blocks req B blocks req C — they queue single-file on the connection</text>
+
+  <!-- HTTP/2: multiplexed -->
+  <text x="30" y="172" class="h" fill="#34d399">HTTP/2 (gRPC) — one connection, many streams interleaved</text>
+  <line x1="60" y1="205" x2="700" y2="205" class="lane"/>
+  <circle r="8" cy="200" fill="#34d399" cx="80"><animate attributeName="cx" values="80;700" dur="1.6s" repeatCount="indefinite"/></circle>
+  <circle r="8" cy="205" fill="#22d3ee" cx="80"><animate attributeName="cx" values="80;700" dur="1.6s" begin="0.3s" repeatCount="indefinite"/></circle>
+  <circle r="8" cy="210" fill="#fbbf24" cx="80"><animate attributeName="cx" values="80;700" dur="1.6s" begin="0.6s" repeatCount="indefinite"/></circle>
+  <text x="60" y="238" class="note">streams A, B, C travel concurrently — no blocking, header compression (HPACK)</text>
+
+  <!-- payload size -->
+  <text x="30" y="288" class="h" fill="#e2e8f0">Payload size: JSON (text) vs Protobuf (binary)</text>
+  <text x="40" y="316" class="note">JSON</text>
+  <rect x="110" y="304" width="430" height="20" rx="4" fill="#f87171"/><text x="552" y="320" class="note" fill="#fca5a5">~ verbose, human-readable, slow to parse</text>
+  <text x="40" y="350" class="note">Protobuf</text>
+  <rect x="110" y="338" width="150" height="20" rx="4" fill="#34d399"/><text x="272" y="354" class="note" fill="#86efac">~3–10× smaller, fast binary parse</text>
+
+  <rect x="30" y="376" width="700" height="38" rx="8" fill="#0b1220" stroke="#334155"/>
+  <text x="44" y="400" class="note">Result: lower latency + CPU for internal service-to-service calls. Trade-off: not human-readable, weak browser support → use REST at the public edge.</text>
+</svg>

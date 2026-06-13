@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="idbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:13px;font-weight:600}
+      .note{fill:#94a3b8;font-size:12px}
+      .key{font-family:monospace;font-size:12px;fill:#fbbf24}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="410" rx="16" fill="url(#idbg)"/>
+  <text x="30" y="38" class="t">Idempotency Key — retry safely, charge once</text>
+
+  <rect x="40" y="70" width="120" height="50" rx="8" class="box"/><text x="100" y="100" text-anchor="middle" class="bl">Client</text>
+  <rect x="320" y="70" width="140" height="50" rx="8" class="box"/><text x="390" y="100" text-anchor="middle" class="bl">Payment API</text>
+  <rect x="600" y="70" width="120" height="50" rx="8" class="box"/><text x="660" y="95" text-anchor="middle" class="bl">Redis</text><text x="660" y="112" text-anchor="middle" class="note">key store</text>
+
+  <!-- Attempt 1: network fails on the way back -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.4s" fill="freeze"/>
+    <text x="40" y="160" class="key">Idempotency-Key: abc-123  (attempt 1)</text>
+    <line x1="160" y1="180" x2="320" y2="180" stroke="#60a5fa" stroke-width="2" marker-end="url(#a)"/>
+    <text x="170" y="174" class="note">charge $50</text>
+    <line x1="460" y1="180" x2="600" y2="180" stroke="#34d399" stroke-width="2"/>
+    <text x="470" y="174" class="note" fill="#86efac">store abc-123 → result, charge done</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.4s" fill="freeze"/>
+    <text x="240" y="208" fill="#f87171" font-size="14" font-weight="700">⚡ network drops the RESPONSE — client never hears back</text>
+  </g>
+
+  <!-- Attempt 2: retry same key -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.4s" fill="freeze"/>
+    <text x="40" y="248" class="key">Idempotency-Key: abc-123  (retry, SAME key)</text>
+    <line x1="160" y1="268" x2="320" y2="268" stroke="#60a5fa" stroke-width="2"/>
+    <text x="170" y="262" class="note">charge $50 (again)</text>
+    <line x1="460" y1="268" x2="600" y2="268" stroke="#fbbf24" stroke-width="2"/>
+    <text x="470" y="262" class="note" fill="#fde68a">key SEEN → return stored result</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.4s" fill="freeze"/>
+    <text x="40" y="300" fill="#34d399" font-size="15" font-weight="700">✓ Logic NOT re-run · customer charged exactly ONCE</text>
+  </g>
+
+  <rect x="30" y="324" width="700" height="66" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze"/></rect>
+  <text x="46" y="350" class="note" fill="#e2e8f0">Like an elevator button: press once or ten times — it still goes to the 5th floor once.</text>
+  <text x="46" y="372" class="note">Cache only SUCCESSFUL results · keys expire in 24–48h · PUT/DELETE are idempotent by spec, POST is NOT.</text>
+</svg>

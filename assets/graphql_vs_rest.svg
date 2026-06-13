@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="gqbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:15px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px}
+      .note{fill:#94a3b8;font-size:11px}
+      .dot{fill:#fde68a}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#gqbg)"/>
+  <text x="30" y="38" class="t">REST: many round trips · GraphQL: one query</text>
+
+  <!-- REST side -->
+  <text x="40" y="74" class="h" fill="#f87171">REST — under-fetching → 3 trips</text>
+  <rect x="40" y="86" width="90" height="36" rx="6" class="box"/><text x="85" y="109" text-anchor="middle" class="bl">Client</text>
+  <g>
+    <line x1="130" y1="104" x2="300" y2="104" stroke="#475569" stroke-width="1.5"/>
+    <text x="140" y="98" class="note">GET /posts/1</text>
+    <line x1="130" y1="134" x2="300" y2="134" stroke="#475569" stroke-width="1.5"/>
+    <text x="140" y="128" class="note">GET /users/9 (author)</text>
+    <line x1="130" y1="164" x2="300" y2="164" stroke="#475569" stroke-width="1.5"/>
+    <text x="140" y="158" class="note">GET /posts/1/comments</text>
+  </g>
+  <rect x="300" y="86" width="90" height="96" rx="6" class="box"/><text x="345" y="138" text-anchor="middle" class="bl">Server</text>
+  <!-- 3 dots animating sequentially -->
+  <circle r="6" class="dot" cx="130" cy="104"><animate attributeName="cx" values="130;300;130" dur="1.2s" begin="0.3s" repeatCount="indefinite"/></circle>
+  <circle r="6" class="dot" cx="130" cy="134"><animate attributeName="cx" values="130;300;130" dur="1.2s" begin="1.5s" repeatCount="indefinite"/></circle>
+  <circle r="6" class="dot" cx="130" cy="164"><animate attributeName="cx" values="130;300;130" dur="1.2s" begin="2.7s" repeatCount="indefinite"/></circle>
+  <text x="50" y="205" class="note" fill="#fca5a5">3 sequential round trips · over/under-fetch</text>
+
+  <!-- GraphQL side -->
+  <text x="430" y="74" class="h" fill="#34d399">GraphQL — one request, exact shape</text>
+  <rect x="430" y="86" width="90" height="96" rx="6" class="box"/><text x="475" y="138" text-anchor="middle" class="bl">Client</text>
+  <line x1="520" y1="134" x2="640" y2="134" stroke="#475569" stroke-width="1.5"/>
+  <text x="525" y="126" class="note">POST /graphql { post,author,comments }</text>
+  <rect x="640" y="86" width="90" height="96" rx="6" class="box"/><text x="685" y="138" text-anchor="middle" class="bl">Server</text>
+  <circle r="6" class="dot" cx="520" cy="134"><animate attributeName="cx" values="520;640;520" dur="1.5s" begin="0.5s" repeatCount="indefinite"/></circle>
+  <text x="450" y="205" class="note" fill="#86efac">1 round trip · client picks exactly the fields</text>
+
+  <!-- resolver tree + caveat -->
+  <rect x="40" y="230" width="690" height="160" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="56" y="256" fill="#f8fafc" font-size="14" font-weight="700">Behind the scenes: the resolver tree (and its trap)</text>
+  <text x="56" y="282" class="bl">Query → post → author, comments → each field has a resolver function</text>
+  <text x="56" y="308" class="note" fill="#fca5a5">⚠ The N+1 trap: naively, "author" runs 1 DB call per post → 50 posts = 50 queries.</text>
+  <text x="56" y="328" class="note" fill="#86efac">✓ Fix with DataLoader: batch + cache the author lookups into one query per tick.</text>
+  <text x="56" y="356" class="note">Trade-off vs REST: flexible &amp; no over-fetch, but HTTP caching is harder (all POSTs)</text>
+  <text x="56" y="374" class="note">and you must guard query depth/complexity to prevent abusive nested queries.</text>
+</svg>

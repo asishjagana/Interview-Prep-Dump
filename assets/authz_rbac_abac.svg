@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="azbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .node{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px;font-weight:600}
+      .note{fill:#94a3b8;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#azbg)"/>
+  <text x="30" y="38" class="t">Authorization: RBAC vs ABAC (and the IDOR trap)</text>
+
+  <!-- RBAC -->
+  <text x="30" y="72" class="h" fill="#60a5fa">RBAC — users → roles → permissions</text>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="86" width="90" height="34" rx="6" class="node"/><text x="85" y="108" text-anchor="middle" class="bl">User: Bob</text>
+    <line x1="130" y1="103" x2="190" y2="103" stroke="#475569" stroke-width="1.5"/>
+    <rect x="190" y="86" width="100" height="34" rx="6" class="node" fill="#1e3a5f"/><text x="240" y="108" text-anchor="middle" class="bl">Role: Editor</text>
+    <line x1="290" y1="103" x2="350" y2="103" stroke="#475569" stroke-width="1.5"/>
+    <rect x="350" y="78" width="150" height="22" rx="5" class="node" fill="#14532d"/><text x="425" y="94" text-anchor="middle" class="note" fill="#bbf7d0">posts:read</text>
+    <rect x="350" y="104" width="150" height="22" rx="5" class="node" fill="#14532d"/><text x="425" y="120" text-anchor="middle" class="note" fill="#bbf7d0">posts:write</text>
+  </g>
+  <text x="40" y="146" class="note" fill="#93c5fd">simple, covers 90% of apps · coarse-grained</text>
+
+  <!-- ABAC -->
+  <text x="30" y="182" class="h" fill="#fbbf24">ABAC — decision from attributes (context-aware)</text>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="196" width="430" height="48" rx="6" class="node" fill="#3b2f0b"/>
+    <text x="56" y="216" class="note" fill="#fde68a">ALLOW if  user.dept == "HR"  AND  doc.label == "Confidential"</text>
+    <text x="56" y="234" class="note" fill="#fde68a">          AND  request.ip in office_range  AND  time == work_hours</text>
+    <line x1="470" y1="220" x2="530" y2="220" stroke="#475569" stroke-width="1.5"/>
+    <rect x="530" y="204" width="100" height="32" rx="6" class="node" fill="#14532d"/><text x="580" y="225" text-anchor="middle" class="bl">✓ permit</text>
+  </g>
+  <text x="40" y="266" class="note" fill="#fde68a">powerful &amp; fine-grained · complex to manage at scale</text>
+
+  <!-- IDOR -->
+  <rect x="30" y="288" width="700" height="116" rx="10" fill="#0b1220" stroke="#7f1d1d"/>
+  <text x="46" y="314" fill="#f87171" font-size="14" font-weight="700">⚠ The #1 trap: IDOR (Insecure Direct Object Reference)</text>
+  <text x="46" y="338" class="note" fill="#fca5a5">Bob is authenticated, so the code lets him GET /orders/124 ... but order 124 belongs to Alice.</text>
+  <text x="46" y="358" class="note">✗ Checking "is logged in?" is AuthN. ✓ You must also check "does Bob OWN this object?" — that's AuthZ.</text>
+  <text x="46" y="382" class="note">Tip: return 404 (not 403) for objects a user can't see, so attackers can't even confirm they exist. (401≠403)</text>
+</svg>

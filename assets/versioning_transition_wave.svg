@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="vwbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .ax{fill:#94a3b8;font-size:12px}
+      .lg{font-size:12px;font-weight:600}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="400" rx="16" fill="url(#vwbg)"/>
+  <text x="30" y="40" class="t">The Transition Wave — v1 and v2 coexist</text>
+
+  <line x1="70" y1="300" x2="710" y2="300" stroke="#475569" stroke-width="2"/>
+  <line x1="70" y1="300" x2="70" y2="70" stroke="#475569" stroke-width="2"/>
+  <text x="390" y="340" text-anchor="middle" class="ax">Time → (v2 launches, users migrate, v1 deprecated &amp; retired)</text>
+  <text x="30" y="180" class="ax" transform="rotate(-90 30 180)">% of traffic</text>
+
+  <!-- v1 area: starts full, declines -->
+  <path d="M70,90 C250,95 360,150 470,240 C540,290 620,298 710,300 L710,300 L70,300 Z" fill="#f87171" opacity="0.35">
+    <animate attributeName="opacity" values="0;0.35" dur="1s" fill="freeze"/>
+  </path>
+  <path d="M70,90 C250,95 360,150 470,240 C540,290 620,298 710,300" fill="none" stroke="#f87171" stroke-width="3" stroke-dasharray="900" stroke-dashoffset="900">
+    <animate attributeName="stroke-dashoffset" from="900" to="0" dur="2.5s" fill="freeze"/>
+  </path>
+
+  <!-- v2 area: starts 0, grows -->
+  <path d="M250,300 C360,260 430,150 560,110 C620,95 670,92 710,90 L710,300 L250,300 Z" fill="#34d399" opacity="0.3">
+    <animate attributeName="opacity" values="0;0.3" dur="1s" begin="1s" fill="freeze"/>
+  </path>
+  <path d="M250,300 C360,260 430,150 560,110 C620,95 670,92 710,90" fill="none" stroke="#34d399" stroke-width="3" stroke-dasharray="800" stroke-dashoffset="800">
+    <animate attributeName="stroke-dashoffset" from="800" to="0" dur="2.5s" begin="0.8s" fill="freeze"/>
+  </path>
+
+  <!-- markers -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <line x1="250" y1="70" x2="250" y2="300" stroke="#64748b" stroke-dasharray="4 4"/>
+    <text x="256" y="88" class="ax" fill="#86efac">v2 launches</text>
+    <line x1="560" y1="70" x2="560" y2="300" stroke="#64748b" stroke-dasharray="4 4"/>
+    <text x="430" y="88" class="ax" fill="#fca5a5">deprecation notice → sunset date</text>
+  </g>
+
+  <rect x="430" y="312" width="14" height="12" fill="#f87171"/><text x="450" y="323" class="lg" fill="#f87171">v1 (old road)</text>
+  <rect x="560" y="312" width="14" height="12" fill="#34d399"/><text x="580" y="323" class="lg" fill="#34d399">v2 (new highway)</text>
+
+  <text x="390" y="376" text-anchor="middle" fill="#94a3b8" font-size="12" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.5s" fill="freeze"/>Never bulldoze the old road while cars are on it. Build v2 alongside, give a long sunset window, then retire v1.</text>
+</svg>
