@@ -8,9 +8,10 @@ Each topic follows a structured 10-point format designed for both deep learning 
 
 ## 🗺️ Category Index
 
-### [01. Planning & Foundations](./01_Planning_Foundations/)
-Building the blueprint. Requirements, trade-offs, and estimation.
-- Functional vs Non-Functional Requirements, Capacity Planning, SLO/SLA, Back-of-the-envelope estimation.
+### [01. Planning & Foundations](./01_Planning_Foundations/) — 📖 [Section Index](./01_Planning_Foundations/README.md)
+Building the blueprint. Requirements, estimation, reliability, and trade-offs.
+- Interview Process, Requirement Gathering, Constraints & Assumptions, Back-of-the-Envelope Estimation, Latency Numbers, QPS/TPS, Capacity Planning, Cost & FinOps, SLA/SLO/SLI, Availability & Reliability Math, CAP & PACELC, Trade-off Analysis.
+- *Fully expanded with animated diagrams, practice drills, interview Q&A, and staff-level deep dives.*
 
 ### [02. API & Interface Design](./02_API_Interface_Design/)
 The contract between services.

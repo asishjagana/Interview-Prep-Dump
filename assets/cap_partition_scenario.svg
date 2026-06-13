@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="pbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .node{fill:#1e293b;stroke:#475569;stroke-width:2}
+      .nlbl{fill:#e2e8f0;font-size:14px;font-weight:700}
+      .val{fill:#fbbf24;font-size:13px;font-family:monospace}
+      .cli{fill:#cbd5e1;font-size:12px}
+      .cp{fill:#60a5fa;font-size:13px;font-weight:600}
+      .ap{fill:#34d399;font-size:13px;font-weight:600}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#pbg)"/>
+  <text x="30" y="40" class="t">Network Partition: the moment you must choose C or A</text>
+
+  <!-- Two datacenters -->
+  <rect x="90" y="90" width="180" height="90" rx="12" class="node"/>
+  <text x="180" y="120" text-anchor="middle" class="nlbl">Node A (DC-East)</text>
+  <text x="180" y="150" text-anchor="middle" class="val">x = 2</text>
+
+  <rect x="490" y="90" width="180" height="90" rx="12" class="node"/>
+  <text x="580" y="120" text-anchor="middle" class="nlbl">Node B (DC-West)</text>
+  <text x="580" y="150" text-anchor="middle" class="val" id="bval">x = 1</text>
+
+  <!-- replication link -->
+  <line x1="270" y1="135" x2="490" y2="135" stroke="#22d3ee" stroke-width="4" id="link">
+    <animate attributeName="opacity" values="1;1;0.15" keyTimes="0;0.45;0.55" dur="6s" repeatCount="indefinite"/>
+  </line>
+  <text x="380" y="125" text-anchor="middle" class="cli" id="linklbl">replicating…
+    <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.45;0.55" dur="6s" repeatCount="indefinite"/>
+  </text>
+  <!-- partition lightning -->
+  <text x="380" y="150" text-anchor="middle" fill="#f87171" font-size="22" opacity="0">⚡✂️⚡
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.5;0.55;0.92;1" dur="6s" repeatCount="indefinite"/>
+  </text>
+  <text x="380" y="175" text-anchor="middle" fill="#f87171" font-size="12" font-weight="700" opacity="0">PARTITION
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.5;0.55;0.92;1" dur="6s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- write that propagated before partition -->
+  <text x="180" y="210" text-anchor="middle" class="cli">✍️ client wrote x=2 to A</text>
+
+  <!-- read during partition -->
+  <text x="580" y="210" text-anchor="middle" class="cli">👀 client reads x from B…</text>
+
+  <!-- The choice boxes appear during partition -->
+  <g class="fade"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.55;0.6;0.92;1" dur="6s" repeatCount="indefinite"/>
+    <rect x="60" y="250" width="320" height="120" rx="12" fill="#0b1220" stroke="#3b82f6"/>
+    <text x="80" y="278" class="cp">CP — choose Consistency</text>
+    <text x="80" y="302" class="cli">Node B can't confirm it has the latest x,</text>
+    <text x="80" y="320" class="cli">so it REFUSES the read (error / block).</text>
+    <text x="80" y="344" class="cli">"Better no answer than a wrong one."</text>
+    <text x="80" y="362" class="cp">→ etcd, HBase, ZooKeeper, banking</text>
+  </g>
+
+  <g class="fade"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.55;0.6;0.92;1" dur="6s" repeatCount="indefinite"/>
+    <rect x="400" y="250" width="320" height="120" rx="12" fill="#0b1220" stroke="#10b981"/>
+    <text x="420" y="278" class="ap">AP — choose Availability</text>
+    <text x="420" y="302" class="cli">Node B answers anyway with x=1</text>
+    <text x="420" y="320" class="cli">(stale!) — stays up, heals later.</text>
+    <text x="420" y="344" class="cli">"Better a stale answer than none."</text>
+    <text x="420" y="362" class="ap">→ Cassandra, DynamoDB, DNS, carts</text>
+  </g>
+
+  <text x="380" y="400" text-anchor="middle" fill="#94a3b8" font-size="12">P (partition tolerance) is not optional in a distributed system — so the real trade is C vs A.</text>
+</svg>

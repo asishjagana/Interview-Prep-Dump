@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .lbl{fill:#e2e8f0;font-size:14px;font-weight:600}
+      .sub{fill:#94a3b8;font-size:12px}
+    </style>
+  </defs>
+  <rect width="720" height="380" rx="16" fill="url(#cbg)"/>
+  <text x="30" y="42" class="t">The 80/20 Rule — Cache the Hot Tail</text>
+
+  <!-- Data: 100% bar -->
+  <text x="30" y="100" class="lbl">All data (100%)</text>
+  <rect x="30" y="112" width="640" height="46" rx="8" fill="#334155"/>
+  <rect x="30" y="112" width="0" height="46" rx="8" fill="#f59e0b">
+    <animate attributeName="width" values="0;128" dur="1s" begin="0.3s" fill="freeze"/>
+  </rect>
+  <text x="94" y="140" fill="#0f172a" font-size="13" font-weight="700" opacity="0" text-anchor="middle">20% hot
+    <animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.4s" fill="freeze"/>
+  </text>
+  <text x="400" y="140" fill="#cbd5e1" font-size="13" text-anchor="middle">80% cold (archive / cheap disk)</text>
+
+  <!-- Traffic bar -->
+  <text x="30" y="200" class="lbl">All requests (100%)</text>
+  <rect x="30" y="212" width="640" height="46" rx="8" fill="#334155"/>
+  <rect x="30" y="212" width="0" height="46" rx="8" fill="#22d3ee">
+    <animate attributeName="width" values="0;512" dur="1s" begin="1.5s" fill="freeze"/>
+  </rect>
+  <text x="286" y="240" fill="#0f172a" font-size="13" font-weight="700" opacity="0" text-anchor="middle">80% of traffic hits that 20%
+    <animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.4s" fill="freeze"/>
+  </text>
+
+  <!-- connecting arrow -->
+  <path d="M94,158 C94,185 286,185 286,212" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4" opacity="0">
+    <animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.5s" fill="freeze"/>
+  </path>
+
+  <rect x="30" y="290" width="640" height="66" rx="10" fill="#0b1220" stroke="#334155" opacity="0">
+    <animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.5s" fill="freeze"/>
+  </rect>
+  <text x="46" y="316" class="sub" font-size="13" opacity="0">Implication: you only need RAM for ~20% of your data to serve ~80% of reads.
+    <animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.5s" fill="freeze"/>
+  </text>
+  <text x="46" y="338" class="sub" font-size="13" opacity="0">A 64 GB cache can front a 320 GB dataset — that math is what justifies Redis/Memcached.
+    <animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.5s" fill="freeze"/>
+  </text>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cobg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .seg{fill:#0f172a;font-size:13px;font-weight:700}
+      .note{fill:#cbd5e1;font-size:12px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="430" rx="16" fill="url(#cobg)"/>
+  <text x="30" y="40" class="t">Anatomy of a Cloud Bill (and the hidden parts)</text>
+
+  <!-- stacked bar growing -->
+  <text x="120" y="80" class="note" text-anchor="middle">Monthly spend →</text>
+
+  <!-- compute -->
+  <rect x="60" y="95" width="0" height="44" rx="6" fill="#60a5fa">
+    <animate attributeName="width" values="0;230" dur="0.7s" begin="0.2s" fill="freeze"/>
+  </rect>
+  <text x="70" y="123" class="seg fade"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.4s" fill="freeze"/>Compute (VMs / containers)</text>
+
+  <!-- storage -->
+  <rect x="290" y="95" width="0" height="44" rx="6" fill="#34d399">
+    <animate attributeName="width" values="0;140" dur="0.7s" begin="0.9s" fill="freeze"/>
+  </rect>
+  <text x="300" y="123" class="seg fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.4s" fill="freeze"/>Storage</text>
+
+  <!-- egress (the surprise) -->
+  <rect x="430" y="95" width="0" height="44" rx="6" fill="#fbbf24">
+    <animate attributeName="width" values="0;160" dur="0.7s" begin="1.6s" fill="freeze"/>
+  </rect>
+  <text x="440" y="123" class="seg fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.4s" fill="freeze"/>Data egress</text>
+
+  <!-- managed services -->
+  <rect x="590" y="95" width="0" height="44" rx="6" fill="#a78bfa">
+    <animate attributeName="width" values="0;110" dur="0.7s" begin="2.3s" fill="freeze"/>
+  </rect>
+  <text x="600" y="123" class="seg fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.4s" fill="freeze"/>Managed svc</text>
+
+  <!-- callouts: the silent killers -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.6s" fill="freeze"/>
+    <path d="M510,139 L510,180" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 4"/>
+    <rect x="300" y="182" width="430" height="60" rx="10" fill="#1f1700" stroke="#fbbf24"/>
+    <text x="316" y="206" fill="#fbbf24" font-size="13" font-weight="700">💸 Egress is the silent killer</text>
+    <text x="316" y="226" class="note">Moving data OUT (cross-region, to internet) is billed per GB and</text>
+    <text x="316" y="242" class="note">surprises teams. Ingress is usually free; egress rarely is.</text>
+  </g>
+
+  <!-- the iceberg: hidden costs below -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.8s" dur="0.6s" fill="freeze"/>
+    <text x="60" y="288" fill="#f87171" font-size="14" font-weight="700">Below the waterline (the costs nobody budgets):</text>
+    <text x="60" y="312" class="note">• Idle / over-provisioned capacity running 24/7 (the #1 cloud waste)</text>
+    <text x="60" y="332" class="note">• Orphaned resources: unattached disks, old snapshots, zombie load balancers</text>
+    <text x="60" y="352" class="note">• Inter-AZ / cross-region traffic between your own services</text>
+    <text x="60" y="372" class="note">• Per-request charges (API Gateway, Lambda) that scale with QPS</text>
+    <text x="60" y="392" class="note">• Engineer time to operate it all (often the biggest cost of all)</text>
+  </g>
+</svg>

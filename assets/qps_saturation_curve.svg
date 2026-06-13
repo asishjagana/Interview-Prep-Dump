@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="qbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .ax{fill:#94a3b8;font-size:13px}
+      .note{fill:#e2e8f0;font-size:12px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="720" height="420" rx="16" fill="url(#qbg)"/>
+  <text x="30" y="40" class="t">The Latency-vs-Throughput "Knee"</text>
+
+  <!-- axes -->
+  <line x1="80" y1="350" x2="660" y2="350" stroke="#475569" stroke-width="2"/>
+  <line x1="80" y1="350" x2="80" y2="70" stroke="#475569" stroke-width="2"/>
+  <text x="370" y="395" text-anchor="middle" class="ax">Throughput (QPS) →</text>
+  <text x="30" y="210" class="ax" transform="rotate(-90 30 210)">Latency (ms) →</text>
+
+  <!-- healthy zone shading -->
+  <rect x="80" y="70" width="360" height="280" fill="#10b981" opacity="0.08"/>
+  <rect x="440" y="70" width="220" height="280" fill="#ef4444" opacity="0.10"/>
+
+  <!-- the curve: flat then hockey-stick up -->
+  <path id="curve" d="M80,330 L260,322 L400,308 L470,280 L520,220 L555,140 L575,90"
+        fill="none" stroke="#22d3ee" stroke-width="4" stroke-linecap="round"
+        stroke-dasharray="700" stroke-dashoffset="700">
+    <animate attributeName="stroke-dashoffset" from="700" to="0" dur="2.5s" fill="freeze"/>
+  </path>
+
+  <!-- knee marker -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.6s" fill="freeze"/>
+    <circle cx="470" cy="280" r="7" fill="#fbbf24"/>
+    <line x1="470" y1="280" x2="470" y2="350" stroke="#fbbf24" stroke-dasharray="4 4"/>
+    <text x="470" y="368" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="700">the "knee"</text>
+  </g>
+
+  <!-- labels -->
+  <text x="200" y="300" class="note fade"><animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.6s" fill="freeze"/>Stable: latency flat, queues empty ✅</text>
+  <text x="500" y="120" class="note fade" fill="#fca5a5"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.6s" fill="freeze"/>Past the knee:</text>
+  <text x="500" y="138" class="note fade" fill="#fca5a5"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.6s" fill="freeze"/>queues build,</text>
+  <text x="500" y="156" class="note fade" fill="#fca5a5"><animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.6s" fill="freeze"/>latency explodes 💥</text>
+
+  <text x="370" y="412" text-anchor="middle" fill="#94a3b8" font-size="12" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.5s" fill="freeze"/>Capacity planning means staying LEFT of the knee — that's why you keep ~30% headroom.</text>
+</svg>

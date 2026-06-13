@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="slobg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .ax{fill:#94a3b8;font-size:12px}
+      .lbl{fill:#e2e8f0;font-size:13px;font-weight:600}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="720" height="420" rx="16" fill="url(#slobg)"/>
+  <text x="30" y="40" class="t">Error Budget Burn-Down (99.9% SLO)</text>
+  <text x="30" y="62" class="ax">Budget = 0.1% of a 30-day month ≈ 43 minutes of allowed downtime</text>
+
+  <!-- axes -->
+  <line x1="70" y1="340" x2="670" y2="340" stroke="#475569" stroke-width="2"/>
+  <line x1="70" y1="340" x2="70" y2="90" stroke="#475569" stroke-width="2"/>
+  <text x="370" y="378" text-anchor="middle" class="ax">Days into the month →</text>
+
+  <!-- full budget line at top -->
+  <line x1="70" y1="100" x2="670" y2="100" stroke="#334155" stroke-dasharray="4 4"/>
+  <text x="76" y="94" class="ax" fill="#34d399">100% budget remaining</text>
+  <line x1="70" y1="340" x2="670" y2="340" stroke="#334155"/>
+  <text x="76" y="356" class="ax" fill="#f87171">0% — budget exhausted, freeze releases</text>
+
+  <!-- ideal slow burn (green) -->
+  <line x1="70" y1="100" x2="670" y2="240" stroke="#34d399" stroke-width="2" stroke-dasharray="600" stroke-dashoffset="600">
+    <animate attributeName="stroke-dashoffset" from="600" to="0" dur="2s" fill="freeze"/>
+  </line>
+  <text x="600" y="232" class="ax fade" fill="#34d399"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.5s" fill="freeze"/>healthy</text>
+
+  <!-- actual burn with an incident cliff (amber→red) -->
+  <polyline points="70,100 220,150 340,165 360,300 460,315 670,338"
+            fill="none" stroke="#fbbf24" stroke-width="3" stroke-dasharray="800" stroke-dashoffset="800">
+    <animate attributeName="stroke-dashoffset" from="800" to="0" dur="2.5s" begin="0.5s" fill="freeze"/>
+  </polyline>
+
+  <!-- incident marker -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.6s" fill="freeze"/>
+    <circle cx="360" cy="300" r="7" fill="#f87171"/>
+    <text x="372" y="295" fill="#f87171" font-size="12" font-weight="700">💥 incident burns</text>
+    <text x="372" y="311" fill="#f87171" font-size="12" font-weight="700">half the budget at once</text>
+  </g>
+
+  <text x="370" y="405" text-anchor="middle" fill="#94a3b8" font-size="12" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.5s" fill="freeze"/>Spend budget slowly → keep shipping features. Burn it fast → stop &amp; fix reliability.</text>
+</svg>

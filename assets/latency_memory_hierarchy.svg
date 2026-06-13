@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="mhbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .tier{fill:#0f172a;font-size:14px;font-weight:700}
+      .meta{fill:#1e293b;font-size:11px}
+      .side{fill:#94a3b8;font-size:12px}
+      .row{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="440" rx="16" fill="url(#mhbg)"/>
+  <text x="30" y="40" class="t">The Memory Hierarchy — speed vs size</text>
+
+  <!-- side axis labels -->
+  <text x="700" y="90" class="side" text-anchor="end">⬆ faster · smaller · costlier</text>
+  <text x="700" y="410" class="side" text-anchor="end">⬇ slower · bigger · cheaper</text>
+
+  <!-- tiers as a centered pyramid of widening bars -->
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.4s" fill="freeze"/>
+    <rect x="320" y="70" width="120" height="34" rx="5" fill="#34d399"/>
+    <text x="380" y="92" text-anchor="middle" class="tier">Registers</text>
+    <text x="455" y="92" class="meta" fill="#86efac">~0.3 ns · ~1 KB</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="0.6s" dur="0.4s" fill="freeze"/>
+    <rect x="295" y="110" width="170" height="34" rx="5" fill="#4ade80"/>
+    <text x="380" y="132" text-anchor="middle" class="tier">L1 cache</text>
+    <text x="480" y="132" class="meta" fill="#86efac">0.5 ns · ~64 KB</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.4s" fill="freeze"/>
+    <rect x="265" y="150" width="230" height="34" rx="5" fill="#22d3ee"/>
+    <text x="380" y="172" text-anchor="middle" class="tier">L2 / L3 cache</text>
+    <text x="510" y="172" class="meta" fill="#a5f3fc">7–20 ns · ~MBs</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.4s" fill="freeze"/>
+    <rect x="225" y="190" width="310" height="34" rx="5" fill="#38bdf8"/>
+    <text x="380" y="212" text-anchor="middle" class="tier">Main memory (RAM)</text>
+    <text x="550" y="212" class="meta" fill="#bae6fd">100 ns · ~GBs</text>
+  </g>
+
+  <!-- THE CLIFF marker between RAM and SSD -->
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <line x1="60" y1="232" x2="700" y2="232" stroke="#f87171" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="64" y="247" fill="#f87171" font-size="12" font-weight="700">⚠ THE CLIFF — RAM is ~100,000× faster than disk. This is why caches exist.</text>
+  </g>
+
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.4s" fill="freeze"/>
+    <rect x="175" y="256" width="410" height="34" rx="5" fill="#fbbf24"/>
+    <text x="380" y="278" text-anchor="middle" class="tier">SSD (NVMe)</text>
+    <text x="600" y="278" class="meta" fill="#fde68a">100 µs · ~TBs</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.4s" fill="freeze"/>
+    <rect x="135" y="296" width="490" height="34" rx="5" fill="#fb923c"/>
+    <text x="380" y="318" text-anchor="middle" class="tier">Spinning disk (HDD)</text>
+    <text x="635" y="318" class="meta" fill="#fed7aa">10 ms · ~TBs</text>
+  </g>
+  <g class="row"><animate attributeName="opacity" from="0" to="1" begin="3.1s" dur="0.4s" fill="freeze"/>
+    <rect x="95" y="336" width="570" height="34" rx="5" fill="#f87171"/>
+    <text x="380" y="358" text-anchor="middle" class="tier">Network (cross-region)</text>
+    <text x="675" y="358" class="meta" fill="#fecaca" text-anchor="end">150 ms · ∞</text>
+  </g>
+
+  <text x="380" y="400" text-anchor="middle" fill="#94a3b8" font-size="12" class="row"><animate attributeName="opacity" from="0" to="1" begin="3.5s" dur="0.5s" fill="freeze"/>Every level down is a big step slower. Caching = keep hot data as high up this pyramid as you can.</text>
+</svg>

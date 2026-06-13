@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="sbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .ph{fill:#0f172a;font-size:14px;font-weight:700}
+      .mn{fill:#cbd5e1;font-size:11px}
+      .seg{opacity:0}
+    </style>
+  </defs>
+  <rect width="800" height="300" rx="16" fill="url(#sbg)"/>
+  <text x="30" y="42" class="t">The 45-Minute Interview Clock</text>
+
+  <!-- progress bar track -->
+  <rect x="30" y="70" width="740" height="6" rx="3" fill="#334155"/>
+  <rect x="30" y="70" width="0" height="6" rx="3" fill="#22d3ee">
+    <animate attributeName="width" values="0;740" dur="5s" fill="freeze"/>
+  </rect>
+  <circle r="9" cy="73" cx="30" fill="#22d3ee">
+    <animate attributeName="cx" values="30;770" dur="5s" fill="freeze"/>
+  </circle>
+
+  <!-- Phase cards -->
+  <g class="seg"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.4s" fill="freeze"/>
+    <rect x="30" y="110" width="130" height="120" rx="10" fill="#818cf8"/>
+    <text x="44" y="134" class="ph">① Clarify</text>
+    <text x="44" y="156" class="mn">5–10 min</text>
+    <text x="44" y="178" class="mn">Functional &amp;</text>
+    <text x="44" y="194" class="mn">non-functional</text>
+    <text x="44" y="210" class="mn">requirements</text>
+  </g>
+  <g class="seg"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.4s" fill="freeze"/>
+    <rect x="172" y="110" width="130" height="120" rx="10" fill="#22d3ee"/>
+    <text x="186" y="134" class="ph">② Estimate</text>
+    <text x="186" y="156" class="mn">~5 min</text>
+    <text x="186" y="178" class="mn">QPS, storage,</text>
+    <text x="186" y="194" class="mn">bandwidth</text>
+    <text x="186" y="210" class="mn">(BotE math)</text>
+  </g>
+  <g class="seg"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.4s" fill="freeze"/>
+    <rect x="314" y="110" width="150" height="120" rx="10" fill="#34d399"/>
+    <text x="328" y="134" class="ph">③ High-Level</text>
+    <text x="328" y="156" class="mn">10–15 min</text>
+    <text x="328" y="178" class="mn">Boxes &amp; arrows,</text>
+    <text x="328" y="194" class="mn">APIs, data model,</text>
+    <text x="328" y="210" class="mn">major components</text>
+  </g>
+  <g class="seg"><animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.4s" fill="freeze"/>
+    <rect x="476" y="110" width="160" height="120" rx="10" fill="#fbbf24"/>
+    <text x="490" y="134" class="ph">④ Deep Dive</text>
+    <text x="490" y="156" class="mn">15–20 min</text>
+    <text x="490" y="178" class="mn">Bottlenecks,</text>
+    <text x="490" y="194" class="mn">scaling, caching,</text>
+    <text x="490" y="210" class="mn">DB internals</text>
+  </g>
+  <g class="seg"><animate attributeName="opacity" from="0" to="1" begin="4.2s" dur="0.4s" fill="freeze"/>
+    <rect x="648" y="110" width="122" height="120" rx="10" fill="#f87171"/>
+    <text x="662" y="134" class="ph">⑤ Wrap</text>
+    <text x="662" y="156" class="mn">~5 min</text>
+    <text x="662" y="178" class="mn">Trade-offs,</text>
+    <text x="662" y="194" class="mn">bottlenecks,</text>
+    <text x="662" y="210" class="mn">next steps</text>
+  </g>
+
+  <text x="400" y="270" text-anchor="middle" fill="#94a3b8" font-size="13" class="seg"><animate attributeName="opacity" from="0" to="1" begin="4.8s" dur="0.5s" fill="freeze"/>You drive the clock — narrate out loud, manage time, and never get stuck on one box.</text>
+</svg>

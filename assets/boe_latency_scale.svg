@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="lbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0a1d"/>
+      <stop offset="1" stop-color="#1a1535"/>
+    </linearGradient>
+    <radialGradient id="dot" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </radialGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .op{fill:#e2e8f0;font-size:14px;font-weight:600}
+      .rt{fill:#a5b4fc;font-size:12px}
+      .hu{fill:#86efac;font-size:12px;font-style:italic}
+      .track{stroke:#334155;stroke-width:2}
+      .pulse{fill:url(#dot)}
+    </style>
+  </defs>
+  <rect width="760" height="460" rx="16" fill="url(#lbg)"/>
+  <text x="30" y="40" class="t">Latency, Scaled to Human Time (×1 billion)</text>
+  <text x="30" y="62" class="rt" font-size="12">If 1 CPU cycle = 1 second, how long does each operation "feel"?</text>
+
+  <!-- L1 cache -->
+  <g>
+    <text x="30" y="108" class="op">L1 cache · 0.5 ns</text>
+    <line x1="300" y1="103" x2="700" y2="103" class="track"/>
+    <circle r="7" class="pulse" cy="103" cx="300">
+      <animate attributeName="cx" values="300;312;300" dur="0.6s" repeatCount="indefinite"/>
+    </circle>
+    <text x="320" y="108" class="hu">≈ a single heartbeat</text>
+  </g>
+
+  <!-- Main memory -->
+  <g>
+    <text x="30" y="158" class="op">RAM access · 100 ns</text>
+    <line x1="300" y1="153" x2="700" y2="153" class="track"/>
+    <circle r="7" class="pulse" cy="153" cx="300">
+      <animate attributeName="cx" values="300;360;300" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="380" y="158" class="hu">≈ brewing a cup of coffee</text>
+  </g>
+
+  <!-- SSD -->
+  <g>
+    <text x="30" y="208" class="op">SSD random read · 100 µs</text>
+    <line x1="300" y1="203" x2="700" y2="203" class="track"/>
+    <circle r="7" class="pulse" cy="203" cx="300">
+      <animate attributeName="cx" values="300;480;300" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="500" y="208" class="hu">≈ a couple of days</text>
+  </g>
+
+  <!-- Same DC round trip -->
+  <g>
+    <text x="30" y="258" class="op">Round-trip in same DC · 500 µs</text>
+    <line x1="300" y1="253" x2="700" y2="253" class="track"/>
+    <circle r="7" class="pulse" cy="253" cx="300">
+      <animate attributeName="cx" values="300;560;300" dur="2.6s" repeatCount="indefinite"/>
+    </circle>
+    <text x="580" y="258" class="hu">≈ a week or two</text>
+  </g>
+
+  <!-- Disk seek -->
+  <g>
+    <text x="30" y="308" class="op">Spinning-disk seek · 10 ms</text>
+    <line x1="300" y1="303" x2="700" y2="303" class="track"/>
+    <circle r="7" class="pulse" cy="303" cx="300">
+      <animate attributeName="cx" values="300;640;300" dur="3.4s" repeatCount="indefinite"/>
+    </circle>
+    <text x="500" y="308" class="hu">≈ several months</text>
+  </g>
+
+  <!-- Cross-continent -->
+  <g>
+    <text x="30" y="358" class="op">Packet US ↔ Europe · 150 ms</text>
+    <line x1="300" y1="353" x2="700" y2="353" class="track"/>
+    <circle r="7" class="pulse" cy="353" cx="300">
+      <animate attributeName="cx" values="300;690;300" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="430" y="358" class="hu">≈ several years away</text>
+  </g>
+
+  <rect x="30" y="388" width="700" height="50" rx="10" fill="#120f29" stroke="#3730a3"/>
+  <text x="46" y="411" class="rt" font-size="13">Takeaway: memory is ~100,000× faster than disk, and a network hop is the most</text>
+  <text x="46" y="429" class="rt" font-size="13">expensive thing you do. Every cache you add removes a "trip to another country".</text>
+</svg>

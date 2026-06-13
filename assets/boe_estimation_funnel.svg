@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 440" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="fbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#172033"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#fbbf24"/></linearGradient>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{fill:#0f172a;font-size:16px;font-weight:700}
+      .v{fill:#0f172a;font-size:13px;font-weight:600}
+      .box{opacity:0}
+      .flow{stroke:#64748b;stroke-width:2;fill:none;stroke-dasharray:6 6}
+    </style>
+  </defs>
+  <rect width="780" height="440" rx="16" fill="url(#fbg)"/>
+  <text x="30" y="40" class="t">The Estimation Funnel: from Users → Servers</text>
+
+  <!-- Step 1 DAU -->
+  <g class="box"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="70" width="660" height="58" rx="10" fill="url(#g1)"/>
+    <text x="80" y="98" class="h">① DAU — Daily Active Users</text>
+    <text x="80" y="118" class="v">Start here. e.g. 100,000,000 users</text>
+    <text x="690" y="105" class="h" text-anchor="end">100 M</text>
+  </g>
+  <path class="flow" d="M390,128 L390,150" marker-end="url(#ar)"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.3s" fill="freeze"/></path>
+
+  <!-- Step 2 QPS -->
+  <g class="box"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="152" width="660" height="58" rx="10" fill="url(#g2)"/>
+    <text x="80" y="180" class="h">② QPS — Queries / second</text>
+    <text x="80" y="200" class="v">100M × 10 actions ÷ 100k sec ≈ 10k avg → peak ×2</text>
+    <text x="700" y="187" class="h" text-anchor="end">~25 k QPS</text>
+  </g>
+  <path class="flow" d="M390,210 L390,232" marker-end="url(#ar)"><animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.3s" fill="freeze"/></path>
+
+  <!-- Step 3 Storage -->
+  <g class="box"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="234" width="660" height="58" rx="10" fill="url(#g3)"/>
+    <text x="80" y="262" class="h">③ Storage / day → / 5 yr</text>
+    <text x="80" y="282" class="v">100M × 200KB = 20 TB/day × 365 × 5 × 3 (replicas)</text>
+    <text x="700" y="269" class="h" text-anchor="end">~110 PB</text>
+  </g>
+  <path class="flow" d="M390,292 L390,314" marker-end="url(#ar)"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.3s" fill="freeze"/></path>
+
+  <!-- Step 4 Servers -->
+  <g class="box"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="316" width="660" height="58" rx="10" fill="url(#g4)"/>
+    <text x="80" y="344" class="h">④ Servers / Cache / Bandwidth</text>
+    <text x="80" y="364" class="v">25k QPS ÷ 1k QPS-per-node → fleet size + CDN decision</text>
+    <text x="700" y="351" class="h" text-anchor="end">~25+ nodes</text>
+  </g>
+
+  <g class="box"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.5s" fill="freeze"/>
+    <text x="390" y="404" text-anchor="middle" fill="#94a3b8" font-size="13">Each arrow is a derivation — change DAU at the top and the whole funnel re-flows.</text>
+    <text x="390" y="424" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="700">One wrong assumption at ① multiplies all the way down.</text>
+  </g>
+</svg>

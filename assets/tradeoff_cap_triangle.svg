@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="trbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .v{fill:#0f172a;font-size:15px;font-weight:700}
+      .note{fill:#cbd5e1;font-size:12px}
+      .fade{opacity:0}
+      .edge{stroke:#475569;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="720" height="440" rx="16" fill="url(#trbg)"/>
+  <text x="30" y="40" class="t">Every Architecture Picks Its Sacrifices</text>
+
+  <!-- CAP triangle -->
+  <text x="180" y="72" fill="#94a3b8" font-size="14" font-weight="700">CAP: pick 2 of 3</text>
+  <line x1="180" y1="100" x2="90" y2="250" class="edge"/>
+  <line x1="180" y1="100" x2="270" y2="250" class="edge"/>
+  <line x1="90" y1="250" x2="270" y2="250" class="edge"/>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <circle cx="180" cy="100" r="34" fill="#818cf8"/><text x="180" y="105" text-anchor="middle" class="v">C</text>
+    <text x="180" y="135" text-anchor="middle" class="note">Consistency</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.5s" fill="freeze"/>
+    <circle cx="90" cy="250" r="34" fill="#34d399"/><text x="90" y="255" text-anchor="middle" class="v">A</text>
+    <text x="90" y="300" text-anchor="middle" class="note">Availability</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <circle cx="270" cy="250" r="34" fill="#fbbf24"/><text x="270" y="255" text-anchor="middle" class="v">P</text>
+    <text x="270" y="300" text-anchor="middle" class="note">Partition tol.</text>
+  </g>
+
+  <!-- "pick two" triangle: cheap/fast/good -->
+  <text x="520" y="72" fill="#94a3b8" font-size="14" font-weight="700">Project: pick 2 of 3</text>
+  <line x1="520" y1="100" x2="430" y2="250" class="edge"/>
+  <line x1="520" y1="100" x2="610" y2="250" class="edge"/>
+  <line x1="430" y1="250" x2="610" y2="250" class="edge"/>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <circle cx="520" cy="100" r="34" fill="#22d3ee"/><text x="520" y="105" text-anchor="middle" class="v">Fast</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <circle cx="430" cy="250" r="34" fill="#f472b6"/><text x="430" y="255" text-anchor="middle" class="v">Cheap</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze"/>
+    <circle cx="610" cy="250" r="34" fill="#a78bfa"/><text x="610" y="255" text-anchor="middle" class="v">Good</text>
+  </g>
+
+  <!-- bottom bar -->
+  <rect x="40" y="345" width="640" height="70" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.3s" dur="0.6s" fill="freeze"/></rect>
+  <text x="56" y="372" fill="#e2e8f0" font-size="13" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.5s" dur="0.5s" fill="freeze"/>Want speed? give up accuracy (serve stale cache).  Want consistency? give up availability (lock on partition).</text>
+  <text x="56" y="396" fill="#fbbf24" font-size="13" font-weight="700" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.7s" dur="0.5s" fill="freeze"/>If you haven't named what you gave up, you haven't finished the design.</text>
+</svg>

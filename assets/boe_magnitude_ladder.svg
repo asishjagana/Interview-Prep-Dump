@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+    <style>
+      .label{fill:#e2e8f0;font-size:15px;font-weight:600}
+      .ex{fill:#94a3b8;font-size:12px}
+      .pow{fill:#fbbf24;font-size:13px;font-weight:700}
+      .title{fill:#f8fafc;font-size:20px;font-weight:700}
+      .step{opacity:0}
+      .b{transform-origin:left center}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#bg)"/>
+  <text x="30" y="42" class="title">The Powers-of-10 Ladder — "Is it 5 GB or 5 PB?"</text>
+
+  <!-- rows: each row fades in and grows -->
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.4s" fill="freeze"/>
+    <text x="30" y="92" class="pow">10³</text>
+    <rect x="80" y="78" height="22" rx="5" fill="url(#bar)" class="b" width="60"/>
+    <text x="155" y="94" class="label">Kilo (KB)</text>
+    <text x="280" y="94" class="ex">≈ one short email / a paragraph of text</text>
+  </g>
+
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.4s" fill="freeze"/>
+    <text x="30" y="142" class="pow">10⁶</text>
+    <rect x="80" y="128" height="22" rx="5" fill="url(#bar)" class="b" width="120"/>
+    <text x="215" y="144" class="label">Mega (MB)</text>
+    <text x="340" y="144" class="ex">≈ a 3-min MP3 song / a hi-res photo</text>
+  </g>
+
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.4s" fill="freeze"/>
+    <text x="30" y="192" class="pow">10⁹</text>
+    <rect x="80" y="178" height="22" rx="5" fill="url(#bar)" class="b" width="220"/>
+    <text x="315" y="194" class="label">Giga (GB)</text>
+    <text x="440" y="194" class="ex">≈ a 1080p movie / RAM in a laptop</text>
+  </g>
+
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.4s" fill="freeze"/>
+    <text x="30" y="242" class="pow">10¹²</text>
+    <rect x="80" y="228" height="22" rx="5" fill="url(#bar)" class="b" width="360"/>
+    <text x="455" y="244" class="label">Tera (TB)</text>
+    <text x="575" y="244" class="ex">≈ a big SSD / fits on 1 disk</text>
+  </g>
+
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.4s" fill="freeze"/>
+    <text x="30" y="292" class="pow">10¹⁵</text>
+    <rect x="80" y="278" height="22" rx="5" fill="url(#bar)" class="b" width="560"/>
+    <text x="655" y="294" class="label">Peta (PB)</text>
+  </g>
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.4s" fill="freeze"/>
+    <text x="80" y="318" class="ex">≈ a data-center cluster — you MUST shard &amp; distribute. One machine cannot hold this.</text>
+  </g>
+
+  <g class="step"><animate attributeName="opacity" from="0" to="1" begin="3.1s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="345" width="700" height="50" rx="10" fill="#0b1220" stroke="#334155"/>
+    <text x="46" y="368" class="ex" font-size="13">Rule of thumb: each step up is</text>
+    <text x="248" y="368" class="pow" font-size="14">×1000</text>
+    <text x="300" y="368" class="ex" font-size="13">. The jump from "fits on a disk" (TB) to "needs a cluster" (PB)</text>
+    <text x="46" y="386" class="ex" font-size="13">is the single most important boundary back-of-the-envelope math reveals.</text>
+  </g>
+</svg>

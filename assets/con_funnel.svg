@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cfbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <linearGradient id="funnel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .opt{fill:#cbd5e1;font-size:12px}
+      .res{fill:#0f172a;font-size:15px;font-weight:700}
+      .c{fill:#fbbf24;font-size:13px;font-weight:600}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="720" height="400" rx="16" fill="url(#cfbg)"/>
+  <text x="30" y="42" class="t">The Constraint Funnel — many options → one design</text>
+
+  <!-- options floating at top -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.6s" fill="freeze"/>
+    <text x="90" y="85" class="opt">SQL?</text><text x="170" y="80" class="opt">NoSQL?</text>
+    <text x="260" y="88" class="opt">Spanner?</text><text x="360" y="80" class="opt">single node?</text>
+    <text x="470" y="88" class="opt">sharded?</text><text x="560" y="82" class="opt">serverless?</text>
+    <text x="620" y="90" class="opt">cache?</text><text x="130" y="100" class="opt">event-driven?</text>
+    <text x="300" y="102" class="opt">monolith?</text><text x="450" y="100" class="opt">microservices?</text>
+  </g>
+
+  <!-- funnel shape -->
+  <polygon points="110,120 610,120 430,300 290,300" fill="url(#funnel)" opacity="0.85"/>
+
+  <!-- constraints as labels on the funnel walls -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.5s" fill="freeze"/>
+    <text x="360" y="150" text-anchor="middle" class="c">↓ Hard constraints: GDPR, "AWS only", budget</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <text x="360" y="195" text-anchor="middle" class="c">↓ Scale constraints: QPS, data volume, latency</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.5s" fill="freeze"/>
+    <text x="360" y="240" text-anchor="middle" class="c">↓ Stated assumptions: read:write = 100:1</text>
+  </g>
+
+  <!-- output -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.6s" fill="freeze"/>
+    <rect x="270" y="315" width="180" height="50" rx="10" fill="#34d399"/>
+    <text x="360" y="346" text-anchor="middle" class="res">ONE clear design</text>
+  </g>
+  <text x="360" y="388" text-anchor="middle" fill="#94a3b8" font-size="12" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.5s" fill="freeze"/>Constraints are enabling limitations — each wall removes whole categories of choices.</text>
+</svg>
