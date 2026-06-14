@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="crbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:11px}
+      .lyr{fill:#0f172a;font-size:13px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#crbg)"/>
+  <text x="30" y="38" class="t">Component Responsibilities — one clear job each</text>
+
+  <!-- left: God component (bad) -->
+  <text x="150" y="72" text-anchor="middle" fill="#f87171" font-size="13" font-weight="700">❌ God component</text>
+  <rect x="60" y="86" width="180" height="150" rx="10" fill="#3b1d1d" stroke="#f87171" stroke-width="2"/>
+  <text x="150" y="120" text-anchor="middle" fill="#fca5a5" font-size="12">UserController</text>
+  <text x="150" y="146" text-anchor="middle" class="note" fill="#fca5a5">validation +</text>
+  <text x="150" y="164" text-anchor="middle" class="note" fill="#fca5a5">DB queries +</text>
+  <text x="150" y="182" text-anchor="middle" class="note" fill="#fca5a5">email sending +</text>
+  <text x="150" y="200" text-anchor="middle" class="note" fill="#fca5a5">tax calc + auth +</text>
+  <text x="150" y="218" text-anchor="middle" class="note" fill="#fca5a5">everything</text>
+
+  <path d="M260,160 L320,160" stroke="#fbbf24" stroke-width="3" marker-end="url(#cra)"/>
+  <defs><marker id="cra" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+  <text x="290" y="150" text-anchor="middle" class="note" fill="#fbbf24">SRP</text>
+
+  <!-- right: layered (good) -->
+  <text x="540" y="72" text-anchor="middle" fill="#34d399" font-size="13" font-weight="700">✓ Separation of concerns</text>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="360" y="86" width="360" height="36" rx="6" fill="#60a5fa"/><text x="540" y="109" text-anchor="middle" class="lyr">Controller — HTTP in/out only</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.5s" fill="freeze"/>
+    <rect x="360" y="128" width="360" height="36" rx="6" fill="#34d399"/><text x="540" y="151" text-anchor="middle" class="lyr">Service / Orchestrator — business logic</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="360" y="170" width="360" height="36" rx="6" fill="#fbbf24"/><text x="540" y="193" text-anchor="middle" class="lyr">Repository — data access only</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+    <rect x="360" y="212" width="360" height="30" rx="6" fill="#475569"/><text x="540" y="232" text-anchor="middle" class="lyr" fill="#e2e8f0">Database / external IO</text>
+  </g>
+  <!-- one-way arrows -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <line x1="730" y1="122" x2="730" y2="128" stroke="#94a3b8"/><line x1="730" y1="164" x2="730" y2="170" stroke="#94a3b8"/><line x1="730" y1="206" x2="730" y2="212" stroke="#94a3b8"/>
+    <text x="540" y="260" text-anchor="middle" class="note">dependencies point one way — down. No layer reaches up or sideways into internals.</text>
+  </g>
+
+  <rect x="30" y="282" width="700" height="122" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="308" fill="#f8fafc" font-size="14" font-weight="700">High cohesion, low coupling (the kitchen brigade)</text>
+  <text x="46" y="332" class="note">Single Responsibility: one reason to change. Encapsulation: hide internals behind a clean interface.</text>
+  <text x="46" y="354" class="note" fill="#86efac">✓ testable (mock the layer below) · reusable (one EmailService everywhere) · easy to isolate bugs.</text>
+  <text x="46" y="376" class="note" fill="#fca5a5">✗ watch for: the "I'll just add it here" slide into a God component, circular responsibilities, anemic pass-through layers.</text>
+</svg>

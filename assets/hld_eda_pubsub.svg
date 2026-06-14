@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="edabg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px;font-weight:600}
+      .note{fill:#94a3b8;font-size:11px}
+      .ev{fill:#fde68a}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#edabg)"/>
+  <text x="30" y="38" class="t">Event-Driven — publish, then go back to work</text>
+
+  <!-- producer -->
+  <rect x="40" y="150" width="120" height="60" rx="10" fill="#1e3a5f" stroke="#60a5fa" stroke-width="2"/>
+  <text x="100" y="178" text-anchor="middle" class="bl">Checkout</text>
+  <text x="100" y="196" text-anchor="middle" class="note" fill="#93c5fd">producer</text>
+
+  <!-- broker -->
+  <rect x="280" y="130" width="160" height="100" rx="10" fill="#3b2f0b" stroke="#fbbf24" stroke-width="2"/>
+  <text x="360" y="158" text-anchor="middle" class="bl" fill="#fde68a">Broker</text>
+  <text x="360" y="178" text-anchor="middle" class="note" fill="#fde68a">Kafka / SQS</text>
+  <text x="360" y="200" text-anchor="middle" class="note" fill="#fde68a">stores + routes</text>
+  <text x="360" y="218" text-anchor="middle" class="note" fill="#fde68a">"ORDER_CREATED"</text>
+
+  <!-- event flowing producer → broker -->
+  <line x1="160" y1="180" x2="280" y2="180" stroke="#475569" stroke-width="2"/>
+  <circle r="7" class="ev" cy="180" cx="160"><animate attributeName="cx" values="160;280;160" dur="1.6s" repeatCount="indefinite"/></circle>
+  <text x="220" y="170" text-anchor="middle" class="note">fire &amp; forget</text>
+
+  <!-- consumers -->
+  <g>
+    <rect x="580" y="80" width="150" height="44" rx="8" class="box"/><text x="655" y="107" text-anchor="middle" class="bl">Email service</text>
+    <rect x="580" y="158" width="150" height="44" rx="8" class="box"/><text x="655" y="185" text-anchor="middle" class="bl">Pricing service</text>
+    <rect x="580" y="236" width="150" height="44" rx="8" class="box"/><text x="655" y="263" text-anchor="middle" class="bl">Analytics service</text>
+  </g>
+  <!-- broker → each consumer -->
+  <line x1="440" y1="160" x2="580" y2="102" stroke="#475569" stroke-width="2"/>
+  <line x1="440" y1="180" x2="580" y2="180" stroke="#475569" stroke-width="2"/>
+  <line x1="440" y1="200" x2="580" y2="258" stroke="#475569" stroke-width="2"/>
+  <circle r="6" fill="#34d399" cx="440" cy="160"><animate attributeName="cx" values="440;580" dur="1.4s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="cy" values="160;102" dur="1.4s" begin="0.8s" repeatCount="indefinite"/></circle>
+  <circle r="6" fill="#34d399" cx="440" cy="180"><animate attributeName="cx" values="440;580" dur="1.4s" begin="1s" repeatCount="indefinite"/></circle>
+  <circle r="6" fill="#34d399" cx="440" cy="200"><animate attributeName="cx" values="440;580" dur="1.4s" begin="1.2s" repeatCount="indefinite"/><animate attributeName="cy" values="200;258" dur="1.4s" begin="1.2s" repeatCount="indefinite"/></circle>
+  <text x="510" y="300" text-anchor="middle" class="note">one event → many consumers, each reacts independently (choreography)</text>
+
+  <rect x="30" y="320" width="700" height="84" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.6s" fill="freeze"/></rect>
+  <text x="46" y="344" fill="#f8fafc" font-size="13" font-weight="700">Temporal decoupling: producer never waits, consumers can be offline</text>
+  <text x="46" y="366" class="note" fill="#86efac">✓ loose coupling · scale consumers independently · resilient (queue absorbs spikes &amp; outages)</text>
+  <text x="46" y="386" class="note" fill="#fca5a5">✗ eventual consistency · hard to trace/debug · needs idempotent consumers (events can repeat) · poison pills</text>
+</svg>

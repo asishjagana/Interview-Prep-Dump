@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="mmbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px;font-weight:600}
+      .note{fill:#94a3b8;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="430" rx="16" fill="url(#mmbg)"/>
+  <text x="30" y="38" class="t">Monolith vs Microservices</text>
+
+  <!-- Monolith -->
+  <text x="30" y="72" class="h" fill="#60a5fa">Monolith — one process, one DB (Swiss Army knife)</text>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="86" width="290" height="130" rx="10" fill="#1e3a5f" stroke="#60a5fa" stroke-width="2"/>
+    <rect x="60" y="104" width="110" height="34" rx="5" class="box"/><text x="115" y="126" text-anchor="middle" class="bl">Auth</text>
+    <rect x="190" y="104" width="120" height="34" rx="5" class="box"/><text x="250" y="126" text-anchor="middle" class="bl">Catalog</text>
+    <rect x="60" y="148" width="110" height="34" rx="5" class="box"/><text x="115" y="170" text-anchor="middle" class="bl">Payments</text>
+    <rect x="190" y="148" width="120" height="34" rx="5" class="box"/><text x="250" y="170" text-anchor="middle" class="bl">Orders</text>
+    <text x="185" y="204" text-anchor="middle" class="note">in-process calls (ns) · one deploy · shared DB</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <text x="40" y="244" class="note" fill="#93c5fd">✓ simple deploy/test/refactor · low latency</text>
+    <text x="40" y="262" class="note" fill="#fca5a5">✗ one bug → whole app down · scale all-or-nothing · merge contention</text>
+  </g>
+
+  <!-- Microservices -->
+  <text x="430" y="72" class="h" fill="#34d399">Microservices — many processes, DB-per-service (toolbox)</text>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="440" y="92" width="90" height="40" rx="8" class="box"/><text x="485" y="112" text-anchor="middle" class="bl">Auth</text><circle cx="485" cy="124" r="3" fill="#34d399"/>
+    <rect x="550" y="92" width="90" height="40" rx="8" class="box"/><text x="595" y="112" text-anchor="middle" class="bl">Catalog</text><circle cx="595" cy="124" r="3" fill="#34d399"/>
+    <rect x="660" y="92" width="80" height="40" rx="8" class="box"/><text x="700" y="112" text-anchor="middle" class="bl">Orders</text><circle cx="700" cy="124" r="3" fill="#34d399"/>
+    <rect x="495" y="150" width="90" height="40" rx="8" class="box"/><text x="540" y="170" text-anchor="middle" class="bl">Payments</text><circle cx="540" cy="182" r="3" fill="#34d399"/>
+    <rect x="605" y="150" width="90" height="40" rx="8" class="box"/><text x="650" y="170" text-anchor="middle" class="bl">Search</text><circle cx="650" cy="182" r="3" fill="#34d399"/>
+    <text x="590" y="208" text-anchor="middle" class="note">network calls (ms) · independent deploy · DB each</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <text x="430" y="244" class="note" fill="#86efac">✓ independent scale/deploy · fault isolation · polyglot</text>
+    <text x="430" y="262" class="note" fill="#fca5a5">✗ ops complexity · network latency · distributed data (Sagas)</text>
+  </g>
+
+  <!-- bottom guidance -->
+  <rect x="30" y="284" width="700" height="120" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.6s" fill="freeze"/></rect>
+  <text x="46" y="310" class="h" fill="#f8fafc">Conway's Law: architecture mirrors team structure</text>
+  <text x="46" y="334" class="note">Monolith fits a small co-located team; microservices fit many independent teams shipping on their own cadence.</text>
+  <text x="46" y="358" class="note" fill="#fbbf24">⚠ Distributed monolith = the worst of both: services so coupled you must deploy them together.</text>
+  <text x="46" y="382" class="note" fill="#fbbf24">Start monolith-first for product-market fit; decompose along bounded contexts when team/scale pain is real.</text>
+</svg>

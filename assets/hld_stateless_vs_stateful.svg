@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="ssbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px;font-weight:600}
+      .note{fill:#94a3b8;font-size:11px}
+      .dot{fill:#fde68a}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#ssbg)"/>
+  <text x="30" y="38" class="t">Stateless vs Stateful Services</text>
+
+  <!-- Stateless -->
+  <text x="30" y="72" class="h" fill="#34d399">Stateless — any node serves any request (vending machine)</text>
+  <rect x="40" y="84" width="80" height="40" rx="8" class="box"/><text x="80" y="109" text-anchor="middle" class="bl">LB</text>
+  <rect x="180" y="84" width="80" height="40" rx="8" fill="#14532d" stroke="#34d399"/><text x="220" y="109" text-anchor="middle" class="bl">Node 1</text>
+  <rect x="180" y="134" width="80" height="40" rx="8" fill="#14532d" stroke="#34d399"/><text x="220" y="159" text-anchor="middle" class="bl">Node 2</text>
+  <rect x="180" y="184" width="80" height="40" rx="8" fill="#14532d" stroke="#34d399"/><text x="220" y="209" text-anchor="middle" class="bl">Node 3</text>
+  <rect x="330" y="134" width="110" height="40" rx="8" fill="#3b1d1d" stroke="#f87171"/><text x="385" y="159" text-anchor="middle" class="bl">Redis / DB</text>
+  <text x="385" y="190" text-anchor="middle" class="note" fill="#fca5a5">shared state</text>
+  <!-- LB to any node, node to shared store -->
+  <line x1="120" y1="104" x2="180" y2="104" stroke="#64748b" stroke-width="2"/>
+  <line x1="120" y1="104" x2="180" y2="154" stroke="#64748b" stroke-width="2"/>
+  <line x1="120" y1="104" x2="180" y2="204" stroke="#64748b" stroke-width="2"/>
+  <line x1="260" y1="154" x2="330" y2="154" stroke="#64748b" stroke-width="2" stroke-dasharray="4 3"/>
+  <circle r="6" class="dot" cy="104" cx="120"><animate attributeName="cx" values="120;180" dur="1s" repeatCount="indefinite"/><animate attributeName="cy" values="104;154" dur="1s" repeatCount="indefinite"/></circle>
+  <text x="40" y="248" class="note" fill="#86efac">✓ scale linearly (add nodes) · node death = non-event · spot instances</text>
+  <text x="40" y="265" class="note" fill="#fca5a5">✗ fetch state every call → latency + DB load</text>
+
+  <!-- Stateful -->
+  <text x="470" y="72" class="h" fill="#fbbf24">Stateful — user pinned to a node (personal tailor)</text>
+  <rect x="480" y="84" width="80" height="40" rx="8" class="box"/><text x="520" y="109" text-anchor="middle" class="bl">LB</text>
+  <rect x="620" y="90" width="110" height="44" rx="8" fill="#3b2f0b" stroke="#fbbf24"/><text x="675" y="112" text-anchor="middle" class="bl">Node A</text><text x="675" y="128" text-anchor="middle" class="note" fill="#fde68a">user 1,2 state</text>
+  <rect x="620" y="150" width="110" height="44" rx="8" fill="#3b2f0b" stroke="#fbbf24"/><text x="675" y="172" text-anchor="middle" class="bl">Node B</text><text x="675" y="188" text-anchor="middle" class="note" fill="#fde68a">user 3,4 state</text>
+  <line x1="560" y1="104" x2="620" y2="112" stroke="#64748b" stroke-width="2"/>
+  <text x="585" y="100" class="note" fill="#fbbf24">sticky</text>
+  <text x="470" y="226" class="note">state in local RAM/disk (DB nodes, game servers)</text>
+  <text x="470" y="248" class="note" fill="#fde68a">✓ ultra-low latency · strong real-time consistency</text>
+  <text x="470" y="265" class="note" fill="#fca5a5">✗ hard to scale (sharding) · node death = data loss/split-brain · slow cold start</text>
+
+  <rect x="30" y="288" width="700" height="116" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.6s" fill="freeze"/></rect>
+  <text x="46" y="314" fill="#f8fafc" font-size="14" font-weight="700">Rule: scale the logic (stateless), shard the memory (stateful)</text>
+  <text x="46" y="338" class="note">The pattern to make a service stateless: externalize state to Redis/DB/S3, carry identity in a JWT.</text>
+  <text x="46" y="360" class="note">Something must be stateful at the bottom (the database) — push it down, keep the app tier stateless.</text>
+  <text x="46" y="382" class="note" fill="#fbbf24">Sticky sessions are a band-aid: they make a stateful app *look* scalable but reintroduce the pinning problem.</text>
+</svg>

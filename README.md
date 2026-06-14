@@ -18,9 +18,10 @@ The contract between services.
 - API Design Fundamentals, REST, GraphQL, gRPC, API Versioning, Pagination & Filtering, Idempotency, Authentication, Authorization, Rate Limiting, API Gateway.
 - *Fully expanded with animated diagrams, practice drills, interview Q&A, and staff-level deep dives.*
 
-### [03. High-Level Design (HLD)](./03_High_Level_Design/)
-The bird's eye view.
-- Client-Server, Tiered Architectures, Load Balancing (HL), Proxies, and CDNs.
+### [03. High-Level Design (HLD)](./03_High_Level_Design/) — 📖 [Section Index](./03_High_Level_Design/README.md)
+The bird's eye view — choosing the shape of the system.
+- Monolith vs Microservices, Modular Monolith, SOA, Event-Driven Architecture, Stateless vs Stateful, System Decomposition, Component Responsibilities, High Availability Design.
+- *Fully expanded with animated diagrams, practice drills, interview Q&A, and staff-level deep dives.*
 
 ### [04. Low-Level Design (LLD)](./04_Low_Level_Design/)
 The nuts and bolts.

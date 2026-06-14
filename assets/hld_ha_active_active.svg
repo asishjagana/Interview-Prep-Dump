@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="habg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .box{fill:#1e293b;stroke:#475569;stroke-width:1.5}
+      .bl{fill:#e2e8f0;font-size:12px;font-weight:600}
+      .note{fill:#94a3b8;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="430" rx="16" fill="url(#habg)"/>
+  <text x="30" y="38" class="t">High Availability — design for failure</text>
+
+  <!-- Active-Passive -->
+  <text x="30" y="72" class="h" fill="#fbbf24">Active–Passive — standby wakes on failure</text>
+  <rect x="40" y="86" width="70" height="40" rx="8" class="box"/><text x="75" y="111" text-anchor="middle" class="bl">LB</text>
+  <rect x="170" y="80" width="100" height="40" rx="8" fill="#14532d" stroke="#34d399" stroke-width="2"/><text x="220" y="105" text-anchor="middle" class="bl">Active</text>
+  <rect x="170" y="138" width="100" height="40" rx="8" fill="#1e293b" stroke="#64748b" stroke-dasharray="4 3"/><text x="220" y="163" text-anchor="middle" class="bl" fill="#94a3b8">Passive (idle)</text>
+  <line x1="110" y1="106" x2="170" y2="100" stroke="#34d399" stroke-width="2"/>
+  <text x="40" y="206" class="note">simpler · wastes the standby · failover gap while passive warms up</text>
+
+  <!-- Active-Active -->
+  <text x="430" y="72" class="h" fill="#34d399">Active–Active — both serve, survivor absorbs load</text>
+  <rect x="440" y="86" width="70" height="40" rx="8" class="box"/><text x="475" y="111" text-anchor="middle" class="bl">LB</text>
+  <rect x="570" y="80" width="100" height="40" rx="8" fill="#14532d" stroke="#34d399" stroke-width="2"/><text x="620" y="105" text-anchor="middle" class="bl">Node 1</text>
+  <rect x="570" y="138" width="100" height="40" rx="8" fill="#14532d" stroke="#34d399" stroke-width="2"/><text x="620" y="163" text-anchor="middle" class="bl">Node 2</text>
+  <line x1="510" y1="106" x2="570" y2="100" stroke="#34d399" stroke-width="2"/>
+  <line x1="510" y1="106" x2="570" y2="158" stroke="#34d399" stroke-width="2"/>
+  <text x="430" y="206" class="note">no idle capacity · instant failover · must handle N+M load on survivor</text>
+
+  <!-- health check + failover -->
+  <rect x="40" y="226" width="700" height="56" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="56" y="250" class="note" fill="#e2e8f0">Health check (GET /health checks DB + cache + disk) → LB removes a failing node from rotation automatically.</text>
+  <text x="56" y="270" class="note" fill="#fca5a5">⚠ cascading failure: node dies → survivor gets 100% → also dies. Defend with N+M headroom, load shedding, circuit breakers.</text>
+
+  <!-- nines table -->
+  <rect x="40" y="296" width="700" height="116" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="56" y="320" class="h" fill="#f8fafc">The "nines" (downtime/yr) + the levers</text>
+  <text x="56" y="344" class="note">99% → 3.65 days   ·   99.9% → 8.76 h   ·   99.99% → 52 min   ·   99.999% → 5.26 min</text>
+  <text x="56" y="368" class="note" fill="#86efac">Levers: redundancy (N+M) · multi-AZ → multi-region · automatic failover · replication · eliminate every SPOF.</text>
+  <text x="56" y="390" class="note" fill="#fbbf24">RTO = how fast you recover · RPO = how much data you can lose. Each extra nine ≈ 10× cost. Beware split-brain &amp; stale standbys.</text>
+</svg>

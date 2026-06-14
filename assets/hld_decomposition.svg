@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="decbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:11px}
+      .bl{fill:#0f172a;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#decbg)"/>
+  <text x="30" y="38" class="t">System Decomposition — split by business capability</text>
+
+  <!-- tangled monolith -->
+  <text x="120" y="72" text-anchor="middle" fill="#f87171" font-size="13" font-weight="700">Big Ball of Mud</text>
+  <circle cx="120" cy="150" r="62" fill="#3b1d1d" stroke="#f87171" stroke-width="2"/>
+  <g stroke="#f87171" stroke-width="1.5" opacity="0.7">
+    <line x1="90" y1="120" x2="150" y2="180"/><line x1="150" y1="120" x2="90" y2="180"/>
+    <line x1="80" y1="150" x2="160" y2="150"/><line x1="120" y1="110" x2="120" y2="190"/>
+    <line x1="95" y1="135" x2="148" y2="170"/><line x1="148" y1="135" x2="95" y2="170"/>
+  </g>
+  <text x="120" y="232" text-anchor="middle" class="note" fill="#fca5a5">everything depends on everything</text>
+
+  <!-- arrow -->
+  <path d="M195,150 L255,150" stroke="#fbbf24" stroke-width="3" marker-end="url(#da)"/>
+  <defs><marker id="da" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+  <text x="225" y="140" text-anchor="middle" class="note" fill="#fbbf24">decompose</text>
+
+  <!-- bounded contexts -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.4s" dur="0.6s" fill="freeze"/>
+    <rect x="290" y="86" width="130" height="56" rx="10" fill="#34d399"/><text x="355" y="110" text-anchor="middle" class="bl">Ordering</text><text x="355" y="128" text-anchor="middle" fill="#064e3b" font-size="10">own team + DB</text>
+    <rect x="440" y="86" width="130" height="56" rx="10" fill="#60a5fa"/><text x="505" y="110" text-anchor="middle" class="bl">Catalog</text><text x="505" y="128" text-anchor="middle" fill="#1e3a5f" font-size="10">own team + DB</text>
+    <rect x="590" y="86" width="130" height="56" rx="10" fill="#c084fc"/><text x="655" y="110" text-anchor="middle" class="bl">Payments</text><text x="655" y="128" text-anchor="middle" fill="#4c1d6e" font-size="10">own team + DB</text>
+    <rect x="365" y="158" width="130" height="56" rx="10" fill="#fbbf24"/><text x="430" y="182" text-anchor="middle" class="bl">Search</text><text x="430" y="200" text-anchor="middle" fill="#78350f" font-size="10">own team + DB</text>
+    <rect x="515" y="158" width="130" height="56" rx="10" fill="#fb923c"/><text x="580" y="182" text-anchor="middle" class="bl">Shipping</text><text x="580" y="200" text-anchor="middle" fill="#7c2d12" font-size="10">own team + DB</text>
+    <text x="505" y="244" text-anchor="middle" class="note">bounded contexts — talk via APIs/events, not shared DBs</text>
+  </g>
+
+  <rect x="30" y="270" width="700" height="134" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="296" fill="#f8fafc" font-size="14" font-weight="700">Decompose by DDD bounded context, not by technical layer</text>
+  <text x="46" y="320" class="note" fill="#86efac">✓ right: split "Ordering" from "Logistics" (business capability) — each team owns a vertical slice end to end.</text>
+  <text x="46" y="342" class="note" fill="#fca5a5">✗ wrong: split "all CSS" from "all JS" (that's folders, not boundaries); or "Price" in Catalog + "Discount" in Marketing.</text>
+  <text x="46" y="364" class="note" fill="#fbbf24">⚠ over-decomposition → chatty interfaces (one user action = 50 network calls) and anemic proxy services.</text>
+  <text x="46" y="386" class="note">Migrate a legacy monolith with the Strangler Fig pattern: wrap it, peel off capabilities one at a time.</text>
+</svg>

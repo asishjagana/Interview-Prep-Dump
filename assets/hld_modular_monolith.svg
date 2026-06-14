@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="modbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .mod{stroke-width:2}
+      .ml{fill:#0f172a;font-size:14px;font-weight:700}
+      .api{fill:#fbbf24;font-size:10px;font-family:monospace}
+      .note{fill:#94a3b8;font-size:12px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#modbg)"/>
+  <text x="30" y="38" class="t">Modular Monolith — modules on one baseplate</text>
+
+  <!-- baseplate -->
+  <rect x="40" y="70" width="680" height="180" rx="12" fill="#0b1220" stroke="#334155" stroke-width="2"/>
+  <text x="58" y="92" class="note">one deployable · one process · in-process calls (fast) · atomic commits</text>
+
+  <!-- modules (LEGO blocks) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="70" y="110" width="150" height="110" rx="8" fill="#34d399" class="mod" stroke="#059669"/>
+    <text x="145" y="140" text-anchor="middle" class="ml">Orders</text>
+    <rect x="84" y="155" width="122" height="22" rx="4" fill="#064e3b"/><text x="145" y="170" text-anchor="middle" class="api">orders.public</text>
+    <text x="145" y="200" text-anchor="middle" fill="#064e3b" font-size="10">owns its tables</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.5s" fill="freeze"/>
+    <rect x="240" y="110" width="150" height="110" rx="8" fill="#60a5fa" class="mod" stroke="#2563eb"/>
+    <text x="315" y="140" text-anchor="middle" class="ml">Payments</text>
+    <rect x="254" y="155" width="122" height="22" rx="4" fill="#1e3a5f"/><text x="315" y="170" text-anchor="middle" class="api">payments.public</text>
+    <text x="315" y="200" text-anchor="middle" fill="#1e3a5f" font-size="10">owns its tables</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <rect x="410" y="110" width="150" height="110" rx="8" fill="#c084fc" class="mod" stroke="#9333ea"/>
+    <text x="485" y="140" text-anchor="middle" class="ml">Shipping</text>
+    <rect x="424" y="155" width="122" height="22" rx="4" fill="#4c1d6e"/><text x="485" y="170" text-anchor="middle" class="api">shipping.public</text>
+    <text x="485" y="200" text-anchor="middle" fill="#4c1d6e" font-size="10">owns its tables</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="580" y="110" width="120" height="110" rx="8" fill="#fbbf24" class="mod" stroke="#d97706"/>
+    <text x="640" y="140" text-anchor="middle" class="ml">Catalog</text>
+    <rect x="592" y="155" width="96" height="22" rx="4" fill="#78350f"/><text x="640" y="170" text-anchor="middle" class="api">catalog.public</text>
+  </g>
+
+  <!-- one-way calls through public APIs -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.5s" fill="freeze"/>
+    <path d="M220,166 L240,166" stroke="#fbbf24" stroke-width="2" marker-end="url(#ar)"/>
+    <path d="M390,166 L410,166" stroke="#fbbf24" stroke-width="2" marker-end="url(#ar)"/>
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+    <text x="280" y="270" text-anchor="middle" class="api" fill="#fbbf24">modules talk ONLY through public APIs — no reaching into internals</text>
+  </g>
+
+  <rect x="30" y="290" width="700" height="114" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.6s" fill="freeze"/></rect>
+  <text x="46" y="316" fill="#f8fafc" font-size="14" font-weight="700">The "third way": clean boundaries, monolith simplicity</text>
+  <text x="46" y="340" class="note">Enforce boundaries with tooling: Packwerk (Ruby), ArchUnit (Java), Java Modules, import-linter (Python).</text>
+  <text x="46" y="362" class="note" fill="#86efac">✓ easiest to refactor boundaries BEFORE you pay the network tax of splitting into services.</text>
+  <text x="46" y="384" class="note" fill="#fca5a5">✗ still one process (SPOF), can't scale modules independently, single language. Shopify Core runs this way.</text>
+</svg>
