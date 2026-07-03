@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="shbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="sar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#f8fafc;font-size:14px;font-weight:800}
+      .nl{fill:#0f172a;font-size:12px;font-weight:700}
+      .cap{fill:#cbd5e1;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="500" rx="16" fill="url(#shbg)"/>
+  <text x="30" y="40" class="t">Sharding — split data across nodes by a shard key</text>
+  <text x="30" y="62" class="sub">replication COPIES data; sharding SPLITS it · the shard key decides balance &amp; hot-spot risk</text>
+
+  <!-- HASH -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="82" width="352" height="150" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="40" y="106" class="hd" fill="#6ee7b7">HASH (key-based)</text>
+    <text x="40" y="124" class="cap">shard = hash(user_id) % N — even spread</text>
+    <rect x="40" y="138" width="90" height="30" rx="6" fill="#34d399"/><text x="85" y="158" text-anchor="middle" class="nl">Shard 0</text>
+    <rect x="140" y="138" width="90" height="30" rx="6" fill="#34d399"/><text x="185" y="158" text-anchor="middle" class="nl">Shard 1</text>
+    <rect x="240" y="138" width="90" height="30" rx="6" fill="#34d399"/><text x="285" y="158" text-anchor="middle" class="nl">Shard 2</text>
+    <text x="40" y="192" class="cap">✓ balanced load, no hot spots</text>
+    <text x="40" y="210" class="cap">✗ range queries fan out · resharding moves ~all data</text>
+  </g>
+
+  <!-- RANGE -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="384" y="82" width="352" height="150" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="400" y="106" class="hd" fill="#fbbf24">RANGE-based</text>
+    <text x="400" y="124" class="cap">A–H | I–P | Q–Z  (or by date)</text>
+    <rect x="400" y="138" width="90" height="30" rx="6" fill="#fbbf24"/><text x="445" y="158" text-anchor="middle" class="nl">A–H</text>
+    <rect x="500" y="138" width="90" height="30" rx="6" fill="#fbbf24"/><text x="545" y="158" text-anchor="middle" class="nl">I–P</text>
+    <rect x="600" y="138" width="90" height="30" rx="6" fill="#f87171"/><text x="645" y="158" text-anchor="middle" class="nl">Q–Z 🔥</text>
+    <text x="400" y="192" class="cap">✓ efficient range scans (time-series)</text>
+    <text x="400" y="210" class="cap" fill="#fca5a5">✗ HOT SPOT — all "now" writes hit one shard</text>
+  </g>
+
+  <!-- DIRECTORY -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="244" width="352" height="120" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="40" y="268" class="hd" fill="#93c5fd">DIRECTORY (lookup table)</text>
+    <rect x="40" y="282" width="120" height="30" rx="6" fill="#60a5fa"/><text x="100" y="302" text-anchor="middle" class="nl">key → shard map</text>
+    <line x1="160" y1="297" x2="210" y2="297" stroke="#64748b" marker-end="url(#sar)"/>
+    <rect x="216" y="282" width="46" height="30" rx="6" fill="#60a5fa"/><text x="239" y="302" text-anchor="middle" class="nl">S0</text>
+    <rect x="270" y="282" width="46" height="30" rx="6" fill="#60a5fa"/><text x="293" y="302" text-anchor="middle" class="nl">S1</text>
+    <text x="40" y="336" class="cap">✓ flexible rebalancing</text>
+    <text x="40" y="354" class="cap">✗ lookup table is a SPOF / extra hop</text>
+  </g>
+
+  <!-- CONSISTENT HASHING -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="384" y="244" width="352" height="120" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="400" y="268" class="hd" fill="#c4b5fd">CONSISTENT HASHING (the fix)</text>
+    <circle cx="470" cy="315" r="34" fill="none" stroke="#818cf8" stroke-width="3"/>
+    <circle cx="470" cy="281" r="5" fill="#34d399"/><circle cx="504" cy="315" r="5" fill="#34d399"/>
+    <circle cx="470" cy="349" r="5" fill="#34d399"/><circle cx="436" cy="315" r="5" fill="#34d399"/>
+    <text x="530" y="300" class="cap">add/remove a node →</text>
+    <text x="530" y="318" class="cap">only ~1/N of keys move,</text>
+    <text x="530" y="336" class="cap">not the whole dataset</text>
+  </g>
+
+  <!-- verdict -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.1s" dur="0.6s" fill="freeze"/>
+    <rect x="24" y="378" width="712" height="106" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="40" y="402" class="hd" fill="#0f172a">THE RULES OF SHARDING</text>
+    <text x="40" y="426" class="nl" font-weight="400">• "Don't shard until you must" — it's the last scaling rung; joins &amp; transactions get hard</text>
+    <text x="40" y="448" class="nl" font-weight="400">• Pick a HIGH-CARDINALITY, evenly-distributed key · salt/split celebrity keys to kill hot spots</text>
+    <text x="40" y="470" class="nl" font-weight="400">• Cross-shard queries FAN OUT (slow) · replication + sharding are complements, use both</text>
+  </g>
+</svg>

@@ -54,6 +54,6 @@
     <rect x="30" y="370" width="700" height="76" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
     <text x="48" y="394" class="hd">The nuance interviewers want</text>
     <text x="48" y="416" class="row">• CAP is a knife-edge (only during a partition) · PACELC adds the Else: latency vs consistency always</text>
-    <text x="48" y="436" class="row">• Choice is per-operation & tunable (quorum R+W>N), not one label for the whole database</text>
+    <text x="48" y="436" class="row">• Choice is per-operation &amp; tunable (quorum R+W&gt;N), not one label for the whole database</text>
   </g>
 </svg>

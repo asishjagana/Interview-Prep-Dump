@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 490" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="colbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#f8fafc;font-size:14px;font-weight:800}
+      .cell{fill:#0f172a;font-size:11px;font-weight:700}
+      .cap{fill:#cbd5e1;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="490" rx="16" fill="url(#colbg)"/>
+  <text x="30" y="40" class="t">Row vs Columnar storage — same table, different disk layout</text>
+  <text x="30" y="62" class="sub">query "SUM(price)": row DB reads every column; columnar reads only the price column</text>
+
+  <!-- ROW-BASED -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="82" width="352" height="200" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="40" y="106" class="hd" fill="#93c5fd">ROW-BASED (OLTP — Postgres, MySQL)</text>
+    <text x="40" y="124" class="cap">rows stored together; one record = one block</text>
+    <!-- row blocks -->
+    <rect x="40" y="136" width="320" height="26" rx="4" fill="#1e293b" stroke="#475569"/>
+    <rect x="44" y="139" width="70" height="20" fill="#f87171"/><text x="79" y="154" text-anchor="middle" class="cell">id 1</text>
+    <rect x="118" y="139" width="90" height="20" fill="#94a3b8"/><text x="163" y="154" text-anchor="middle" class="cell">Alice</text>
+    <rect x="212" y="139" width="70" height="20" fill="#60a5fa"/><text x="247" y="154" text-anchor="middle" class="cell">$40</text>
+    <rect x="286" y="139" width="70" height="20" fill="#94a3b8"/><text x="321" y="154" text-anchor="middle" class="cell">US</text>
+    <rect x="40" y="166" width="320" height="26" rx="4" fill="#1e293b" stroke="#475569"/>
+    <rect x="44" y="169" width="70" height="20" fill="#f87171"/><text x="79" y="184" text-anchor="middle" class="cell">id 2</text>
+    <rect x="118" y="169" width="90" height="20" fill="#94a3b8"/><text x="163" y="184" text-anchor="middle" class="cell">Bob</text>
+    <rect x="212" y="169" width="70" height="20" fill="#60a5fa"/><text x="247" y="184" text-anchor="middle" class="cell">$12</text>
+    <rect x="286" y="169" width="70" height="20" fill="#94a3b8"/><text x="321" y="184" text-anchor="middle" class="cell">US</text>
+    <text x="40" y="216" class="cap" fill="#fca5a5">SUM(price): must read the WHOLE block (name, country too)</text>
+    <text x="40" y="238" class="cap">✓ fast single-row read/write ("give me order #2")</text>
+    <text x="40" y="258" class="cap">✓ great for OLTP — insert/update one row cheaply</text>
+    <text x="40" y="276" class="cap" fill="#fca5a5">✗ analytics scans waste I/O on unused columns</text>
+  </g>
+
+  <!-- COLUMNAR -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <rect x="384" y="82" width="352" height="200" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="400" y="106" class="hd" fill="#6ee7b7">COLUMNAR (OLAP — BigQuery, ClickHouse)</text>
+    <text x="400" y="124" class="cap">each column stored together, contiguously</text>
+    <rect x="400" y="136" width="150" height="20" rx="4" fill="#334155"/><text x="410" y="151" class="cell" fill="#e2e8f0">id:   1 | 2</text>
+    <rect x="400" y="160" width="150" height="20" rx="4" fill="#334155"/><text x="410" y="175" class="cell" fill="#e2e8f0">name: Alice|Bob</text>
+    <rect x="400" y="184" width="200" height="20" rx="4" fill="#16a34a"/><text x="410" y="199" class="cell" fill="#fff">price: $40 | $12  ← read ONLY this</text>
+    <rect x="400" y="208" width="150" height="20" rx="4" fill="#334155"/><text x="410" y="223" class="cell" fill="#e2e8f0">country: US|US</text>
+    <text x="400" y="248" class="cap">✓ SUM(price): read 1 column, skip 99% of disk</text>
+    <text x="400" y="266" class="cap">✓ 10x compression (same-type: RLE, dictionary)</text>
+    <text x="400" y="278" class="cap" fill="#fca5a5">✗ single-row insert/update = touch every column file</text>
+  </g>
+
+  <!-- why it wins -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.6s" fill="freeze"/>
+    <rect x="24" y="294" width="712" height="96" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="40" y="318" class="hd" fill="#0f172a">WHY COLUMNAR WINS FOR ANALYTICS</text>
+    <text x="40" y="342" class="cell" font-weight="400">• Less I/O — reads only the columns the query touches (2 of 500, not all 500)</text>
+    <text x="40" y="362" class="cell" font-weight="400">• Better compression — a column is one data type → run-length / dictionary encoding shrinks 10x</text>
+    <text x="40" y="382" class="cell" font-weight="400">• Vectorized execution — CPU batches SUM/AVG over packed values (SIMD) instead of row-by-row</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.6s" fill="freeze"/>
+    <rect x="24" y="402" width="712" height="72" rx="10" fill="#1e293b" stroke="#64748b"/>
+    <text x="40" y="426" class="hd">COLUMNAR = OLAP (analytics, few columns, many rows, big aggregates)</text>
+    <text x="40" y="450" class="cap">ROW = OLTP (transactions, whole-row read/write) · never use columnar for user updates, orders, chat</text>
+    <text x="40" y="468" class="cap">formats: Parquet / ORC bring columnar to data lakes · buffer &amp; bulk-insert — columnar hates single-row writes</text>
+  </g>
+</svg>

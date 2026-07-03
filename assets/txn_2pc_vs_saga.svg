@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="txbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="tar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#f8fafc;font-size:14px;font-weight:800}
+      .nl{fill:#0f172a;font-size:11px;font-weight:700}
+      .cap{fill:#cbd5e1;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="500" rx="16" fill="url(#txbg)"/>
+  <text x="30" y="40" class="t">Distributed transactions: 2PC vs Saga</text>
+  <text x="30" y="62" class="sub">one action spans many DBs · ACID doesn't reach across services — coordinate or compensate</text>
+
+  <!-- 2PC -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="80" width="712" height="150" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="40" y="104" class="hd" fill="#93c5fd">2PC — Two-Phase Commit (strict, synchronous, LOCKS)</text>
+    <rect x="40" y="120" width="110" height="34" rx="6" fill="#60a5fa"/><text x="95" y="142" text-anchor="middle" class="nl">Coordinator</text>
+    <rect x="230" y="120" width="80" height="34" rx="6" fill="#bfdbfe"/><text x="270" y="142" text-anchor="middle" class="nl">Svc A</text>
+    <rect x="330" y="120" width="80" height="34" rx="6" fill="#bfdbfe"/><text x="370" y="142" text-anchor="middle" class="nl">Svc B</text>
+    <rect x="430" y="120" width="80" height="34" rx="6" fill="#bfdbfe"/><text x="470" y="142" text-anchor="middle" class="nl">Svc C</text>
+    <text x="40" y="178" class="cap">Phase 1 PREPARE: "can you commit?" → all reserve &amp; vote YES (holding locks)</text>
+    <text x="40" y="196" class="cap">Phase 2 COMMIT: all said yes → "commit!"  ·  any NO → "rollback!"</text>
+    <text x="40" y="218" class="cap" fill="#fca5a5">✗ coordinator dies in phase 2 → participants BLOCK, locks held forever</text>
+  </g>
+
+  <!-- SAGA -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="242" width="712" height="170" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="40" y="266" class="hd" fill="#6ee7b7">SAGA — chain of local txns + compensations (async, NO locks)</text>
+    <!-- forward -->
+    <rect x="40" y="282" width="120" height="34" rx="6" fill="#34d399"/><text x="100" y="304" text-anchor="middle" class="nl">1. charge card</text>
+    <rect x="200" y="282" width="120" height="34" rx="6" fill="#34d399"/><text x="260" y="304" text-anchor="middle" class="nl">2. book flight</text>
+    <rect x="360" y="282" width="130" height="34" rx="6" fill="#f87171"/><text x="425" y="304" text-anchor="middle" class="nl">3. book hotel ✗</text>
+    <line x1="160" y1="299" x2="200" y2="299" stroke="#64748b" marker-end="url(#tar)"/>
+    <line x1="320" y1="299" x2="360" y2="299" stroke="#64748b" marker-end="url(#tar)"/>
+    <!-- compensations -->
+    <text x="40" y="344" class="cap" fill="#fbbf24">step 3 fails → run COMPENSATIONS in reverse:</text>
+    <rect x="200" y="352" width="120" height="30" rx="6" fill="#fbbf24"/><text x="260" y="372" text-anchor="middle" class="nl">cancel flight</text>
+    <rect x="40" y="352" width="120" height="30" rx="6" fill="#fbbf24"/><text x="100" y="372" text-anchor="middle" class="nl">refund card</text>
+    <line x1="200" y1="367" x2="160" y2="367" stroke="#64748b" marker-end="url(#tar)"/>
+    <text x="40" y="402" class="cap">Orchestration = central manager tells each step · Choreography = services react to events</text>
+  </g>
+
+  <!-- verdict -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.6s" fill="freeze"/>
+    <rect x="24" y="424" width="712" height="60" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="40" y="448" class="hd" fill="#0f172a">CHOOSE: 2PC = strong+atomic but blocking &amp; brittle · Saga = scalable+eventual but you write all the UNDOs</text>
+    <text x="40" y="470" class="nl" font-weight="400">Best default across microservices = Saga + Outbox pattern + idempotent, retryable steps. Avoid 2PC at scale.</text>
+  </g>
+</svg>
