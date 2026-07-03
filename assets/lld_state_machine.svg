@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 440" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="smbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/></marker>
+    <marker id="ahr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f87171"/></marker>
+    <marker id="aha" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .st{fill:#0f172a;font-size:13px;font-weight:700}
+      .ev{fill:#fbbf24;font-size:10px;font-family:monospace}
+      .evg{fill:#6ee7b7;font-size:10px;font-family:monospace}
+      .note{fill:#94a3b8;font-size:12px}
+      .bad{fill:#fca5a5;font-size:11px;font-weight:700}
+      .fade{opacity:0}
+      .edge{stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="780" height="440" rx="16" fill="url(#smbg)"/>
+  <text x="30" y="38" class="t">Order Lifecycle — states, events &amp; guarded transitions</text>
+  <text x="30" y="60" class="note">one state at a time · only declared arrows are legal · everything else is rejected</text>
+
+  <!-- initial marker -->
+  <circle cx="52" cy="150" r="7" fill="#f8fafc"/>
+  <path d="M59,150 L82,150" class="edge" stroke="#34d399" marker-end="url(#ah)"/>
+
+  <!-- DRAFT -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="86" y="126" width="112" height="48" rx="10" fill="#ede9fe" stroke="#818cf8" stroke-width="2"/>
+    <text x="142" y="155" text-anchor="middle" class="st">DRAFT</text>
+  </g>
+  <!-- PENDING_PAYMENT -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="248" y="126" width="132" height="48" rx="10" fill="#e0f2fe" stroke="#60a5fa" stroke-width="2"/>
+    <text x="314" y="149" text-anchor="middle" class="st">PENDING_</text>
+    <text x="314" y="164" text-anchor="middle" class="st">PAYMENT</text>
+  </g>
+  <!-- PAID -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="430" y="126" width="112" height="48" rx="10" fill="#dcfce7" stroke="#34d399" stroke-width="2"/>
+    <text x="486" y="155" text-anchor="middle" class="st">PAID</text>
+  </g>
+  <!-- SHIPPED -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="592" y="126" width="112" height="48" rx="10" fill="#dcfce7" stroke="#34d399" stroke-width="2"/>
+    <text x="648" y="155" text-anchor="middle" class="st">SHIPPED</text>
+  </g>
+  <!-- DELIVERED (terminal, double ring) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.5s" fill="freeze"/>
+    <rect x="592" y="252" width="112" height="48" rx="10" fill="#34d399" stroke="#059669" stroke-width="2"/>
+    <rect x="596" y="256" width="104" height="40" rx="8" fill="none" stroke="#065f46" stroke-width="1.5"/>
+    <text x="648" y="281" text-anchor="middle" class="st">DELIVERED</text>
+  </g>
+  <!-- CANCELLED (terminal) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.5s" fill="freeze"/>
+    <rect x="248" y="252" width="132" height="48" rx="10" fill="#fee2e2" stroke="#f87171" stroke-width="2"/>
+    <rect x="252" y="256" width="124" height="40" rx="8" fill="none" stroke="#991b1b" stroke-width="1.5"/>
+    <text x="314" y="281" text-anchor="middle" class="st">CANCELLED</text>
+  </g>
+
+  <!-- happy-path transitions -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <path d="M198,150 L246,150" class="edge" stroke="#34d399" marker-end="url(#ah)"/>
+    <text x="222" y="141" text-anchor="middle" class="evg">place</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <path d="M380,150 L428,150" class="edge" stroke="#34d399" marker-end="url(#ah)"/>
+    <text x="404" y="141" text-anchor="middle" class="evg">pay ✓</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <path d="M542,150 L590,150" class="edge" stroke="#34d399" marker-end="url(#ah)"/>
+    <text x="566" y="141" text-anchor="middle" class="evg">ship</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.3s" dur="0.5s" fill="freeze"/>
+    <path d="M648,174 L648,250" class="edge" stroke="#34d399" marker-end="url(#ah)"/>
+    <text x="690" y="216" text-anchor="middle" class="evg">deliver</text>
+  </g>
+
+  <!-- cancel transitions (amber) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.6s" dur="0.5s" fill="freeze"/>
+    <path d="M314,174 L314,250" class="edge" stroke="#fbbf24" marker-end="url(#aha)"/>
+    <text x="356" y="216" text-anchor="middle" class="ev">cancel</text>
+  </g>
+
+  <!-- rejected illegal transition DRAFT -> SHIPPED -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="4.2s" dur="0.6s" fill="freeze"/>
+    <path d="M150,120 C300,50 520,50 640,120" class="edge" stroke="#f87171" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahr)"/>
+    <text x="395" y="66" text-anchor="middle" class="bad">✗ ship  —  ILLEGAL: no DRAFT → SHIPPED transition (rejected)</text>
+  </g>
+
+  <!-- footer -->
+  <rect x="30" y="332" width="720" height="88" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="4.6s" dur="0.6s" fill="freeze"/></rect>
+  <text x="46" y="358" fill="#f8fafc" font-size="14" font-weight="700">The machine is the single source of truth for "what can happen next"</text>
+  <text x="46" y="381" class="note" fill="#86efac">✓ every legal move is a declared arrow · guards (pay ✓) block bad transitions · terminal states have no exits.</text>
+  <text x="46" y="403" class="note" fill="#fca5a5">✗ any undeclared move (DRAFT → SHIPPED) is rejected in ONE place — no scattered if/else, no impossible states.</text>
+</svg>

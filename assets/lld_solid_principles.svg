@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="solidbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .let{fill:#0f172a;font-size:30px;font-weight:800}
+      .name{fill:#0f172a;font-size:15px;font-weight:700}
+      .desc{fill:#0f172a;font-size:12px}
+      .note{fill:#f8fafc;font-size:13px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="500" rx="16" fill="url(#solidbg)"/>
+  <text x="30" y="40" class="t">SOLID — five rules for code that is easy to change, hard to break</text>
+  <text x="30" y="62" class="sub">each principle limits the blast radius of a change · they interlock, they don't stack randomly</text>
+
+  <!-- S -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="80" width="680" height="66" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <rect x="52" y="92" width="52" height="42" rx="8" fill="#34d399"/>
+    <text x="78" y="123" text-anchor="middle" class="let">S</text>
+    <text x="122" y="108" class="name">Single Responsibility</text>
+    <text x="122" y="130" class="desc">one class, one reason to change — one actor it answers to</text>
+  </g>
+
+  <!-- O -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="158" width="680" height="66" rx="10" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <rect x="52" y="170" width="52" height="42" rx="8" fill="#60a5fa"/>
+    <text x="78" y="201" text-anchor="middle" class="let">O</text>
+    <text x="122" y="186" class="name">Open / Closed</text>
+    <text x="122" y="208" class="desc">open to extension, closed to modification — add new code, don't edit old</text>
+  </g>
+
+  <!-- L -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="236" width="680" height="66" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <rect x="52" y="248" width="52" height="42" rx="8" fill="#818cf8"/>
+    <text x="78" y="279" text-anchor="middle" class="let">L</text>
+    <text x="122" y="264" class="name">Liskov Substitution</text>
+    <text x="122" y="286" class="desc">a subtype must work anywhere its base type is expected — no surprises</text>
+  </g>
+
+  <!-- I -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="314" width="680" height="66" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <rect x="52" y="326" width="52" height="42" rx="8" fill="#fbbf24"/>
+    <text x="78" y="357" text-anchor="middle" class="let">I</text>
+    <text x="122" y="342" class="name">Interface Segregation</text>
+    <text x="122" y="364" class="desc">many small interfaces &gt; one fat one — clients depend only on what they use</text>
+  </g>
+
+  <!-- D -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="392" width="680" height="66" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <rect x="52" y="404" width="52" height="42" rx="8" fill="#f87171"/>
+    <text x="78" y="435" text-anchor="middle" class="let">D</text>
+    <text x="122" y="420" class="name">Dependency Inversion</text>
+    <text x="122" y="442" class="desc">depend on abstractions, not concretions — high-level policy owns the interface</text>
+  </g>
+
+  <!-- bottom note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.7s" dur="0.6s" fill="freeze"/>
+    <text x="380" y="484" text-anchor="middle" class="note">manage dependencies &amp; responsibilities → easy to change, hard to break</text>
+  </g>
+</svg>

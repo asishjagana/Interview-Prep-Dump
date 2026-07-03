@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="oopbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .pillar{stroke-width:2}
+      .pl{fill:#0f172a;font-size:15px;font-weight:700}
+      .cap{fill:#0f172a;font-size:10px}
+      .note{fill:#94a3b8;font-size:12px}
+      .fade{opacity:0}
+    </style>
+    <marker id="oarr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker>
+  </defs>
+  <rect width="760" height="460" rx="16" fill="url(#oopbg)"/>
+  <text x="30" y="38" class="t">The Four Pillars of Object-Oriented Design</text>
+  <text x="30" y="60" class="note">objects bundle state + behavior — these four ideas keep that bundle honest</text>
+
+  <!-- Encapsulation (green) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="90" width="165" height="130" rx="10" fill="#34d399" class="pillar" stroke="#059669"/>
+    <text x="112" y="120" text-anchor="middle" class="pl">Encapsulation</text>
+    <rect x="46" y="138" width="133" height="22" rx="4" fill="#064e3b"/><text x="112" y="153" text-anchor="middle" class="cap" fill="#a7f3d0">private state + methods</text>
+    <text x="112" y="182" text-anchor="middle" class="cap">hide the data,</text>
+    <text x="112" y="198" text-anchor="middle" class="cap">guard every change</text>
+  </g>
+
+  <!-- Abstraction (blue) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.5s" fill="freeze"/>
+    <rect x="210" y="90" width="165" height="130" rx="10" fill="#60a5fa" class="pillar" stroke="#2563eb"/>
+    <text x="292" y="120" text-anchor="middle" class="pl">Abstraction</text>
+    <rect x="226" y="138" width="133" height="22" rx="4" fill="#1e3a5f"/><text x="292" y="153" text-anchor="middle" class="cap" fill="#bfdbfe">expose WHAT, hide HOW</text>
+    <text x="292" y="182" text-anchor="middle" class="cap">a clean interface</text>
+    <text x="292" y="198" text-anchor="middle" class="cap">over a messy engine</text>
+  </g>
+
+  <!-- Inheritance (purple) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <rect x="390" y="90" width="165" height="130" rx="10" fill="#c084fc" class="pillar" stroke="#9333ea"/>
+    <text x="472" y="120" text-anchor="middle" class="pl">Inheritance</text>
+    <rect x="406" y="138" width="133" height="22" rx="4" fill="#4c1d6e"/><text x="472" y="153" text-anchor="middle" class="cap" fill="#e9d5ff">an is-a relationship</text>
+    <text x="472" y="182" text-anchor="middle" class="cap">reuse a base type</text>
+    <text x="472" y="198" text-anchor="middle" class="cap">use sparingly</text>
+  </g>
+
+  <!-- Polymorphism (amber) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="570" y="90" width="165" height="130" rx="10" fill="#fbbf24" class="pillar" stroke="#d97706"/>
+    <text x="652" y="120" text-anchor="middle" class="pl">Polymorphism</text>
+    <rect x="586" y="138" width="133" height="22" rx="4" fill="#78350f"/><text x="652" y="153" text-anchor="middle" class="cap" fill="#fde68a">one message, many forms</text>
+    <text x="652" y="182" text-anchor="middle" class="cap">same call,</text>
+    <text x="652" y="198" text-anchor="middle" class="cap">type-specific behavior</text>
+  </g>
+
+  <!-- flow linking them -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.5s" fill="freeze"/>
+    <path d="M195,155 L210,155" stroke="#fbbf24" stroke-width="2" marker-end="url(#oarr)"/>
+    <path d="M375,155 L390,155" stroke="#fbbf24" stroke-width="2" marker-end="url(#oarr)"/>
+    <path d="M555,155 L570,155" stroke="#fbbf24" stroke-width="2" marker-end="url(#oarr)"/>
+    <text x="382" y="250" text-anchor="middle" class="cap" fill="#fbbf24" font-size="12">hide state → hide detail → share type → vary behavior behind one interface</text>
+  </g>
+
+  <!-- composition vs deep inheritance note -->
+  <rect x="30" y="280" width="705" height="150" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.6s" fill="freeze"/></rect>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.6s" fill="freeze"/>
+    <text x="46" y="306" fill="#f8fafc" font-size="14" font-weight="700">Composition over deep inheritance</text>
+
+    <text x="46" y="332" class="note" fill="#fca5a5">Deep inheritance (fragile):</text>
+    <rect x="46" y="342" width="150" height="20" rx="4" fill="#7f1d1d"/><text x="121" y="356" text-anchor="middle" fill="#fecaca" font-size="10">Vehicle</text>
+    <rect x="76" y="368" width="150" height="20" rx="4" fill="#7f1d1d"/><text x="151" y="382" text-anchor="middle" fill="#fecaca" font-size="10">Car : Vehicle</text>
+    <rect x="106" y="394" width="180" height="20" rx="4" fill="#7f1d1d"/><text x="196" y="408" text-anchor="middle" fill="#fecaca" font-size="10">FlyingCar : Car ... wrong shape</text>
+
+    <text x="410" y="332" class="note" fill="#86efac">Composition (flexible):</text>
+    <rect x="410" y="342" width="120" height="20" rx="4" fill="#065f46"/><text x="470" y="356" text-anchor="middle" fill="#a7f3d0" font-size="10">Car</text>
+    <rect x="410" y="368" width="150" height="20" rx="4" fill="#065f46"/><text x="485" y="382" text-anchor="middle" fill="#a7f3d0" font-size="10">has-a Engine</text>
+    <rect x="570" y="368" width="150" height="20" rx="4" fill="#065f46"/><text x="645" y="382" text-anchor="middle" fill="#a7f3d0" font-size="10">has-a Wheels</text>
+    <rect x="410" y="394" width="310" height="20" rx="4" fill="#065f46"/><text x="565" y="408" text-anchor="middle" fill="#a7f3d0" font-size="10">swap parts freely — no rigid ancestry</text>
+  </g>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="dibg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="diar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .lbl{fill:#0f172a;font-size:14px;font-weight:700}
+      .sub{fill:#0f172a;font-size:10px;font-family:monospace}
+      .note{fill:#94a3b8;font-size:12px}
+      .inj{fill:#fbbf24;font-size:11px;font-family:monospace}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="440" rx="16" fill="url(#dibg)"/>
+  <text x="30" y="38" class="t">Dependency Injection — the client depends only on an interface</text>
+
+  <!-- Injector / Main -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="70" width="200" height="120" rx="10" fill="#818cf8" stroke="#4f46e5" stroke-width="2"/>
+    <text x="140" y="98" text-anchor="middle" class="lbl">Injector / main()</text>
+    <rect x="56" y="112" width="168" height="26" rx="4" fill="#312e81"/><text x="140" y="129" text-anchor="middle" class="inj" fill="#c7d2fe">creates concretes</text>
+    <text x="140" y="158" text-anchor="middle" fill="#312e81" font-size="10">wires the object graph</text>
+    <text x="140" y="176" text-anchor="middle" fill="#312e81" font-size="10">the ONLY place `new` lives</text>
+  </g>
+
+  <!-- Client depends on interface -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.5s" fill="freeze"/>
+    <rect x="300" y="70" width="200" height="120" rx="10" fill="#60a5fa" stroke="#2563eb" stroke-width="2"/>
+    <text x="400" y="98" text-anchor="middle" class="lbl">OrderService (client)</text>
+    <rect x="316" y="112" width="168" height="26" rx="4" fill="#1e3a5f"/><text x="400" y="129" text-anchor="middle" class="inj" fill="#bfdbfe">__init__(n: Notifier)</text>
+    <text x="400" y="158" text-anchor="middle" fill="#1e3a5f" font-size="10">depends on the ABSTRACTION</text>
+    <text x="400" y="176" text-anchor="middle" fill="#1e3a5f" font-size="10">never constructs its deps</text>
+  </g>
+
+  <!-- Notifier interface -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <rect x="560" y="90" width="170" height="80" rx="10" fill="#fbbf24" stroke="#d97706" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="645" y="122" text-anchor="middle" class="lbl">«interface»</text>
+    <text x="645" y="144" text-anchor="middle" class="lbl">Notifier</text>
+    <text x="645" y="162" text-anchor="middle" fill="#78350f" font-size="10">notify(msg)</text>
+  </g>
+
+  <!-- arrows: injector injects into client; client depends on interface -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <path d="M240,130 L300,130" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#diar)"/>
+    <text x="270" y="120" text-anchor="middle" class="inj">injects</text>
+    <path d="M500,130 L560,130" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#diar)"/>
+    <text x="530" y="120" text-anchor="middle" class="inj">uses</text>
+  </g>
+
+  <!-- prod impl -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="510" y="230" width="220" height="80" rx="10" fill="#34d399" stroke="#059669" stroke-width="2"/>
+    <text x="620" y="260" text-anchor="middle" class="lbl">EmailNotifier (prod)</text>
+    <text x="620" y="282" text-anchor="middle" fill="#064e3b" font-size="11">sends real email</text>
+    <text x="620" y="299" text-anchor="middle" fill="#064e3b" font-size="10">implements Notifier</text>
+  </g>
+
+  <!-- test impl -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.5s" fill="freeze"/>
+    <rect x="510" y="330" width="220" height="80" rx="10" fill="#f87171" stroke="#dc2626" stroke-width="2"/>
+    <text x="620" y="360" text-anchor="middle" class="lbl">MockNotifier (test)</text>
+    <text x="620" y="382" text-anchor="middle" fill="#7f1d1d" font-size="11">records calls, sends nothing</text>
+    <text x="620" y="399" text-anchor="middle" fill="#7f1d1d" font-size="10">implements Notifier</text>
+  </g>
+
+  <!-- realizes arrows to interface -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.5s" fill="freeze"/>
+    <path d="M620,230 L645,172" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#diar)"/>
+    <path d="M535,330 C480,270 560,190 630,172" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#diar)"/>
+    <text x="700" y="205" text-anchor="middle" class="note" font-size="10">realize</text>
+  </g>
+
+  <!-- swap note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.9s" dur="0.6s" fill="freeze"/>
+    <rect x="40" y="230" width="440" height="180" rx="10" fill="#0b1220" stroke="#334155"/>
+    <text x="58" y="258" fill="#f8fafc" font-size="14" font-weight="700">Same client, two wirings — swap at the edge</text>
+    <text x="58" y="286" class="note" fill="#86efac">prod:  OrderService(EmailNotifier())</text>
+    <text x="58" y="310" class="note" fill="#fca5a5">test:  OrderService(MockNotifier())</text>
+    <text x="58" y="342" class="note">The client's code is IDENTICAL in both. Only the</text>
+    <text x="58" y="360" class="note">injector chooses which concrete to hand over.</text>
+    <text x="58" y="388" class="inj" fill="#fbbf24">→ testability, swappability, no hidden `new` inside logic</text>
+  </g>
+</svg>

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="umlbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .bx{stroke-width:2}
+      .bl{fill:#0f172a;font-size:13px;font-weight:700}
+      .rel{fill:#f8fafc;font-size:13px;font-weight:700}
+      .desc{fill:#94a3b8;font-size:11px}
+      .code{fill:#fbbf24;font-size:11px;font-family:monospace}
+      .line{stroke:#e2e8f0;stroke-width:2;fill:none}
+      .dash{stroke:#e2e8f0;stroke-width:2;fill:none;stroke-dasharray:6 4}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#umlbg)"/>
+  <text x="30" y="38" class="t">UML Class-Relationship Notation</text>
+  <text x="30" y="58" class="sub">the line between two boxes encodes ownership, lifecycle &amp; multiplicity — the diamond sits on the WHOLE</text>
+
+  <!-- ── INHERITANCE : hollow triangle ── -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="82" width="110" height="42" rx="6" fill="#60a5fa" class="bx" stroke="#2563eb"/>
+    <text x="95" y="108" text-anchor="middle" class="bl">Animal</text>
+    <rect x="300" y="82" width="110" height="42" rx="6" fill="#e0f2fe" class="bx" stroke="#2563eb"/>
+    <text x="355" y="108" text-anchor="middle" class="bl">Dog</text>
+    <!-- triangle points to parent (Animal, left) -->
+    <path class="line" d="M300,103 L172,103"/>
+    <path d="M150,103 L172,93 L172,113 Z" fill="#0f172a" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="440" y="98" class="rel">Inheritance &#8212; &#8220;is-a&#8221;</text>
+    <text x="440" y="115" class="desc">hollow triangle &#183; Dog is an Animal</text>
+  </g>
+
+  <!-- ── REALIZATION : dashed hollow triangle ── -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="152" width="110" height="42" rx="6" fill="#60a5fa" class="bx" stroke="#2563eb"/>
+    <text x="95" y="178" text-anchor="middle" class="bl">List</text>
+    <rect x="300" y="152" width="110" height="42" rx="6" fill="#e0f2fe" class="bx" stroke="#2563eb"/>
+    <text x="355" y="178" text-anchor="middle" class="bl">ArrayList</text>
+    <path class="dash" d="M300,173 L172,173"/>
+    <path d="M150,173 L172,163 L172,183 Z" fill="#0f172a" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="440" y="168" class="rel">Realization &#8212; &#8220;implements&#8221;</text>
+    <text x="440" y="185" class="desc">dashed + hollow triangle &#183; interface</text>
+  </g>
+
+  <!-- ── COMPOSITION : filled diamond ── -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="222" width="110" height="42" rx="6" fill="#34d399" class="bx" stroke="#059669"/>
+    <text x="95" y="248" text-anchor="middle" class="bl">House</text>
+    <rect x="300" y="222" width="110" height="42" rx="6" fill="#dcfce7" class="bx" stroke="#059669"/>
+    <text x="355" y="248" text-anchor="middle" class="bl">Room</text>
+    <path class="line" d="M300,243 L178,243"/>
+    <!-- FILLED diamond on the whole (House, left) -->
+    <path d="M150,243 L166,235 L182,243 L166,251 Z" fill="#e2e8f0" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="286" y="238" text-anchor="end" class="code">1..*</text>
+    <text x="440" y="238" class="rel">Composition &#8212; &#8220;owns-a&#8221;</text>
+    <text x="440" y="255" class="desc">FILLED diamond &#183; Room dies with House</text>
+  </g>
+
+  <!-- ── AGGREGATION : hollow diamond ── -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.0s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="292" width="110" height="42" rx="6" fill="#fbbf24" class="bx" stroke="#d97706"/>
+    <text x="95" y="318" text-anchor="middle" class="bl">Team</text>
+    <rect x="300" y="292" width="110" height="42" rx="6" fill="#fef3c7" class="bx" stroke="#d97706"/>
+    <text x="355" y="318" text-anchor="middle" class="bl">Player</text>
+    <path class="line" d="M300,313 L182,313"/>
+    <!-- HOLLOW diamond on the whole (Team, left) -->
+    <path d="M150,313 L166,305 L182,313 L166,321 Z" fill="#0f172a" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="286" y="308" text-anchor="end" class="code">0..*</text>
+    <text x="440" y="308" class="rel">Aggregation &#8212; &#8220;has-a&#8221;</text>
+    <text x="440" y="325" class="desc">hollow diamond &#183; Player outlives Team</text>
+  </g>
+
+  <!-- ── ASSOCIATION : plain arrow ── -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="362" width="110" height="42" rx="6" fill="#818cf8" class="bx" stroke="#4f46e5"/>
+    <text x="95" y="388" text-anchor="middle" class="bl">Driver</text>
+    <rect x="300" y="362" width="110" height="42" rx="6" fill="#ede9fe" class="bx" stroke="#4f46e5"/>
+    <text x="355" y="388" text-anchor="middle" class="bl">Car</text>
+    <path class="line" d="M150,383 L296,383"/>
+    <path d="M300,383 L288,377 L288,389 Z" fill="#e2e8f0"/>
+    <text x="440" y="378" class="rel">Association &#8212; &#8220;knows / uses&#8221;</text>
+    <text x="440" y="395" class="desc">plain arrow &#183; a structural link</text>
+  </g>
+
+  <!-- ── DEPENDENCY : dashed arrow ── -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="432" width="110" height="42" rx="6" fill="#f87171" class="bx" stroke="#dc2626"/>
+    <text x="95" y="458" text-anchor="middle" class="bl">OrderSvc</text>
+    <rect x="300" y="432" width="110" height="42" rx="6" fill="#fee2e2" class="bx" stroke="#dc2626"/>
+    <text x="355" y="458" text-anchor="middle" class="bl">Gateway</text>
+    <path class="dash" d="M150,453 L296,453"/>
+    <path d="M300,453 L288,447 L288,459 Z" fill="#e2e8f0"/>
+    <text x="440" y="448" class="rel">Dependency &#8212; &#8220;uses briefly&#8221;</text>
+    <text x="440" y="465" class="desc">dashed arrow &#183; transient, weakest link</text>
+  </g>
+
+  <!-- footer -->
+  <rect x="30" y="496" width="700" height="46" rx="10" fill="#0b1220" stroke="#334155" class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.8s" dur="0.6s" fill="freeze"/></rect>
+  <text x="46" y="516" fill="#86efac" font-size="12" font-weight="700">FILLED = FATAL: the part dies with the whole (composition). Hollow diamond = it floats free (aggregation).</text>
+  <text x="46" y="534" class="sub">The test: &#8220;delete the whole &#8594; should the part die?&#8221;  yes &#8594; composition &#183; no &#8594; aggregation. Diamond sits on the owner.</text>
+</svg>

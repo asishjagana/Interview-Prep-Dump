@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 480" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="seqbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="solid" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f8fafc"/></marker>
+    <marker id="open" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f8fafc" stroke-width="1.4"/></marker>
+    <marker id="openb" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#60a5fa" stroke-width="1.4"/></marker>
+    <marker id="openg" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#34d399" stroke-width="1.4"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .p{fill:#0f172a;font-size:13px;font-weight:700}
+      .ll{stroke:#64748b;stroke-width:1.6;stroke-dasharray:5 5}
+      .msg{fill:#e2e8f0;font-size:11px;font-family:monospace}
+      .note{fill:#94a3b8;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="780" height="480" rx="16" fill="url(#seqbg)"/>
+  <text x="30" y="38" class="t">Anatomy of a Sequence Diagram — time flows down</text>
+
+  <!-- participant boxes -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.1s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="60" width="120" height="34" rx="6" fill="#818cf8" stroke="#4f46e5" stroke-width="2"/><text x="120" y="82" text-anchor="middle" class="p">User</text>
+    <rect x="300" y="60" width="120" height="34" rx="6" fill="#60a5fa" stroke="#2563eb" stroke-width="2"/><text x="360" y="82" text-anchor="middle" class="p">Gateway</text>
+    <rect x="540" y="60" width="120" height="34" rx="6" fill="#34d399" stroke="#059669" stroke-width="2"/><text x="600" y="82" text-anchor="middle" class="p">Service</text>
+  </g>
+
+  <!-- lifelines -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="0.5s" fill="freeze"/>
+    <line x1="120" y1="94" x2="120" y2="410" class="ll"/>
+    <line x1="360" y1="94" x2="360" y2="410" class="ll"/>
+    <line x1="600" y1="94" x2="600" y2="410" class="ll"/>
+    <text x="120" y="430" text-anchor="middle" class="note">lifeline (dashed = existence over time)</text>
+  </g>
+
+  <!-- activation bars -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="353" y="140" width="14" height="200" rx="2" fill="#1e3a5f" stroke="#60a5fa"/>
+    <rect x="593" y="200" width="14" height="90" rx="2" fill="#064e3b" stroke="#34d399"/>
+    <text x="392" y="245" class="note" fill="#94a3b8">activation bar</text>
+    <text x="392" y="260" class="note" fill="#94a3b8">(busy; height = latency)</text>
+  </g>
+
+  <!-- msg 1: sync User -> Gateway -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <line x1="120" y1="140" x2="353" y2="140" stroke="#f8fafc" stroke-width="1.8" marker-end="url(#solid)"/>
+    <text x="236" y="132" text-anchor="middle" class="msg">request  (sync)</text>
+  </g>
+
+  <!-- msg 2: sync Gateway -> Service -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <line x1="367" y1="200" x2="593" y2="200" stroke="#f8fafc" stroke-width="1.8" marker-end="url(#solid)"/>
+    <text x="480" y="192" text-anchor="middle" class="msg">do work  (sync)</text>
+  </g>
+
+  <!-- msg 3: return Service -> Gateway (dashed) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.5s" fill="freeze"/>
+    <line x1="593" y1="290" x2="367" y2="290" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#open)"/>
+    <text x="480" y="282" text-anchor="middle" class="msg">result  (return)</text>
+  </g>
+
+  <!-- msg 4: async Gateway -> Service (open head) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>
+    <line x1="367" y1="320" x2="600" y2="320" stroke="#34d399" stroke-width="1.8" marker-end="url(#openg)"/>
+    <text x="484" y="312" text-anchor="middle" class="msg" fill="#6ee7b7">emit event  (async)</text>
+  </g>
+
+  <!-- msg 5: return Gateway -> User (dashed) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.5s" fill="freeze"/>
+    <line x1="353" y1="340" x2="120" y2="340" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#open)"/>
+    <text x="236" y="332" text-anchor="middle" class="msg">response  (return)</text>
+  </g>
+
+  <!-- legend -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.3s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="444" width="720" height="26" rx="8" fill="#0b1220" stroke="#334155"/>
+    <line x1="46" y1="457" x2="86" y2="457" stroke="#f8fafc" stroke-width="1.8" marker-end="url(#solid)"/><text x="94" y="461" class="note" fill="#e2e8f0">sync (blocks)</text>
+    <line x1="210" y1="457" x2="250" y2="457" stroke="#34d399" stroke-width="1.8" marker-end="url(#openg)"/><text x="258" y="461" class="note" fill="#6ee7b7">async (fire &amp; forget)</text>
+    <line x1="430" y1="457" x2="470" y2="457" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#open)"/><text x="478" y="461" class="note">dashed = return</text>
+    <rect x="620" y="450" width="12" height="14" rx="2" fill="#1e3a5f" stroke="#60a5fa"/><text x="640" y="461" class="note">= activation bar</text>
+  </g>
+</svg>

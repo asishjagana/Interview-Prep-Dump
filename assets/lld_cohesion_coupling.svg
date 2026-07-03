@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="ccbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="tang" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f87171"/></marker>
+    <marker id="tidy" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .h{font-size:14px;font-weight:700}
+      .cl{fill:#0f172a;font-size:12px;font-weight:700}
+      .note{fill:#94a3b8;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="460" rx="16" fill="url(#ccbg)"/>
+  <text x="30" y="38" class="t">Cohesion vs Coupling — the sweet spot</text>
+
+  <!-- ============ LEFT: bad ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="62" width="340" height="330" rx="12" fill="#1a1113" stroke="#7f1d1d" stroke-width="2"/>
+    <text x="200" y="88" text-anchor="middle" class="h" fill="#fca5a5">HIGH coupling &amp; LOW cohesion</text>
+    <text x="200" y="106" text-anchor="middle" class="note" fill="#fca5a5">tangled ball of mud</text>
+  </g>
+
+  <!-- tangled nodes -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="130" width="110" height="46" rx="6" fill="#f87171" stroke="#dc2626"/><text x="115" y="158" text-anchor="middle" class="cl">Order + Tax</text>
+    <rect x="230" y="130" width="110" height="46" rx="6" fill="#f87171" stroke="#dc2626"/><text x="285" y="158" text-anchor="middle" class="cl">User + Email</text>
+    <rect x="60" y="250" width="110" height="46" rx="6" fill="#f87171" stroke="#dc2626"/><text x="115" y="278" text-anchor="middle" class="cl">Report + SQL</text>
+    <rect x="230" y="250" width="110" height="46" rx="6" fill="#f87171" stroke="#dc2626"/><text x="285" y="278" text-anchor="middle" class="cl">Utils (grab-bag)</text>
+  </g>
+
+  <!-- tangled arrows: everything talks to everything, into internals -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.6s" fill="freeze"/>
+    <path d="M170,150 L230,150" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <path d="M170,168 L228,262" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <path d="M285,176 L285,248" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <path d="M232,272 L172,272" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <path d="M115,250 L115,178" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <path d="M170,262 L228,168" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <path d="M285,130 L120,130" stroke="#f87171" stroke-width="2" marker-end="url(#tang)"/>
+    <text x="200" y="336" text-anchor="middle" class="note" fill="#fca5a5">every class reaches into every other's guts</text>
+    <text x="200" y="356" text-anchor="middle" class="note" fill="#fca5a5">change one → break many · impossible to test alone</text>
+  </g>
+
+  <!-- ============ RIGHT: good ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.6s" fill="freeze"/>
+    <rect x="390" y="62" width="340" height="330" rx="12" fill="#0c1a14" stroke="#166534" stroke-width="2"/>
+    <text x="560" y="88" text-anchor="middle" class="h" fill="#86efac">LOW coupling &amp; HIGH cohesion</text>
+    <text x="560" y="106" text-anchor="middle" class="note" fill="#86efac">tidy modules, thin interfaces</text>
+  </g>
+
+  <!-- tidy modules -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="420" y="130" width="130" height="60" rx="8" fill="#34d399" stroke="#059669"/><text x="485" y="156" text-anchor="middle" class="cl">Orders</text><text x="485" y="176" text-anchor="middle" fill="#064e3b" font-size="10">orders only</text>
+    <rect x="580" y="130" width="120" height="60" rx="8" fill="#60a5fa" stroke="#2563eb"/><text x="640" y="156" text-anchor="middle" class="cl">Email</text><text x="640" y="176" text-anchor="middle" fill="#1e3a5f" font-size="10">email only</text>
+    <rect x="420" y="250" width="130" height="60" rx="8" fill="#fbbf24" stroke="#d97706"/><text x="485" y="276" text-anchor="middle" class="cl">Tax</text><text x="485" y="296" text-anchor="middle" fill="#78350f" font-size="10">tax only</text>
+    <rect x="580" y="250" width="120" height="60" rx="8" fill="#818cf8" stroke="#6366f1"/><text x="640" y="276" text-anchor="middle" class="cl">Reports</text><text x="640" y="296" text-anchor="middle" fill="#312e81" font-size="10">reports only</text>
+  </g>
+
+  <!-- tidy arrows: one-way, through interfaces -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.6s" fill="freeze"/>
+    <path d="M550,150 L580,150" stroke="#34d399" stroke-width="2" marker-end="url(#tidy)"/>
+    <path d="M485,190 L485,248" stroke="#34d399" stroke-width="2" marker-end="url(#tidy)"/>
+    <path d="M550,280 L580,280" stroke="#34d399" stroke-width="2" marker-end="url(#tidy)"/>
+    <text x="560" y="336" text-anchor="middle" class="note" fill="#86efac">each class = one job · talks via thin public APIs</text>
+    <text x="560" y="356" text-anchor="middle" class="note" fill="#86efac">change internals freely · test in isolation</text>
+  </g>
+
+  <!-- bottom banner -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="406" width="700" height="42" rx="10" fill="#0b1220" stroke="#334155"/>
+    <text x="380" y="425" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">The sweet spot: HIGH cohesion (things that belong together, together) + LOW coupling (depend on WHAT, not HOW)</text>
+    <text x="380" y="441" text-anchor="middle" class="note">Cohesion is the harder, more valuable dial — get it right and low coupling tends to follow.</text>
+  </g>
+</svg>
