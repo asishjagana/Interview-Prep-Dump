@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="scalebg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .ax{fill:#cbd5e1;font-size:13px;font-weight:700}
+      .cap{fill:#0f172a;font-size:12px;font-weight:700}
+      .sm{fill:#0f172a;font-size:11px}
+      .note{fill:#e2e8f0;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="470" rx="16" fill="url(#scalebg)"/>
+  <text x="30" y="40" class="t">Scale UP vs Scale OUT — two axes, two cost curves</text>
+  <text x="30" y="62" class="sub">vertical: one bigger box, easy but capped · horizontal: more boxes, complex but ~linear</text>
+
+  <!-- axes -->
+  <line x1="120" y1="410" x2="120" y2="90" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="120" y1="410" x2="700" y2="410" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="60" y="100" class="ax">scale</text>
+  <text x="70" y="116" class="ax">UP ↑</text>
+  <text x="600" y="440" class="ax">scale OUT →</text>
+
+  <!-- SQL vertical: growing single boxes going up (blue) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="150" y="350" width="40" height="40" rx="5" fill="#60a5fa" stroke="#2563eb"/>
+    <rect x="150" y="280" width="56" height="56" rx="5" fill="#60a5fa" stroke="#2563eb"/>
+    <rect x="150" y="180" width="76" height="80" rx="5" fill="#60a5fa" stroke="#2563eb"/>
+    <text x="150" y="165" class="ax" font-size="12" fill="#93c5fd">SQL: bigger box</text>
+    <line x1="150" y1="150" x2="240" y2="150" stroke="#f87171" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="150" y="140" class="ax" font-size="11" fill="#f87171">⛔ hardware ceiling</text>
+  </g>
+
+  <!-- NoSQL horizontal: many equal boxes going right (green) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="320" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="366" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="412" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="458" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="504" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="550" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="596" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <rect x="642" y="360" width="34" height="34" rx="5" fill="#34d399" stroke="#16a34a"/>
+    <text x="320" y="350" class="ax" font-size="12" fill="#6ee7b7">NoSQL: add commodity nodes → ~linear</text>
+  </g>
+
+  <!-- the scaling ladder (order of moves) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.6s" fill="freeze"/>
+    <rect x="300" y="95" width="380" height="150" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="320" y="120" class="cap" font-size="14">THE SCALING LADDER (cheapest → hardest)</text>
+    <text x="320" y="144" class="sm">1. Optimize: indexes, kill N+1, cache hot reads</text>
+    <text x="320" y="166" class="sm">2. Scale UP: bigger instance (1 config change)</text>
+    <text x="320" y="188" class="sm">3. Read replicas: offload reads (lag appears)</text>
+    <text x="320" y="210" class="sm">4. Shard: split writes by key (joins get hard)</text>
+    <text x="320" y="232" class="sm">5. Re-platform: NewSQL / purpose-built NoSQL</text>
+  </g>
+
+  <!-- read vs write callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.6s" fill="freeze"/>
+    <text x="120" y="452" class="note">READS scale with replicas + cache · WRITES scale only with sharding — the write path is the real ceiling</text>
+  </g>
+</svg>

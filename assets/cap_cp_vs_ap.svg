@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="capdbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:15px;font-weight:800}
+      .row{fill:#0f172a;font-size:12px}
+      .q{fill:#f8fafc;font-size:14px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="460" rx="16" fill="url(#capdbg)"/>
+  <text x="30" y="40" class="t">CAP: P is mandatory — the real choice is CP vs AP</text>
+  <text x="30" y="62" class="sub">networks partition, so you can't drop P · "CA" only exists on a single node (not distributed)</text>
+
+  <!-- the question -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="230" y="82" width="300" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="106" text-anchor="middle" class="hd">Network partition happens</text>
+    <text x="380" y="126" text-anchor="middle" class="row">a node can't reach its peers — now what?</text>
+  </g>
+  <line x1="330" y1="134" x2="200" y2="164" stroke="#64748b" stroke-width="2"/>
+  <line x1="430" y1="134" x2="560" y2="164" stroke="#64748b" stroke-width="2"/>
+
+  <!-- CP -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="164" width="345" height="130" rx="10" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <text x="48" y="190" class="hd">CP — keep Consistency, drop Availability</text>
+    <text x="48" y="214" class="row">refuse/err on the minority side rather than</text>
+    <text x="48" y="232" class="row">serve possibly-wrong data</text>
+    <text x="48" y="256" class="row" font-style="italic">HBase, MongoDB (default), Zookeeper, etcd,</text>
+    <text x="48" y="274" class="row" font-style="italic">Spanner → banks, inventory, config, locks</text>
+  </g>
+  <!-- AP -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="385" y="164" width="345" height="130" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="403" y="190" class="hd">AP — keep Availability, drop Consistency</text>
+    <text x="403" y="214" class="row">answer from local state (maybe stale),</text>
+    <text x="403" y="232" class="row">reconcile after the partition heals</text>
+    <text x="403" y="256" class="row" font-style="italic">Cassandra, DynamoDB, Riak, Couch →</text>
+    <text x="403" y="274" class="row" font-style="italic">feeds, carts, counts, presence</text>
+  </g>
+
+  <!-- CA myth -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="306" width="700" height="52" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="380" y="330" text-anchor="middle" class="hd">⛔ "CA" is a myth for distributed systems</text>
+    <text x="380" y="350" text-anchor="middle" class="row">you can't opt out of partitions — CA only describes a single non-distributed node</text>
+  </g>
+
+  <!-- nuance -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="370" width="700" height="76" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="48" y="394" class="hd">The nuance interviewers want</text>
+    <text x="48" y="416" class="row">• CAP is a knife-edge (only during a partition) · PACELC adds the Else: latency vs consistency always</text>
+    <text x="48" y="436" class="row">• Choice is per-operation & tunable (quorum R+W>N), not one label for the whole database</text>
+  </g>
+</svg>

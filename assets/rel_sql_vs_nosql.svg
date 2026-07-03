@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="relbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:16px;font-weight:800}
+      .lbl{fill:#e2e8f0;font-size:12px;font-weight:600}
+      .cell{fill:#0f172a;font-size:11px}
+      .note{fill:#f8fafc;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="470" rx="16" fill="url(#relbg)"/>
+  <text x="30" y="40" class="t">SQL vs NoSQL — the same data, two shapes</text>
+  <text x="30" y="62" class="sub">normalize + JOIN + scale-up  vs  denormalize + single-lookup + scale-out · pick by access pattern</text>
+
+  <!-- ===== SQL side (left, blue) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="82" width="340" height="150" rx="10" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <text x="48" y="108" class="hd">RELATIONAL — normalized tables</text>
+    <!-- Users table -->
+    <rect x="48" y="122" width="140" height="88" rx="6" fill="#bfdbfe" stroke="#2563eb"/>
+    <text x="56" y="138" class="cell" font-weight="700">Users</text>
+    <line x1="48" y1="144" x2="188" y2="144" stroke="#2563eb"/>
+    <text x="56" y="160" class="cell">id · name</text>
+    <text x="56" y="178" class="cell">123 · Ada</text>
+    <text x="56" y="196" class="cell">124 · Linus</text>
+    <!-- Orders table -->
+    <rect x="212" y="122" width="140" height="88" rx="6" fill="#bfdbfe" stroke="#2563eb"/>
+    <text x="220" y="138" class="cell" font-weight="700">Orders</text>
+    <line x1="212" y1="144" x2="352" y2="144" stroke="#2563eb"/>
+    <text x="220" y="160" class="cell">user_id · total</text>
+    <text x="220" y="178" class="cell">123 · $40</text>
+    <text x="220" y="196" class="cell">123 · $12</text>
+    <!-- FK link -->
+    <path d="M188 166 L212 166" stroke="#dc2626" stroke-width="2" marker-end="url(#fk)"/>
+  </g>
+  <defs><marker id="fk" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker></defs>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <text x="200" y="252" text-anchor="middle" class="lbl">JOIN at read time · ACID · scale-UP (bigger box)</text>
+    <rect x="150" y="262" width="100" height="52" rx="6" fill="#60a5fa" stroke="#2563eb" stroke-width="2"/>
+    <text x="200" y="292" text-anchor="middle" class="cell" font-weight="700">1 big node</text>
+  </g>
+
+  <!-- ===== NoSQL side (right, green) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="390" y="82" width="340" height="150" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="408" y="108" class="hd">NoSQL — one denormalized document</text>
+    <rect x="408" y="122" width="304" height="88" rx="6" fill="#bbf7d0" stroke="#16a34a"/>
+    <text x="418" y="140" class="cell">{ _id: 123, name: "Ada",</text>
+    <text x="418" y="160" class="cell">&#160;&#160;orders: [ { total: $40 },</text>
+    <text x="418" y="180" class="cell">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{ total: $12 } ] }</text>
+    <text x="418" y="200" class="cell" font-weight="700">one read by _id — no JOIN</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <text x="560" y="252" text-anchor="middle" class="lbl">single-key lookup · BASE · scale-OUT (more boxes)</text>
+    <rect x="470" y="262" width="52" height="52" rx="6" fill="#34d399" stroke="#16a34a" stroke-width="2"/>
+    <rect x="534" y="262" width="52" height="52" rx="6" fill="#34d399" stroke="#16a34a" stroke-width="2"/>
+    <rect x="598" y="262" width="52" height="52" rx="6" fill="#34d399" stroke="#16a34a" stroke-width="2"/>
+  </g>
+
+  <!-- ===== verdict ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.1s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="342" width="700" height="104" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="380" y="368" text-anchor="middle" class="hd">The deciding question is the ACCESS PATTERN, not "which is faster"</text>
+    <text x="50" y="394" class="cell" font-size="12">• Relationships explored many ways, strong consistency, ad-hoc reporting  →  SQL</text>
+    <text x="50" y="416" class="cell" font-size="12">• One dominant lookup key, write-heavy at massive scale, evolving schema  →  NoSQL</text>
+    <text x="50" y="438" class="cell" font-size="12">• Need both guarantees + horizontal scale  →  NewSQL (Spanner, CockroachDB) or polyglot persistence</text>
+  </g>
+</svg>

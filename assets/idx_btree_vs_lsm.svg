@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="idxbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="iar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:14px;font-weight:800}
+      .nd{fill:#0f172a;font-size:11px;font-weight:700}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="500" rx="16" fill="url(#idxbg)"/>
+  <text x="30" y="40" class="t">Indexes: read-optimized (B-tree) vs write-optimized (LSM)</text>
+  <text x="30" y="62" class="sub">every index speeds reads and slows writes — the structure decides which side wins</text>
+
+  <!-- B-TREE (left, blue) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="80" width="350" height="230" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="48" y="104" class="hd" fill="#93c5fd">B-TREE / B+TREE — sorted, balanced</text>
+    <text x="48" y="122" class="cap">O(log N) lookup · great for RANGE queries · update-in-place</text>
+    <!-- root -->
+    <rect x="160" y="134" width="90" height="26" rx="5" fill="#60a5fa"/><text x="205" y="152" text-anchor="middle" class="nd">[ 30 | 60 ]</text>
+    <!-- children -->
+    <rect x="52" y="196" width="80" height="24" rx="5" fill="#bfdbfe"/><text x="92" y="213" text-anchor="middle" class="nd">10 20</text>
+    <rect x="165" y="196" width="80" height="24" rx="5" fill="#bfdbfe"/><text x="205" y="213" text-anchor="middle" class="nd">40 50</text>
+    <rect x="278" y="196" width="80" height="24" rx="5" fill="#bfdbfe"/><text x="318" y="213" text-anchor="middle" class="nd">70 90</text>
+    <line x1="185" y1="160" x2="92" y2="196" stroke="#64748b" marker-end="url(#iar)"/>
+    <line x1="205" y1="160" x2="205" y2="196" stroke="#64748b" marker-end="url(#iar)"/>
+    <line x1="225" y1="160" x2="318" y2="196" stroke="#64748b" marker-end="url(#iar)"/>
+    <!-- leaf link (B+) -->
+    <line x1="132" y1="208" x2="165" y2="208" stroke="#34d399" stroke-dasharray="3 3"/>
+    <line x1="245" y1="208" x2="278" y2="208" stroke="#34d399" stroke-dasharray="3 3"/>
+    <text x="48" y="248" class="cap">leaves linked in order → range scans walk sideways</text>
+    <text x="48" y="286" class="hd" fill="#93c5fd" font-size="12">Reads: fast &amp; predictable   Writes: rebalance on disk</text>
+  </g>
+
+  <!-- LSM (right, green) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="400" y="80" width="330" height="230" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="418" y="104" class="hd" fill="#6ee7b7">LSM-TREE — log-structured</text>
+    <text x="418" y="122" class="cap">buffer writes in RAM, flush &amp; merge to disk later</text>
+    <!-- memtable -->
+    <rect x="418" y="134" width="140" height="30" rx="5" fill="#34d399"/><text x="488" y="154" text-anchor="middle" class="nd">MemTable (RAM)</text>
+    <text x="568" y="153" class="cap">← writes land here (fast, sequential)</text>
+    <!-- sstables -->
+    <rect x="418" y="182" width="90" height="24" rx="5" fill="#bbf7d0"/><text x="463" y="199" text-anchor="middle" class="nd">SSTable 1</text>
+    <rect x="418" y="212" width="90" height="24" rx="5" fill="#bbf7d0"/><text x="463" y="229" text-anchor="middle" class="nd">SSTable 2</text>
+    <rect x="418" y="242" width="90" height="24" rx="5" fill="#bbf7d0"/><text x="463" y="259" text-anchor="middle" class="nd">SSTable 3</text>
+    <path d="M540 200 L640 200" stroke="#94a3b8" marker-end="url(#iar)"/>
+    <text x="522" y="199" class="cap">flush</text>
+    <rect x="560" y="212" width="150" height="30" rx="5" fill="#16a34a"/><text x="635" y="232" text-anchor="middle" class="nd" fill="#fff">compaction merges</text>
+    <text x="418" y="290" class="hd" fill="#6ee7b7" font-size="12">Writes: sequential &amp; fast   Reads: check many files (amplification)</text>
+  </g>
+
+  <!-- trade table -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="326" width="700" height="88" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="48" y="350" class="hd">THE UNIVERSAL TRADE — an index is a bet on read-heaviness</text>
+    <text x="48" y="374" class="cap" font-size="12">• Reads: O(N) full scan → O(log N) / O(1) lookup     • Writes: +1 structure to maintain per index</text>
+    <text x="48" y="396" class="cap" font-size="12">• B-tree/Hash → read-heavy OLTP     • LSM → write-heavy (Cassandra, RocksDB)     • Hash → exact-match only, no ranges</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="424" width="700" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="452" text-anchor="middle" class="hd">Index the columns you FILTER/JOIN/SORT on — measure with EXPLAIN ANALYZE, don't guess</text>
+  </g>
+</svg>

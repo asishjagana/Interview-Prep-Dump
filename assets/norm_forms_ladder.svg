@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="normbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="nar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .step{fill:#0f172a;font-size:13px;font-weight:800}
+      .rule{fill:#0f172a;font-size:11px}
+      .side{fill:#e2e8f0;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="480" rx="16" fill="url(#normbg)"/>
+  <text x="30" y="40" class="t">Normalize until it hurts, then denormalize until it works</text>
+  <text x="30" y="62" class="sub">1NF → 2NF → 3NF removes redundancy · denormalization adds it back for read speed</text>
+
+  <!-- ladder up (blue = normalize) -->
+  <text x="60" y="98" class="side" fill="#93c5fd">◄ NORMALIZE (integrity, less storage, slower reads)</text>
+
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="112" width="640" height="52" rx="8" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <text x="76" y="134" class="step">1NF — atomic</text>
+    <text x="76" y="154" class="rule">one value per cell · no comma-lists, no repeating groups</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="172" width="640" height="52" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="76" y="194" class="step">2NF — no partial dependency</text>
+    <text x="76" y="214" class="rule">every non-key column depends on the WHOLE composite key</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+    <rect x="60" y="232" width="640" height="52" rx="8" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+    <text x="76" y="254" class="step">3NF — no transitive dependency</text>
+    <text x="76" y="274" class="rule">non-key columns depend on the key only, not on each other (zip→city→key)</text>
+  </g>
+
+  <text x="330" y="308" text-anchor="middle" class="side">▼ the pivot: reads too slow, too many JOINs ▼</text>
+
+  <!-- denormalize (green) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.6s" fill="freeze"/>
+    <rect x="60" y="320" width="640" height="80" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="76" y="344" class="step">DENORMALIZE — add redundancy back on purpose</text>
+    <text x="76" y="366" class="rule">• precomputed counters (likes_count) · • copy user_name into Orders</text>
+    <text x="76" y="386" class="rule">• materialized views · trade: fast reads, but writes fan out &amp; can drift</text>
+  </g>
+  <text x="700" y="418" text-anchor="end" class="side" fill="#6ee7b7">DENORMALIZE (fast reads, write cost, drift risk) ►</text>
+
+  <!-- verdict -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.6s" fill="freeze"/>
+    <rect x="60" y="428" width="640" height="38" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="380" y="452" text-anchor="middle" class="step">Normalize by default; denormalize only where a measured read path demands it</text>
+  </g>
+</svg>

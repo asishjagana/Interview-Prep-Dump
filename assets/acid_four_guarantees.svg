@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="acidbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .let{fill:#0f172a;font-size:26px;font-weight:800}
+      .name{fill:#0f172a;font-size:14px;font-weight:700}
+      .desc{fill:#0f172a;font-size:11px}
+      .mech{fill:#0f172a;font-size:10px;font-style:italic}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="500" rx="16" fill="url(#acidbg)"/>
+  <text x="30" y="40" class="t">ACID — the four guarantees of a transaction</text>
+  <text x="30" y="62" class="sub">a bundle of operations that succeeds completely or not at all · the mechanism is named on each row</text>
+
+  <!-- A -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="82" width="680" height="82" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <rect x="52" y="96" width="56" height="54" rx="8" fill="#34d399"/>
+    <text x="80" y="132" text-anchor="middle" class="let">A</text>
+    <text x="122" y="112" class="name">Atomicity — all or nothing</text>
+    <text x="122" y="132" class="desc">the whole transaction commits, or it fully rolls back — never half-applied</text>
+    <text x="122" y="152" class="mech">mechanism: Write-Ahead Log (WAL) → replay/undo on crash</text>
+  </g>
+  <!-- C -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="174" width="680" height="82" rx="10" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <rect x="52" y="188" width="56" height="54" rx="8" fill="#60a5fa"/>
+    <text x="80" y="224" text-anchor="middle" class="let">C</text>
+    <text x="122" y="204" class="name">Consistency — rules always hold</text>
+    <text x="122" y="224" class="desc">every commit leaves the DB valid: constraints, FKs, triggers never violated</text>
+    <text x="122" y="244" class="mech">mechanism: NOT NULL / UNIQUE / FOREIGN KEY / CHECK constraints</text>
+  </g>
+  <!-- I -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="266" width="680" height="82" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <rect x="52" y="280" width="56" height="54" rx="8" fill="#818cf8"/>
+    <text x="80" y="316" text-anchor="middle" class="let">I</text>
+    <text x="122" y="296" class="name">Isolation — no interference</text>
+    <text x="122" y="316" class="desc">concurrent transactions behave as if run one at a time (tunable by level)</text>
+    <text x="122" y="336" class="mech">mechanism: Locks or MVCC · levels: Read Committed → Serializable</text>
+  </g>
+  <!-- D -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="40" y="358" width="680" height="82" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <rect x="52" y="372" width="56" height="54" rx="8" fill="#fbbf24"/>
+    <text x="80" y="408" text-anchor="middle" class="let">D</text>
+    <text x="122" y="388" class="name">Durability — survives crashes</text>
+    <text x="122" y="408" class="desc">once committed, data persists through power loss, crash, reboot</text>
+    <text x="122" y="428" class="mech">mechanism: fsync WAL to non-volatile storage before ACK</text>
+  </g>
+
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.6s" fill="freeze"/>
+    <text x="380" y="470" text-anchor="middle" class="sub" font-size="13" fill="#e2e8f0">Cost: locking + logging + fsync make ACID slower &amp; hard to distribute — the trade BASE / CAP make explicit</text>
+  </g>
+</svg>

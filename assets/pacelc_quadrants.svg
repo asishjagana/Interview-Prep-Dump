@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 490" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="pacbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .fx{fill:#f8fafc;font-size:13px;font-weight:700}
+      .qh{fill:#0f172a;font-size:15px;font-weight:800}
+      .qd{fill:#0f172a;font-size:11px}
+      .axl{fill:#cbd5e1;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="490" rx="16" fill="url(#pacbg)"/>
+  <text x="30" y="40" class="t">PACELC — the trade you make even when nothing is broken</text>
+  <text x="30" y="62" class="sub">if Partition → Availability vs Consistency (=CAP) · Else → Latency vs Consistency</text>
+
+  <!-- formula strip -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="78" width="700" height="40" rx="8" fill="#1e293b" stroke="#475569"/>
+    <text x="380" y="104" text-anchor="middle" class="fx"><tspan fill="#f87171">P</tspan> → <tspan fill="#34d399">A</tspan> or <tspan fill="#60a5fa">C</tspan>   |   <tspan fill="#fbbf24">E</tspan>lse → <tspan fill="#34d399">L</tspan> or <tspan fill="#60a5fa">C</tspan>        (CAP is only the P half)</text>
+  </g>
+
+  <!-- axis labels -->
+  <text x="215" y="150" text-anchor="middle" class="axl">ELSE → Latency (fast)</text>
+  <text x="560" y="150" text-anchor="middle" class="axl">ELSE → Consistency (correct)</text>
+  <text x="52" y="240" class="axl" transform="rotate(-90 52 240)">PARTITION → Availability</text>
+  <text x="52" y="410" class="axl" transform="rotate(-90 52 410)">PARTITION → Consistency</text>
+
+  <!-- PA/EL -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="70" y="160" width="310" height="140" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="90" y="188" class="qh">PA / EL — speed at all times</text>
+    <text x="90" y="212" class="qd">partition → stay available · normal → lowest latency</text>
+    <text x="90" y="236" class="qd">reads from any node; reconcile conflicts later</text>
+    <text x="90" y="266" class="qd" font-style="italic" font-weight="700">Cassandra · DynamoDB · Riak · Couchbase</text>
+    <text x="90" y="286" class="qd">→ feeds, carts, catalogs, telemetry</text>
+  </g>
+  <!-- PC/EC -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="400" y="160" width="330" height="140" rx="10" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <text x="420" y="188" class="qh">PC / EC — truth at all times</text>
+    <text x="420" y="212" class="qd">partition → stay consistent · normal → still consistent</text>
+    <text x="420" y="236" class="qd">coordinate on every read/write; pay the latency</text>
+    <text x="420" y="266" class="qd" font-style="italic" font-weight="700">HBase · BigTable · VoltDB · Spanner*</text>
+    <text x="420" y="286" class="qd">→ ledgers, inventory, config, coordination</text>
+  </g>
+  <!-- PA/EC -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="70" y="312" width="310" height="120" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="90" y="340" class="qh">PA / EC — rare</text>
+    <text x="90" y="364" class="qd">available under partition, but consistent when healthy</text>
+    <text x="90" y="388" class="qd">uncommon combination in practice</text>
+    <text x="90" y="416" class="qd" font-style="italic">(some MySQL cluster configs)</text>
+  </g>
+  <!-- PC/EL -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.5s" fill="freeze"/>
+    <rect x="400" y="312" width="330" height="120" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="420" y="340" class="qh">PC / EL — hybrid</text>
+    <text x="420" y="364" class="qd">consistent under partition, low-latency when healthy</text>
+    <text x="420" y="388" class="qd">fast normal reads, but blocks if primary is lost</text>
+    <text x="420" y="416" class="qd" font-style="italic" font-weight="700">MongoDB (default) · PNUTS</text>
+  </g>
+
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.6s" dur="0.6s" fill="freeze"/>
+    <text x="380" y="466" text-anchor="middle" class="sub" font-size="13" fill="#e2e8f0">Tunable stores let you pick the quadrant PER QUERY (consistency_level = ONE vs QUORUM)</text>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="basebg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <linearGradient id="spec" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:15px;font-weight:800}
+      .row{fill:#0f172a;font-size:12px}
+      .side{fill:#e2e8f0;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="470" rx="16" fill="url(#basebg)"/>
+  <text x="30" y="40" class="t">BASE — trade consistency for availability &amp; scale</text>
+  <text x="30" y="62" class="sub">the AP end of the spectrum: stay Up and Fast, converge to correct Eventually</text>
+
+  <!-- two panels -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="82" width="345" height="150" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="48" y="108" class="hd">BASE (NoSQL, AP)</text>
+    <text x="48" y="132" class="row"><tspan font-weight="700">B</tspan>asically Available — always answers</text>
+    <text x="48" y="154" class="row"><tspan font-weight="700">S</tspan>oft state — data drifts as it replicates</text>
+    <text x="48" y="176" class="row"><tspan font-weight="700">E</tspan>ventual consistency — converges, given time</text>
+    <text x="48" y="206" class="row" font-style="italic">Cassandra · DynamoDB · Riak · feeds, counts, carts</text>
+  </g>
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="385" y="82" width="345" height="150" rx="10" fill="#e0f2fe" stroke="#2563eb" stroke-width="2"/>
+    <text x="403" y="108" class="hd">ACID (relational, CP)</text>
+    <text x="403" y="132" class="row">Atomic · Consistent · Isolated · Durable</text>
+    <text x="403" y="154" class="row">every read sees the latest write, guaranteed</text>
+    <text x="403" y="176" class="row">strong locking / coordination → hard to scale out</text>
+    <text x="403" y="206" class="row" font-style="italic">Postgres · MySQL · money, inventory, bookings</text>
+  </g>
+
+  <!-- spectrum bar -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.6s" fill="freeze"/>
+    <text x="30" y="272" class="side">The consistency spectrum (not a binary)</text>
+    <rect x="30" y="284" width="700" height="20" rx="10" fill="url(#spec)"/>
+    <text x="40" y="330" class="side" fill="#6ee7b7">Eventual</text>
+    <text x="230" y="330" class="side" fill="#a5b4fc">Read-your-writes</text>
+    <text x="430" y="330" class="side" fill="#93c5fd">Causal</text>
+    <text x="640" y="330" class="side" fill="#93c5fd">Strong / Linearizable</text>
+    <text x="40" y="348" class="sub">weakest, fastest</text>
+    <text x="600" y="348" class="sub">strongest, slowest</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="366" width="700" height="86" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="48" y="390" class="hd">Choose PER DATA TYPE, not per system</text>
+    <text x="48" y="414" class="row">• BASE: feeds, like counts, presence, recommendations, sessions (stale = harmless)</text>
+    <text x="48" y="436" class="row">• ACID: balances, inventory, "last item", auth changes (stale = an incident)</text>
+  </g>
+</svg>
