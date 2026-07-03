@@ -151,17 +151,18 @@ mindmap
 ## 7. Worked Mini-Walkthrough — "Design a URL Shortener"
 
 ```mermaid
-sequenceDiagram
-    participant C as Candidate
-    participant I as Interviewer
-    C->>I: ① "Functional: shorten URL, redirect. Non-func: low-latency redirect, high availability. Custom aliases — in scope?"
-    I->>C: "Skip custom aliases."
-    C->>C: ② Estimate — 100M new/mo → ~33 write QPS, ~3.3k read QPS, ~18 TB / 10 yr (with replicas)
-    C->>I: ③ "Client → LB → API → KV store (hash→URL). Cache hot links. 7-char base62 key."
-    I->>C: "How do you avoid collisions on key generation?"
-    C->>C: ④ Deep dive — pre-generated key service / counter + base62 vs hash+retry; cache for the viral 20%
-    C->>I: ⑤ "Trade-off: counter is simple but a SPOF; I'd shard the counter range. SPOF = the KV store → replicate."
-    Note over C,I: Drove all 5 phases, ended on trade-offs ✅
+graph LR
+    A["1. Clarify Scope<br/>Functional: shorten, redirect<br/>Non-functional: latency, availability"] -->
+    B["2. Estimate<br/>100M new/month<br/>33 write QPS, 3.3k read QPS"] -->
+    C["3. Design<br/>LB → API → KV Store<br/>7-char base62 keys"] -->
+    D["4. Deep Dive<br/>Key generation strategies<br/>Cache hot links"] -->
+    E["5. Trade-offs<br/>Replication, sharding<br/>SPOF mitigation"]
+    
+    style A fill:#e1f5ff
+    style B fill:#f3e5f5
+    style C fill:#e8f5e9
+    style D fill:#fff3e0
+    style E fill:#fce4ec
 ```
 
 > Notice the estimation step (②) *proved* this system fits on a couple of disks and is read-dominated — which made caching the headline decision and ruled out premature sharding. See the full numbers in [Back_of_the_Envelope_Estimation.md](./Back_of_the_Envelope_Estimation.md#8-worked-example-b--design-a-url-shortener).
