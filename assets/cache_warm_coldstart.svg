@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cwbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{fill:#e2e8f0;font-size:14px;font-weight:700}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#cwbg)"/>
+  <text x="30" y="34" class="t">Cache Warming: Cold Miss-Storm vs. Pre-Warmed Smooth Ramp</text>
+  <line x1="380" y1="50" x2="380" y2="356" stroke="#334155" stroke-width="1"/>
+
+  <!-- ===================== PANEL 1: COLD CUTOVER ===================== -->
+  <text x="30" y="60" class="h">COLD CUTOVER (no warming)</text>
+  <text x="30" y="76" class="note">deploy / failover moment — 8 requests arrive at once</text>
+
+  <g id="wave1">
+    <animateTransform attributeName="transform" type="translate" values="0,0;0,0;0,173;0,173;0,173;0,173" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;1;1;0;0;1" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <circle cx="70" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="92" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="114" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="136" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="158" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="180" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="202" cy="92" r="6" fill="#818cf8"/>
+    <circle cx="224" cy="92" r="6" fill="#818cf8"/>
+  </g>
+
+  <rect x="60" y="112" width="190" height="55" rx="8" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="155" y="134" text-anchor="middle" class="h" fill="#94a3b8">CACHE</text>
+  <text x="155" y="152" text-anchor="middle" class="note" fill="#f87171">0% populated</text>
+
+  <rect id="db1" x="60" y="250" width="190" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2">
+    <animate attributeName="fill" values="#1e293b;#1e293b;#1e293b;#3b1d1d;#3b1d1d;#1e293b" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="stroke" values="#475569;#475569;#475569;#f87171;#f87171;#475569" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="155" y="270" text-anchor="middle" class="h">DATABASE</text>
+  <text x="155" y="288" text-anchor="middle" class="note">provisioned for ~2,000 QPS</text>
+
+  <rect id="bar1" x="270" y="300" width="24" height="0" fill="#f87171">
+    <animate attributeName="height" values="0;0;0;90;90;0" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="y" values="300;300;300;210;210;300" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="283" y="200" text-anchor="middle" class="note" fill="#f87171" opacity="0">⚠ 20x SPIKE
+    <animate attributeName="opacity" values="0;0;0;1;1;0" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="155" y="335" text-anchor="middle" class="note" fill="#f87171" opacity="0">MISS STORM — all requests hit DB at once
+    <animate attributeName="opacity" values="0;0;0;1;1;0" keyTimes="0;0.043;0.186;0.23;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- ===================== PANEL 2: PRE-WARMED ===================== -->
+  <text x="400" y="60" class="h">PRE-WARMED (warming job ran first)</text>
+  <text x="400" y="76" class="note" opacity="1">warming job fills cache before traffic arrives
+    <animate attributeName="opacity" values="1;1;1;0;0;0;0;1" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="400" y="76" class="note" fill="#bbf7d0" opacity="0">then requests arrive — most now HIT locally
+    <animate attributeName="opacity" values="0;0;0;1;1;1;1;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <rect x="400" y="112" width="80" height="55" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="2"/>
+  <text x="440" y="134" text-anchor="middle" class="note" fill="#c7d2fe">WARMING</text>
+  <text x="440" y="150" text-anchor="middle" class="note" fill="#c7d2fe">JOB</text>
+
+  <circle cx="486" cy="139" r="4" fill="#a5b4fc">
+    <animate attributeName="cx" values="486;500;486" dur="0.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0;0;0;0;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="486" cy="139" r="4" fill="#a5b4fc">
+    <animate attributeName="cx" values="486;500;486" dur="0.6s" begin="0.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0;0;0;0;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="486" cy="139" r="4" fill="#a5b4fc">
+    <animate attributeName="cx" values="486;500;486" dur="0.6s" begin="0.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0;0;0;0;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <rect id="cache2" x="500" y="112" width="190" height="55" rx="8" fill="#1e293b" stroke="#60a5fa" stroke-width="2">
+    <animate attributeName="stroke" values="#60a5fa;#60a5fa;#34d399;#34d399;#34d399;#34d399;#34d399;#60a5fa" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <rect id="fill2" x="504" y="163" width="182" height="0" fill="#34d399" opacity="0.7">
+    <animate attributeName="height" values="0;0;48;48;48;48;48;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="y" values="163;163;115;115;115;115;115;163" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="595" y="128" text-anchor="middle" class="h" fill="#94a3b8">CACHE</text>
+  <text x="595" y="148" text-anchor="middle" class="note" fill="#fbbf24" opacity="1">0% populated
+    <animate attributeName="opacity" values="1;1;0;0;0;0;0;1" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="595" y="148" text-anchor="middle" class="note" fill="#bbf7d0" opacity="0">90% populated
+    <animate attributeName="opacity" values="0;0;1;1;1;1;1;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <g id="wave2stop">
+    <animateTransform attributeName="transform" type="translate" values="0,0;0,0;0,0;0,0;0,48;0,48;0,48;0,0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0;1;1;0;0;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <circle cx="510" cy="92" r="6" fill="#34d399"/>
+    <circle cx="533" cy="92" r="6" fill="#34d399"/>
+    <circle cx="556" cy="92" r="6" fill="#34d399"/>
+    <circle cx="579" cy="92" r="6" fill="#34d399"/>
+    <circle cx="602" cy="92" r="6" fill="#34d399"/>
+    <circle cx="625" cy="92" r="6" fill="#34d399"/>
+  </g>
+
+  <g id="wave2cont">
+    <animateTransform attributeName="transform" type="translate" values="0,0;0,0;0,0;0,0;0,89;0,178;0,178;0,0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0;1;1;1;0;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <circle cx="648" cy="92" r="6" fill="#60a5fa"/>
+    <circle cx="671" cy="92" r="6" fill="#60a5fa"/>
+  </g>
+
+  <rect id="db2" x="500" y="250" width="190" height="50" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#475569;#475569;#475569;#475569;#60a5fa;#60a5fa;#475569" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="595" y="270" text-anchor="middle" class="h">DATABASE</text>
+  <text x="595" y="288" text-anchor="middle" class="note">provisioned for ~2,000 QPS</text>
+
+  <rect id="bar2" x="700" y="300" width="20" height="0" fill="#60a5fa">
+    <animate attributeName="height" values="0;0;0;0;0;20;20;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="y" values="300;300;300;300;300;280;280;300" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="710" y="200" text-anchor="middle" class="note" fill="#86efac" opacity="0">calm ·
+    <animate attributeName="opacity" values="0;0;0;0;0;1;1;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="710" y="214" text-anchor="middle" class="note" fill="#86efac" opacity="0">minimal load
+    <animate attributeName="opacity" values="0;0;0;0;0;1;1;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="595" y="335" text-anchor="middle" class="note" fill="#86efac" opacity="0">90% HIT RATE — DB barely notices
+    <animate attributeName="opacity" values="0;0;0;0;0;1;1;0" keyTimes="0;0.057;0.43;0.47;0.56;0.66;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- ===================== FOOTER ===================== -->
+  <rect x="20" y="364" width="720" height="44" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="36" y="382" class="note">Warming shifts the miss-storm from traffic-arrival time (uncontrolled, dangerous) to before traffic arrives —</text>
+  <text x="36" y="400" class="note">a background job pays the fill cost at a pace it controls, so the cutover itself meets an already-warm cache.</text>
+</svg>

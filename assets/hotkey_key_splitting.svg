@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="hkbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{font-size:14px;font-weight:700}
+      .node{fill:#1e293b;stroke:#475569;stroke-width:2}
+      .nlbl{fill:#e2e8f0;font-size:13px;font-weight:700}
+      .val{fill:#94a3b8;font-size:11px;font-family:monospace}
+    </style>
+  </defs>
+  <rect width="760" height="410" rx="16" fill="url(#hkbg)"/>
+  <text x="30" y="34" class="t">Hot Key Problem — One Overloaded Shard vs. Key-Splitting Fix</text>
+
+  <line x1="380" y1="58" x2="380" y2="335" stroke="#334155" stroke-width="2"/>
+
+  <!-- PANEL 1: ONE HOT KEY -->
+  <text x="195" y="64" text-anchor="middle" class="h" fill="#f87171">ONE HOT KEY</text>
+  <circle cx="195" cy="86" r="9" fill="#818cf8"/>
+  <text x="195" y="110" text-anchor="middle" class="note" fill="#c7d2fe">key: post:viral_123</text>
+
+  <rect x="25" y="150" width="70" height="55" rx="8" class="node"/>
+  <text x="60" y="172" text-anchor="middle" class="nlbl">Shard 0<tspan x="60" dy="18" class="val">CPU 5%</tspan></text>
+
+  <rect x="107" y="150" width="70" height="55" rx="8" class="node"/>
+  <text x="142" y="172" text-anchor="middle" class="nlbl">Shard 1<tspan x="142" dy="18" class="val">CPU 4%</tspan></text>
+
+  <rect x="189" y="150" width="70" height="55" rx="8" fill="#3b1d1d" stroke="#f87171" stroke-width="2">
+    <animate attributeName="fill" values="#3b1d1d;#7f1d1d;#3b1d1d" dur="1s" repeatCount="indefinite"/>
+  </rect>
+  <text x="224" y="172" text-anchor="middle" class="nlbl">Shard 2<tspan x="224" dy="18" fill="#fca5a5" class="val">CPU 100%</tspan></text>
+
+  <rect x="271" y="150" width="70" height="55" rx="8" class="node"/>
+  <text x="306" y="172" text-anchor="middle" class="nlbl">Shard 3<tspan x="306" dy="18" class="val">CPU 6%</tspan></text>
+
+  <circle r="6" fill="#60a5fa" cx="195" cy="100">
+    <animate attributeName="cx" values="195;224" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="195" cy="100">
+    <animate attributeName="cx" values="195;224" dur="1.2s" begin="0.2s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.2s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="195" cy="100">
+    <animate attributeName="cx" values="195;224" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="195" cy="100">
+    <animate attributeName="cx" values="195;224" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="195" cy="100">
+    <animate attributeName="cx" values="195;224" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="195" cy="100">
+    <animate attributeName="cx" values="195;224" dur="1.2s" begin="1.0s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="1.0s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="1.0s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="195" y="245" text-anchor="middle" class="note" fill="#f87171">all traffic funnels to 1 shard → hot partition, latency spikes, possible outage</text>
+
+  <!-- PANEL 2: KEY SPLIT ACROSS SUB-KEYS -->
+  <text x="565" y="64" text-anchor="middle" class="h" fill="#34d399">KEY SPLIT ACROSS SUB-KEYS</text>
+  <circle cx="565" cy="86" r="9" fill="#818cf8"/>
+  <text x="565" y="110" text-anchor="middle" class="note" fill="#c7d2fe">key: post:viral_123:0..3</text>
+
+  <rect x="395" y="150" width="70" height="55" rx="8" fill="#052e1f" stroke="#34d399" stroke-width="2">
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </rect>
+  <text x="430" y="172" text-anchor="middle" class="nlbl">Shard 0<tspan x="430" dy="18" fill="#86efac" class="val">CPU 22%</tspan></text>
+
+  <rect x="477" y="150" width="70" height="55" rx="8" fill="#052e1f" stroke="#34d399" stroke-width="2">
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+  </rect>
+  <text x="512" y="172" text-anchor="middle" class="nlbl">Shard 1<tspan x="512" dy="18" fill="#86efac" class="val">CPU 24%</tspan></text>
+
+  <rect x="559" y="150" width="70" height="55" rx="8" fill="#052e1f" stroke="#34d399" stroke-width="2">
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+  </rect>
+  <text x="594" y="172" text-anchor="middle" class="nlbl">Shard 2<tspan x="594" dy="18" fill="#86efac" class="val">CPU 21%</tspan></text>
+
+  <rect x="641" y="150" width="70" height="55" rx="8" fill="#052e1f" stroke="#34d399" stroke-width="2">
+    <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+  </rect>
+  <text x="676" y="172" text-anchor="middle" class="nlbl">Shard 3<tspan x="676" dy="18" fill="#86efac" class="val">CPU 23%</tspan></text>
+
+  <circle r="6" fill="#60a5fa" cx="565" cy="100">
+    <animate attributeName="cx" values="565;430" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="565" cy="100">
+    <animate attributeName="cx" values="565;512" dur="1.2s" begin="0.2s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.2s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="565" cy="100">
+    <animate attributeName="cx" values="565;594" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="565" cy="100">
+    <animate attributeName="cx" values="565;676" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="565" cy="100">
+    <animate attributeName="cx" values="565;430" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#60a5fa" cx="565" cy="100">
+    <animate attributeName="cx" values="565;512" dur="1.2s" begin="1.0s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="100;177" dur="1.2s" begin="1.0s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.2s" begin="1.0s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="565" y="245" text-anchor="middle" class="note" fill="#34d399">same traffic fans out evenly across 4 sub-keys → 4 calm, low-load shards</text>
+
+  <rect x="30" y="350" width="700" height="46" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="370" class="note" fill="#e2e8f0">Key-splitting turns one overloaded shard into N evenly-loaded shards for a single celebrity key —</text>
+  <text x="46" y="388" class="note">the trade-off is a fan-out read across all N sub-keys plus a client-side merge on every request.</text>
+</svg>

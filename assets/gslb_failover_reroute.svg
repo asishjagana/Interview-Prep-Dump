@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="fobg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{fill:#e2e8f0;font-size:14px;font-weight:700}
+      .lbl{font-size:13px;font-weight:600}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#fobg)"/>
+  <text x="30" y="38" class="t">Regional Failover — and the Failover-Capacity Trap</text>
+
+  <!-- static network paths -->
+  <line x1="380" y1="102" x2="215" y2="170" stroke="#334155" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="380" y1="102" x2="545" y2="170" stroke="#334155" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- GSLB node -->
+  <rect x="330" y="58" width="100" height="42" rx="10" fill="#241f3d" stroke="#818cf8" stroke-width="2"/>
+  <text x="380" y="84" text-anchor="middle" class="h">GSLB / DNS</text>
+
+  <text x="380" y="122" text-anchor="middle" class="note" fill="#a7f3d0">50 / 50 split — both regions healthy
+    <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+  <text x="380" y="122" text-anchor="middle" class="note" fill="#fca5a5" font-weight="700" opacity="0">redirecting 100% → Region B only
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- flowing dots: GSLB -> Region A (steady/recovery only) -->
+  <g opacity="1">
+    <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+    <circle r="5" fill="#60a5fa">
+      <animate attributeName="cx" values="380;215" dur="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.9s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#60a5fa">
+      <animate attributeName="cx" values="380;215" dur="0.9s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.9s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.9s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#60a5fa">
+      <animate attributeName="cx" values="380;215" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- flowing dots: GSLB -> Region B, normal rate (steady/recovery only) -->
+  <g opacity="1">
+    <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+    <circle r="5" fill="#60a5fa">
+      <animate attributeName="cx" values="380;545" dur="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.9s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#60a5fa">
+      <animate attributeName="cx" values="380;545" dur="0.9s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.9s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.9s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#60a5fa">
+      <animate attributeName="cx" values="380;545" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.9s" begin="0.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- flowing dots: GSLB -> Region B, surge rate (failure/reroute window only) -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+    <circle r="5" fill="#fbbf24">
+      <animate attributeName="cx" values="380;545" dur="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#fbbf24">
+      <animate attributeName="cx" values="380;545" dur="0.5s" begin="0.1s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.5s" begin="0.1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.5s" begin="0.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#fbbf24">
+      <animate attributeName="cx" values="380;545" dur="0.5s" begin="0.2s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.5s" begin="0.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.5s" begin="0.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#fbbf24">
+      <animate attributeName="cx" values="380;545" dur="0.5s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.5s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.5s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="5" fill="#fbbf24">
+      <animate attributeName="cx" values="380;545" dur="0.5s" begin="0.4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="102;170" dur="0.5s" begin="0.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.7;1" dur="0.5s" begin="0.4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Region A box -->
+  <rect x="90" y="170" width="250" height="130" rx="14" fill="#14532d" stroke="#34d399" stroke-width="2">
+    <animate attributeName="fill" values="#14532d;#14532d;#3b1d1d;#3b1d1d;#14532d;#14532d" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="stroke" values="#34d399;#34d399;#f87171;#f87171;#34d399;#34d399" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </rect>
+  <text x="215" y="196" text-anchor="middle" class="h">Region A (US-East)</text>
+  <text x="215" y="222" text-anchor="middle" class="lbl" fill="#86efac">50% traffic, healthy
+    <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+  <text x="215" y="222" text-anchor="middle" class="lbl" fill="#fca5a5" opacity="0">✗ health check failing
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+  <text x="215" y="268" text-anchor="middle" font-size="32" fill="#f87171" opacity="0">⚡✗⚡
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- Region B box -->
+  <rect x="420" y="170" width="250" height="130" rx="14" fill="#14532d" stroke="#34d399" stroke-width="2">
+    <animate attributeName="fill" values="#14532d;#14532d;#4a3510;#3b1d1d;#4a3510;#3b1d1d;#3b1d1d;#3b1d1d;#14532d;#14532d" keyTimes="0;0.20;0.24;0.28;0.32;0.36;0.40;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="stroke" values="#34d399;#34d399;#fbbf24;#f87171;#fbbf24;#f87171;#f87171;#f87171;#34d399;#34d399" keyTimes="0;0.20;0.24;0.28;0.32;0.36;0.40;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </rect>
+  <text x="545" y="196" text-anchor="middle" class="h">Region B (US-West)</text>
+  <text x="545" y="220" text-anchor="middle" class="lbl" fill="#86efac">50% traffic, healthy
+    <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.20;0.24;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+  <text x="545" y="220" text-anchor="middle" class="lbl" fill="#fde68a" opacity="0">100% traffic — 2x load!
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.24;0.28;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- load bar -->
+  <rect x="445" y="232" width="200" height="14" rx="4" fill="#0b1220" stroke="#334155"/>
+  <rect x="445" y="232" height="14" rx="4" fill="#34d399" width="100">
+    <animate attributeName="width" values="100;100;200;200;100;100" keyTimes="0;0.20;0.40;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#34d399;#34d399;#fbbf24;#f87171;#fbbf24;#f87171;#f87171;#f87171;#34d399;#34d399" keyTimes="0;0.20;0.24;0.28;0.32;0.36;0.40;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </rect>
+
+  <text x="545" y="264" text-anchor="middle" class="note" fill="#fbbf24" font-weight="700" opacity="0">⚠ 2x load — sized for this?
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.28;0.32;0.85;0.89;1" dur="8s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- footer caption -->
+  <rect x="30" y="350" width="700" height="52" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="371" class="note" fill="#e2e8f0">Failover reroutes 100% of a dead region's traffic onto the survivors instantly — but that capacity has to already exist.</text>
+  <text x="46" y="390" class="note">If Region B was sized for 50%, doubling its load can tip it into cascade too: size every survivor for a peer's full failure.</text>
+</svg>

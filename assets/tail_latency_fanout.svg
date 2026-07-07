@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 410" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="tlbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{font-size:14px;font-weight:700}
+      .svcbox{fill:#1e293b;stroke:#475569;stroke-width:2}
+      .svclbl{fill:#e2e8f0;font-size:13px;font-weight:700}
+      .fan{stroke:#334155;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="760" height="410" rx="16" fill="url(#tlbg)"/>
+  <text x="30" y="38" class="t">Tail Latency Amplification — the Slowest Service Wins</text>
+
+  <!-- client -->
+  <text x="4" y="197" class="note">Client</text>
+  <line x1="4" y1="205" x2="30" y2="205" stroke="#64748b" stroke-width="2"/>
+
+  <!-- fan-out connector lines (static) -->
+  <line class="fan" x1="180" y1="205" x2="550" y2="53"/>
+  <line class="fan" x1="180" y1="205" x2="550" y2="105"/>
+  <line class="fan" x1="180" y1="205" x2="550" y2="157"/>
+  <line class="fan" x1="180" y1="205" x2="550" y2="209"/>
+  <line class="fan" x1="180" y1="205" x2="550" y2="261"/>
+  <line class="fan" x1="180" y1="205" x2="550" y2="313"/>
+
+  <!-- gateway box -->
+  <rect x="30" y="165" width="150" height="80" rx="12" class="svcbox"/>
+  <text x="105" y="195" text-anchor="middle" class="h" fill="#e2e8f0">Gateway</text>
+  <text x="105" y="212" text-anchor="middle" class="note">fans out to 6 services</text>
+
+  <!-- pulsing "waiting" ring, visible only while gateway is blocked on a reply -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.07;0.07;0.85;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <rect x="26" y="161" width="158" height="88" rx="14" fill="none" stroke="#fbbf24" stroke-width="3">
+      <animate attributeName="stroke-opacity" values="1;0.25;1" dur="0.6s" repeatCount="indefinite"/>
+    </rect>
+    <text x="105" y="238" text-anchor="middle" font-size="16">⏳</text>
+  </g>
+
+  <!-- fast-return labels, appear next to the gateway as each fast dot lands -->
+  <text x="190" y="175" class="note" fill="#bbf7d0" font-size="11" opacity="0">12ms
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.26;0.27;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="190" y="188" class="note" fill="#bbf7d0" font-size="11" opacity="0">12ms
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.28;0.29;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="190" y="201" class="note" fill="#bbf7d0" font-size="11" opacity="0">12ms
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.29;0.30;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="190" y="214" class="note" fill="#bbf7d0" font-size="11" opacity="0">12ms
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.30;0.31;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="190" y="227" class="note" fill="#bbf7d0" font-size="11" opacity="0">12ms
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.32;0.33;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- slow-return label -->
+  <text x="105" y="270" text-anchor="middle" class="note" fill="#fca5a5" font-size="12" font-weight="700" opacity="0">180ms — one slow one
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.85;0.86;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- gateway summary once it finally responds -->
+  <text x="30" y="294" class="note" fill="#fde68a" font-size="12" opacity="0">Gateway total latency = 180ms — bounded by the slowest of 6,
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.87;0.88;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+  <text x="30" y="310" class="note" fill="#fde68a" font-size="12" opacity="0">even though 5 of 6 backends answered in ~12ms.
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.87;0.88;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- response dot: gateway replies to client only once the slowest call lands -->
+  <circle cx="30" cy="205" r="6" fill="#f87171" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.85;0.86;0.97;0.98;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="30;30;8;8" keyTimes="0;0.86;0.95;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 6 service boxes -->
+  <rect x="550" y="34" width="180" height="38" rx="8" class="svcbox"/>
+  <text x="640" y="58" text-anchor="middle" class="svclbl">Service 1</text>
+  <rect x="550" y="34" width="180" height="38" rx="8" fill="none" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#60a5fa;#60a5fa;#475569" keyTimes="0;0.18;0.20;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+
+  <rect x="550" y="86" width="180" height="38" rx="8" class="svcbox"/>
+  <text x="640" y="110" text-anchor="middle" class="svclbl">Service 2</text>
+  <rect x="550" y="86" width="180" height="38" rx="8" fill="none" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#60a5fa;#60a5fa;#475569" keyTimes="0;0.18;0.20;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+
+  <rect x="550" y="138" width="180" height="38" rx="8" class="svcbox"/>
+  <text x="640" y="162" text-anchor="middle" class="svclbl">Service 3</text>
+  <rect x="550" y="138" width="180" height="38" rx="8" fill="none" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#60a5fa;#60a5fa;#475569" keyTimes="0;0.18;0.20;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+
+  <rect x="550" y="190" width="180" height="38" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+  <text x="640" y="214" text-anchor="middle" class="svclbl">Service 4</text>
+  <rect x="550" y="190" width="180" height="38" rx="8" fill="none" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#fbbf24;#f87171;#f87171;#475569" keyTimes="0;0.18;0.5;0.75;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+  <text x="712" y="214" text-anchor="end" fill="#fca5a5" font-size="11" font-weight="700" opacity="0">⚠ slow
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5;0.51;0.75;0.76;1" dur="7s" repeatCount="indefinite"/>
+  </text>
+
+  <rect x="550" y="242" width="180" height="38" rx="8" class="svcbox"/>
+  <text x="640" y="266" text-anchor="middle" class="svclbl">Service 5</text>
+  <rect x="550" y="242" width="180" height="38" rx="8" fill="none" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#60a5fa;#60a5fa;#475569" keyTimes="0;0.18;0.20;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+
+  <rect x="550" y="294" width="180" height="38" rx="8" class="svcbox"/>
+  <text x="640" y="318" text-anchor="middle" class="svclbl">Service 6</text>
+  <rect x="550" y="294" width="180" height="38" rx="8" fill="none" stroke="#475569" stroke-width="2">
+    <animate attributeName="stroke" values="#475569;#60a5fa;#60a5fa;#475569" keyTimes="0;0.18;0.20;1" dur="7s" repeatCount="indefinite"/>
+  </rect>
+
+  <text x="730" y="345" text-anchor="end" class="note">→ imagine 100 of these in a real fan-out, not 6</text>
+
+  <!-- travelling dots: depart together, arrive back at very different times -->
+  <circle r="7" cx="180" cy="205" fill="#818cf8">
+    <animate attributeName="cx" values="180;180;560;560;180;180" keyTimes="0;0.07;0.18;0.20;0.26;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="205;205;53;53;205;205" keyTimes="0;0.07;0.18;0.20;0.26;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#818cf8;#818cf8;#60a5fa;#60a5fa;#34d399;#34d399" keyTimes="0;0.07;0.18;0.20;0.26;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle r="7" cx="180" cy="205" fill="#818cf8">
+    <animate attributeName="cx" values="180;180;560;560;180;180" keyTimes="0;0.07;0.18;0.20;0.28;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="205;205;105;105;205;205" keyTimes="0;0.07;0.18;0.20;0.28;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#818cf8;#818cf8;#60a5fa;#60a5fa;#34d399;#34d399" keyTimes="0;0.07;0.18;0.20;0.28;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle r="7" cx="180" cy="205" fill="#818cf8">
+    <animate attributeName="cx" values="180;180;560;560;180;180" keyTimes="0;0.07;0.18;0.20;0.29;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="205;205;157;157;205;205" keyTimes="0;0.07;0.18;0.20;0.29;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#818cf8;#818cf8;#60a5fa;#60a5fa;#34d399;#34d399" keyTimes="0;0.07;0.18;0.20;0.29;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- the slow one: service #4 -->
+  <circle r="8" cx="180" cy="205" fill="#818cf8">
+    <animate attributeName="cx" values="180;180;560;560;180;180" keyTimes="0;0.07;0.18;0.75;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="205;205;209;209;205;205" keyTimes="0;0.07;0.18;0.75;0.85;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#818cf8;#fbbf24;#fbbf24;#f87171;#f87171;#f87171" keyTimes="0;0.07;0.18;0.75;0.85;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle r="7" cx="180" cy="205" fill="#818cf8">
+    <animate attributeName="cx" values="180;180;560;560;180;180" keyTimes="0;0.07;0.18;0.20;0.30;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="205;205;261;261;205;205" keyTimes="0;0.07;0.18;0.20;0.30;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#818cf8;#818cf8;#60a5fa;#60a5fa;#34d399;#34d399" keyTimes="0;0.07;0.18;0.20;0.30;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle r="7" cx="180" cy="205" fill="#818cf8">
+    <animate attributeName="cx" values="180;180;560;560;180;180" keyTimes="0;0.07;0.18;0.20;0.32;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="205;205;313;313;205;205" keyTimes="0;0.07;0.18;0.20;0.32;1" dur="7s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#818cf8;#818cf8;#60a5fa;#60a5fa;#34d399;#34d399" keyTimes="0;0.07;0.18;0.20;0.32;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+
+  <rect x="30" y="352" width="700" height="46" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="372" class="note" fill="#e2e8f0">A fanned-out request is bounded by its SLOWEST leaf, not its average one — and at fan-out N with per-service</text>
+  <text x="46" y="390" class="note">"slow" probability p, P(at least one slow call) = 1−(1−p)^N: a rare per-service event becomes near-certain overall.</text>
+</svg>

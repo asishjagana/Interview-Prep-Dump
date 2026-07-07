@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="nbbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{font-size:14px;font-weight:700}
+      .app{fill:#1e293b;stroke:#818cf8;stroke-width:2}
+      .db{fill:#1e293b;stroke:#60a5fa;stroke-width:2}
+      .lbl{fill:#e2e8f0;font-size:14px;font-weight:700}
+      .triplbl{fill:#cbd5e1;font-size:12px}
+      .cntlbl{fill:#94a3b8;font-size:12px}
+      .cntnum{font-size:20px;font-weight:700}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#nbbg)"/>
+  <text x="30" y="34" class="t">N+1 Query Problem vs. Batched Loading</text>
+
+  <!-- ===================== PANEL 1 : N+1 ===================== -->
+  <text x="30" y="64" class="h" fill="#f87171">N+1 — one round trip PER ROW</text>
+  <text x="500" y="64" class="cntlbl">round trips:</text>
+  <text x="605" y="69" text-anchor="middle" class="cntnum" fill="#fbbf24" opacity="0">1
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.085;0.09;0.185;0.19;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+  <text x="605" y="69" text-anchor="middle" class="cntnum" fill="#fbbf24" opacity="0">2
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.185;0.19;0.285;0.29;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+  <text x="605" y="69" text-anchor="middle" class="cntnum" fill="#fbbf24" opacity="0">3
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.285;0.29;0.385;0.39;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+  <text x="605" y="69" text-anchor="middle" class="cntnum" fill="#fbbf24" opacity="0">4
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.385;0.39;0.485;0.49;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+  <text x="605" y="69" text-anchor="middle" class="cntnum" fill="#fbbf24" opacity="0">5
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.485;0.49;0.585;0.59;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+  <text x="605" y="69" text-anchor="middle" class="cntnum" fill="#f87171" opacity="0">6
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.585;0.59;0.96;0.965;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <rect x="40" y="80" width="90" height="50" rx="8" class="app"/>
+  <text x="85" y="111" text-anchor="middle" class="lbl">App</text>
+  <rect x="630" y="80" width="90" height="50" rx="8" class="db"/>
+  <text x="675" y="111" text-anchor="middle" class="lbl">DB</text>
+  <line x1="130" y1="105" x2="630" y2="105" stroke="#334155" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- trip 1: initial posts query (purple = starting request) -->
+  <circle r="7" cy="105" fill="#818cf8" opacity="0">
+    <animate attributeName="cx" values="130;630;130;130" keyTimes="0;0.045;0.09;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.09;0.095;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="95" text-anchor="middle" class="triplbl" opacity="0">1) SELECT * FROM posts LIMIT 5
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.09;0.095;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- trips 2-6: one extra round trip PER ROW (amber = repeated N times) -->
+  <circle r="7" cy="105" fill="#fbbf24" opacity="0">
+    <animate attributeName="cx" values="130;130;630;130;130" keyTimes="0;0.10;0.145;0.19;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.095;0.10;0.19;0.195;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="95" text-anchor="middle" class="triplbl" opacity="0">2) SELECT author FROM users WHERE id=1
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.095;0.10;0.19;0.195;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <circle r="7" cy="105" fill="#fbbf24" opacity="0">
+    <animate attributeName="cx" values="130;130;630;130;130" keyTimes="0;0.20;0.245;0.29;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.195;0.20;0.29;0.295;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="95" text-anchor="middle" class="triplbl" opacity="0">3) SELECT author FROM users WHERE id=2
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.195;0.20;0.29;0.295;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <circle r="7" cy="105" fill="#fbbf24" opacity="0">
+    <animate attributeName="cx" values="130;130;630;130;130" keyTimes="0;0.30;0.345;0.39;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.295;0.30;0.39;0.395;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="95" text-anchor="middle" class="triplbl" opacity="0">4) SELECT author FROM users WHERE id=3
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.295;0.30;0.39;0.395;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <circle r="7" cy="105" fill="#fbbf24" opacity="0">
+    <animate attributeName="cx" values="130;130;630;130;130" keyTimes="0;0.40;0.445;0.49;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.395;0.40;0.49;0.495;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="95" text-anchor="middle" class="triplbl" opacity="0">5) SELECT author FROM users WHERE id=4
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.395;0.40;0.49;0.495;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <circle r="7" cy="105" fill="#f87171" opacity="0">
+    <animate attributeName="cx" values="130;130;630;130;130" keyTimes="0;0.50;0.545;0.59;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.495;0.50;0.59;0.595;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="95" text-anchor="middle" class="triplbl" opacity="0">6) SELECT author FROM users WHERE id=5
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.495;0.50;0.59;0.595;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <rect x="210" y="150" width="340" height="32" rx="8" fill="#3b1d1d" stroke="#f87171" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.595;0.60;0.93;0.95;1" dur="10s" repeatCount="indefinite"/>
+  </rect>
+  <text x="380" y="171" text-anchor="middle" class="note" fill="#fca5a5" font-weight="700" opacity="0">6 round trips · ~60ms total (10ms each)
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.595;0.60;0.93;0.95;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <line x1="30" y1="196" x2="730" y2="196" stroke="#334155" stroke-width="1" opacity="0.6"/>
+
+  <!-- ===================== PANEL 2 : BATCHED ===================== -->
+  <text x="30" y="214" class="h" fill="#34d399">BATCHED — one round trip for everything</text>
+  <text x="500" y="214" class="cntlbl">round trips:</text>
+  <text x="605" y="219" text-anchor="middle" class="cntnum" fill="#818cf8" opacity="0">1
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.085;0.09;0.185;0.19;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+  <text x="605" y="219" text-anchor="middle" class="cntnum" fill="#34d399" opacity="0">2
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.185;0.19;0.96;0.965;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <rect x="40" y="230" width="90" height="50" rx="8" class="app"/>
+  <text x="85" y="261" text-anchor="middle" class="lbl">App</text>
+  <rect x="630" y="230" width="90" height="50" rx="8" class="db"/>
+  <text x="675" y="261" text-anchor="middle" class="lbl">DB</text>
+  <line x1="130" y1="255" x2="630" y2="255" stroke="#334155" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- trip 1: same posts query -->
+  <circle r="7" cy="255" fill="#818cf8" opacity="0">
+    <animate attributeName="cx" values="130;630;130;130" keyTimes="0;0.045;0.09;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.09;0.095;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="245" text-anchor="middle" class="triplbl" opacity="0">1) SELECT * FROM posts LIMIT 5
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.09;0.095;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- trip 2: single batched IN-clause query replaces all 5 per-row lookups -->
+  <circle r="7" cy="255" fill="#34d399" opacity="0">
+    <animate attributeName="cx" values="130;130;630;130;130" keyTimes="0;0.10;0.145;0.19;1" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.095;0.10;0.19;0.195;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <text x="380" y="245" text-anchor="middle" class="triplbl" opacity="0">2) SELECT * FROM users WHERE id IN (1,2,3,4,5)
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.095;0.10;0.19;0.195;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <rect x="220" y="300" width="320" height="32" rx="8" fill="#14532d" stroke="#34d399" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.195;0.20;0.93;0.95;1" dur="10s" repeatCount="indefinite"/>
+  </rect>
+  <text x="380" y="321" text-anchor="middle" class="note" fill="#bbf7d0" font-weight="700" opacity="0">2 round trips · ~20ms total
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.195;0.20;0.93;0.95;1" dur="10s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- ===================== FOOTER ===================== -->
+  <rect x="30" y="350" width="700" height="52" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="372" class="note" fill="#e2e8f0">N+1 turns "fetch N related rows" into N+1 sequential network round trips — one for the list, one more per row.</text>
+  <text x="46" y="390" class="note">Batching (JOIN, WHERE id IN (...), or a DataLoader) collapses those N extra calls into one constant round trip, regardless of N.</text>
+</svg>

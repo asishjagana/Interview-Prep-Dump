@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <filter id="fastblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .note{fill:#94a3b8;font-size:12px}
+      .h{font-size:14px;font-weight:700}
+      .fin{font-size:13px;font-weight:700;font-family:monospace}
+      .val{fill:#fbbf24;font-size:14px;font-family:monospace;font-weight:700}
+    </style>
+  </defs>
+  <rect width="760" height="420" rx="16" fill="url(#cbg)"/>
+  <text x="30" y="34" class="t">The Cache Race: In-Process Memory vs a Network Hop</text>
+
+  <!-- Track 1: local cache -->
+  <text x="40" y="66" class="h" fill="#34d399">LOCAL CACHE (in-process HashMap)</text>
+  <line x1="140" y1="90" x2="620" y2="90" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+  <line x1="140" y1="80" x2="140" y2="100" stroke="#818cf8" stroke-width="3"/>
+  <line x1="620" y1="80" x2="620" y2="100" stroke="#64748b" stroke-width="3"/>
+  <text x="140" y="112" text-anchor="middle" class="note">start</text>
+  <text x="650" y="94" class="fin" fill="#34d399">~50-100ns</text>
+
+  <!-- trailing ghost blur copies for "impossibly fast" feel -->
+  <circle r="7" cy="90" fill="#34d399" opacity="0.25" filter="url(#fastblur)">
+    <animate attributeName="cx" values="140;620" dur="0.15s" begin="-0.03s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="7" cy="90" fill="#34d399" opacity="0.15" filter="url(#fastblur)">
+    <animate attributeName="cx" values="140;620" dur="0.15s" begin="-0.06s" repeatCount="indefinite"/>
+  </circle>
+  <!-- main fast dot -->
+  <circle r="7" cy="90" fill="#34d399">
+    <animate attributeName="cx" values="140;620" dur="0.15s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.5;1" dur="0.075s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Track 2: distributed cache -->
+  <text x="40" y="152" class="h" fill="#60a5fa">DISTRIBUTED CACHE (Redis over the network)</text>
+  <text x="380" y="172" text-anchor="middle" class="note">serialize → network round trip (~0.5-1ms) → deserialize</text>
+  <line x1="140" y1="190" x2="620" y2="190" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+  <line x1="140" y1="180" x2="140" y2="200" stroke="#818cf8" stroke-width="3"/>
+  <line x1="620" y1="180" x2="620" y2="200" stroke="#64748b" stroke-width="3"/>
+  <text x="140" y="212" text-anchor="middle" class="note">start</text>
+  <text x="650" y="194" class="fin" fill="#60a5fa">~0.5-1ms</text>
+
+  <circle r="7" cy="190" fill="#60a5fa">
+    <animate attributeName="cx" values="140;620" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="140" y="226" class="note" fill="#fbbf24">animation speed is illustrative, not to scale — real gap is ~10,000-20,000x</text>
+
+  <!-- numeric comparison box -->
+  <rect x="40" y="242" width="680" height="58" rx="10" fill="#0b1220" stroke="#475569"/>
+  <text x="380" y="266" text-anchor="middle"><tspan class="val" fill="#34d399">50ns</tspan><tspan class="note"> vs </tspan><tspan class="val" fill="#60a5fa">1,000,000ns (1ms)</tspan></text>
+  <text x="380" y="288" text-anchor="middle" class="note">→ the network hop costs ~10,000-20,000x more than a local memory read.</text>
+
+  <!-- footer caption -->
+  <rect x="30" y="344" width="700" height="52" rx="10" fill="#0b1220" stroke="#334155"/>
+  <text x="46" y="366" class="note" fill="#e2e8f0">This gap is why a near-cache exists: put the fast local track in front of the slow network track</text>
+  <text x="46" y="384" class="note">for the hottest keys, so most reads never have to run the slow race at all.</text>
+</svg>
