@@ -14,7 +14,7 @@
 
 ---
 
-## 🗺️ How the 8 Topics Interlock
+## 🗺️ How the 14 Topics Interlock
 
 ```mermaid
 flowchart TD
@@ -23,26 +23,36 @@ flowchart TD
     STYLE --> MM["② Modular Monolith (the default middle)"]
     STYLE --> SOA["③ SOA (enterprise ancestor)"]
     STYLE --> EDA["④ Event-Driven (how they talk)"]
+    STYLE --> TOPO["⑭ Client-Server vs P2P (the topology axis)"]
 
     SPLIT["How to split the system"]
     SPLIT --> DEC["⑥ System Decomposition (bounded contexts)"]
     SPLIT --> CR["⑦ Component Responsibilities (SRP, one zoom in)"]
+    SPLIT --> LHC["⑨ Layered/Hexagonal/Clean (inside one service)"]
+    SPLIT --> MFE["⑬ Micro-Frontends (decomposition up to the UI)"]
     MONO --> SPLIT
     MM --> SPLIT
 
     RUNTIME["Runtime properties"]
     RUNTIME --> ST["⑤ Stateless vs Stateful (where state lives)"]
     RUNTIME --> HA["⑧ High Availability (surviving failure)"]
+    RUNTIME --> MT["⑩ Multi-Tenancy (packing tenants safely)"]
+    RUNTIME --> CELL["⑫ Cell-Based (blast-radius isolation)"]
     EDA --> RUNTIME
     DEC --> RUNTIME
+
+    DATA["Big-data / analytics shape"]
+    DATA --> LK["⑪ Lambda / Kappa (batch + stream views)"]
+    EDA --> DATA
 
     style STYLE fill:#ede9fe,color:#000
     style SPLIT fill:#cffafe,color:#000
     style RUNTIME fill:#dcfce7,color:#000
+    style DATA fill:#e0f2fe,color:#000
     style HA fill:#fef3c7,color:#000
 ```
 
-> **The spine:** *pick a style → decompose into the right boundaries → decide where state lives and how components communicate → design it to survive failure.* Decomposition (⑥) and component responsibility (⑦) are the same principle at two zoom levels; statelessness (⑤) is what makes HA (⑧) easy.
+> **The spine:** *pick a style → decompose into the right boundaries (across services ⑥, inside each one ⑨, and up to the UI ⑬) → decide where state lives and how components communicate → design it to survive failure and isolate blast radius.* Decomposition (⑥) and component responsibility (⑦) are the same principle at two zoom levels; statelessness (⑤) is what makes HA (⑧) and cell isolation (⑫) easy.
 
 ---
 
@@ -58,6 +68,12 @@ flowchart TD
 | 6 | [System Decomposition](./System_Decomposition.md) | Split by capability, not layer | Bounded contexts; data is the real boundary; Strangler Fig for legacy |
 | 7 | [Component Responsibilities](./Component_Responsibilities.md) | One clear job each | SRP = one reason to change; high cohesion + low coupling; IO at the edges |
 | 8 | [High Availability Design](./High_Availability_Design.md) | Twin-engine airplane | Redundancy + auto failover; availability is arithmetic; assume everything breaks |
+| 9 | [Layered, Hexagonal & Clean Architecture](./Layered_Hexagonal_Clean_Architecture.md) | The boxes *inside* one service | Domain at the center; dependencies point inward; ports & adapters make infra swappable |
+| 10 | [Multi-Tenancy Architecture](./Multi_Tenancy_Architecture.md) | Apartments vs houses vs a duplex | Silo / pool / bridge; isolation vs density; never miss the `tenant_id` filter |
+| 11 | [Lambda & Kappa (Big-Data)](./Lambda_Kappa_Big_Data_Architecture.md) | Batch layer vs one stream | Lambda = two code paths; Kappa = replay the log; lakehouse collapses both |
+| 12 | [Cell-Based Architecture](./Cell_Based_Architecture.md) | Watertight ship bulkheads | Full-stack fault cells; a failure hits ~1/N; shuffle sharding; deploy cell-by-cell |
+| 13 | [Micro-Frontends](./Micro_Frontends.md) | A mall of independent stores | Team-aligned UI slices; build/runtime/edge composition; overkill for one team |
+| 14 | [Client-Server vs Peer-to-Peer](./Client_Server_vs_Peer_to_Peer.md) | Central library vs neighbors lending | The topology axis; hybrid trackers; WebRTC mesh vs SFU; gossip dissemination |
 
 ---
 
@@ -105,6 +121,25 @@ HA      redundancy (N+M) + AUTO failover · multi-AZ→region · DEEP health che
 ANTI-PATTERNS  distributed monolith · God ESB / God component · over-decomposition (nanoservices) ·
                hidden local state behind a LB · synchronous call chains · correlated/hidden SPOFs
 ```
+
+---
+
+## 🧩 Gap Analysis — What Else Belongs Here
+
+> Audit last refreshed 2026-07-08. All six previously-missing topics are now written; the table stays as a living record.
+
+| Candidate topic | Why it matters | Priority | Status |
+|-----------------|----------------|----------|--------|
+| Layered / Hexagonal / Clean | Every "draw the boxes inside one service" question | High | ✅ [have](./Layered_Hexagonal_Clean_Architecture.md) |
+| Multi-Tenancy | SaaS-design staple: silo/pool/bridge, isolation, noisy neighbors | High | ✅ [have](./Multi_Tenancy_Architecture.md) |
+| Lambda / Kappa (big-data) | The architecture-style choice for analytics/aggregation designs | High | ✅ [have](./Lambda_Kappa_Big_Data_Architecture.md) |
+| Cell-Based Architecture | Blast-radius isolation, shuffle sharding — strong Staff+ signal | Med | ✅ [have](./Cell_Based_Architecture.md) |
+| Micro-Frontends | Extends decomposition to the UI for full-stack interviews | Med | ✅ [have](./Micro_Frontends.md) |
+| Client-Server vs P2P | The topology axis; file-sharing & live-video designs | Med | ✅ [have](./Client_Server_vs_Peer_to_Peer.md) |
+| Serverless / FaaS as a style | An architecture style in its own right | — | 🔗 [13 · Cloud-Native](../13_Cloud_Native_Infrastructure/Serverless_Computing_Lambda.md) |
+| CQRS & Saga | The EDA companion patterns | — | 🔗 [10 · Microservices](../10_Microservices_Distributed_Systems/) |
+| Active-active vs active-passive, health checks | Failover *mechanisms* (vs design-level HA here) | — | 🔗 [07 · Load Balancing](../07_Load_Balancing_Scalability/) |
+| DDD / bounded-context depth | Boundary-drawing internals | — | 🔗 [04 · Low-Level Design](../04_Low_Level_Design/Domain_Driven_Design.md) |
 
 ---
 
