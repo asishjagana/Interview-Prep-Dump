@@ -364,7 +364,7 @@ DON'T SAY: "pick 2 of 3" or "I'll use a CA database."
 - [Trade_off_Analysis.md](./Trade_off_Analysis.md) — CAP is the canonical distributed-systems trade-off.
 - [Constraints_Assumptions.md](./Constraints_Assumptions.md) — your consistency requirement is a hard constraint.
 - [SLA_SLO_SLI.md](./SLA_SLO_SLI.md) — availability/durability targets interact with the CAP choice.
-- [05_Databases_Storage](../05_Databases_Storage/) — replication, quorums, consensus (Raft/Paxos) in depth.
+- [05_Databases_Storage/CAP_Theorem.md](../05_Databases_Storage/CAP_Theorem.md) & [05_Databases_Storage/PACELC_Theorem.md](../05_Databases_Storage/PACELC_Theorem.md) — the database-depth versions of this file: same two theorems, but focused on replication, quorums, and consensus (Raft/Paxos) mechanics rather than interview trade-off framing. Read this file first for the framing, then those for the machinery.
 - [10_Microservices_Distributed_Systems](../10_Microservices_Distributed_Systems/) — partitions, split-brain, and coordination.
 
 **External classics:**

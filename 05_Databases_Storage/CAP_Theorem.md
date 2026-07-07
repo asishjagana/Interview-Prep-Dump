@@ -318,6 +318,7 @@ TUNE IT WITH QUORUMS (N replicas)
 ## 13. Connections & Further Reading
 
 **Within this repo:**
+- [01_Planning_Foundations/CAP_Theorem_PACELC.md](../01_Planning_Foundations/CAP_Theorem_PACELC.md) — the interview trade-off-framing companion to this file: same theorem, focused on "which do I sacrifice and how do I say so out loud" rather than replication mechanics. Read that one first if you're prepping for an interview; read this one for the database-internals depth.
 - [PACELC_Theorem.md](./PACELC_Theorem.md) — the essential extension: latency-vs-consistency even with no partition.
 - [Consistency_Models.md](./Consistency_Models.md) — the spectrum between CAP's linearizable C and eventual.
 - [BASE_Philosophy.md](./BASE_Philosophy.md) — the AP corner made operational, plus conflict resolution.

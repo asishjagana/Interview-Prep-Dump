@@ -101,6 +101,7 @@ if (limiter.allowAction()) { /* process request */ }
 - **Reliability & Resilience**: Circuit breakers and backpressure.
 - **Load Balancing**: LBs often perform throttling.
 - **Message Queues**: RabbitMQ vs Kafka handling of backpressure.
+- **[01_Planning_Foundations/Bottleneck_Analysis.md](../01_Planning_Foundations/Bottleneck_Analysis.md)**: The systematic method for finding *which* component saturates first and starts needing to push back like this.
 
 ## 14. Visual Aids
 - **The Bucket Diagram**: Water pouring in (Requests) vs a hole in the bottom (Processing).

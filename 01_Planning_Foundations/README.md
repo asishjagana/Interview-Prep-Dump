@@ -16,13 +16,14 @@ After this section you can, on a whiteboard and in production:
 
 ---
 
-## 🗺️ How the 12 Topics Interlock
+## 🗺️ How the 16 Topics Interlock
 
 These aren't 12 isolated notes — they form one pipeline. Requirements feed estimation; estimation feeds capacity, cost, and reliability; everything converges on trade-offs.
 
 ```mermaid
 flowchart TD
     O["① Interview Overview<br/>the 5-phase process"] --> R["② Requirement Gathering<br/>functional · non-functional"]
+    O --> IC["⑬ Interview Communication<br/>the meta-skill: how you say it"]
     R --> C["③ Constraints &amp; Assumptions<br/>the walls &amp; foundation"]
     C --> E["④ Back-of-Envelope Estimation<br/>the funnel: DAU→QPS→storage"]
 
@@ -32,6 +33,10 @@ flowchart TD
     E --> COST["⑧ Cost / FinOps<br/>the $ on every box"]
     CAP_ --> COST
 
+    Q --> BA["⑭ Bottleneck Analysis<br/>USE method · what breaks first"]
+    CAP_ --> BA
+    BA --> SC["⑮ Scalability Fundamentals<br/>Scale Cube: X·Y·Z"]
+
     R --> SLO["⑨ SLA / SLO / SLI<br/>reliability targets"]
     SLO --> AV["⑩ Availability &amp; Reliability Math<br/>series × parallel · MTBF/MTTR"]
     AV --> CAPx["⑪ CAP &amp; PACELC<br/>consistency vs availability"]
@@ -40,15 +45,21 @@ flowchart TD
     COST --> TO
     AV --> TO
     CAPx --> TO
+    SC --> TO
+    TO --> ADR["⑯ Architecture Decision Records<br/>the written, durable trade-off"]
 
     style O fill:#ede9fe,color:#000
     style E fill:#cffafe,color:#000
     style SLO fill:#dcfce7,color:#000
     style TO fill:#fef3c7,color:#000
     style CAPx fill:#e0f2fe,color:#000
+    style IC fill:#ede9fe,color:#000
+    style BA fill:#fef3c7,color:#000
+    style SC fill:#cffafe,color:#000
+    style ADR fill:#fef3c7,color:#000
 ```
 
-> **The spine:** *Requirements → Estimation → (Capacity · Cost · Reliability) → Trade-offs.* Latency Numbers are the constants the estimates use; CAP/PACELC is the deepest trade-off of all.
+> **The spine:** *Requirements → Estimation → (Capacity · Cost · Reliability) → Trade-offs.* Latency Numbers are the constants the estimates use; CAP/PACELC is the deepest trade-off of all. Four companions extend the spine without changing it: Interview Communication is the *delivery layer* on top of the 5-phase process, Bottleneck Analysis and Scalability Fundamentals turn Capacity Planning's numbers into "which component, and which axis," and Architecture Decision Records is Trade-off Analysis written down permanently.
 
 ---
 
@@ -68,6 +79,10 @@ flowchart TD
 | 10 | [Availability & Reliability Math](./Availability_Reliability_Math.md) | The arithmetic of uptime | Series multiplies (down), redundancy adds nines; A = MTBF/(MTBF+MTTR) |
 | 11 | [CAP Theorem & PACELC](./CAP_Theorem_PACELC.md) | The law of distributed systems | During a partition pick C or A; *else* trade Latency vs Consistency |
 | 12 | [Trade-off Analysis](./Trade_off_Analysis.md) | The core senior skill | No best solutions — name what you sacrificed and why |
+| 13 | [Interview Communication Framework](./Interview_Communication_Framework.md) | The meta-skill of *how* you deliver the design | Think out loud, take hints as steering not verdicts, disagree once with a number, recover without freezing |
+| 14 | [Bottleneck Analysis](./Bottleneck_Analysis.md) | Systematically finding the limiting component | Walk the request path + USE method (Utilization/Saturation/Errors); find what breaks first at 10× |
+| 15 | [Scalability Fundamentals & Scale Cube](./Scalability_Fundamentals_Scale_Cube.md) | What scaling means, and which axis to pull | AKF Cube: X=clone, Y=split, Z=shard; vertical scaling hits a hard, non-linear-cost ceiling fast |
+| 16 | [Architecture Decision Records](./Architecture_Decision_Records.md) | The written, durable form of a trade-off | Context → Decision → Consequences (+ rejected Alternatives); supersede, never edit |
 
 ---
 
@@ -81,7 +96,7 @@ flowchart LR
         F1["1 · Overview"] --> F2["4 · Estimation"] --> F3["6 · QPS"] --> F4["9 · SLO"] --> F5["12 · Trade-offs"]
     end
     subgraph DEEP["🏗️ Mastery (read in full order)"]
-        D1["1→2→3→4→5"] --> D2["6→7→8"] --> D3["9→10→11"] --> D4["12"]
+        D1["1→2→3→4→5"] --> D2["6→7→8"] --> D3["9→10→11"] --> D4["12"] --> D5["13→14→15→16"]
     end
     style FAST fill:#fef3c7,color:#000
     style DEEP fill:#dcfce7,color:#000
@@ -90,9 +105,11 @@ flowchart LR
 | Goal | Path | Why |
 |------|------|-----|
 | **⚡ Interview in 48h** | 1 → 4 → 6 → 9 → 12 (+ skim 5, 11) | The phases, the math, the targets, the trade-offs — the load-bearing 80% |
-| **🏗️ Deep mastery** | 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 | Follows the dependency pipeline top to bottom |
+| **🏗️ Deep mastery** | 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14 → 15 → 16 | Follows the dependency pipeline top to bottom |
 | **🔢 "I freeze on the math"** | 5 → 4 → 6 → 7 → 8 | Latency constants → estimation → throughput → capacity → cost |
 | **🛡️ Reliability focus** | 9 → 10 → 11 → 3 | Targets → the math → the distributed-systems law → constraints |
+| **🗣️ Communication polish** | 1 → 13 → 12 → 16 | Process → how to deliver it live → naming trade-offs → writing them down |
+| **🔍 Scaling & bottlenecks** | 6 → 7 → 14 → 15 | Throughput → capacity → find the limiter → pick the scaling axis |
 
 > **How to study each file:** read the concept sections, then *do the* 🏋️ **Practice Drills before peeking at solutions*, rehearse the* 🎤 **Interview Q&A out loud, and skim* 🎯 **Staff+ Nuances for the depth that impresses senior interviewers.**
 

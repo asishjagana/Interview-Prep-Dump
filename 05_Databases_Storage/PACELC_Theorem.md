@@ -310,6 +310,7 @@ SAYING "PACELC" CORRECTLY = top-tier interview signal.
 ## 13. Connections & Further Reading
 
 **Within this repo:**
+- [01_Planning_Foundations/CAP_Theorem_PACELC.md](../01_Planning_Foundations/CAP_Theorem_PACELC.md) — the interview trade-off-framing companion covering both CAP and PACELC together; this file and [CAP_Theorem.md](./CAP_Theorem.md) are the database-internals depth versions of the same two theorems.
 - [CAP_Theorem.md](./CAP_Theorem.md) — the PAC half; PACELC's foundation and the partition-only view it completes.
 - [Consistency_Models.md](./Consistency_Models.md) — the "C" you're trading, from eventual to linearizable.
 - [BASE_Philosophy.md](./BASE_Philosophy.md) — the PA/EL worldview and its conflict-resolution machinery.

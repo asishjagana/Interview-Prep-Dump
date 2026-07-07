@@ -92,6 +92,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
 - **Monitoring & Metrics**: The triggers for auto-scaling.
 - **Stateless vs Stateful**: The prerequisite for horizontal scaling.
 - **Cloud-Native Architecture**: The environment where auto-scaling thrives.
+- **[01_Planning_Foundations/Scalability_Fundamentals_Scale_Cube.md](../01_Planning_Foundations/Scalability_Fundamentals_Scale_Cube.md)**: The conceptual layer above this file — *which dimension* to scale (clone, split, or shard) and why, before you get to *how* to mechanically autoscale it here.
 
 ## 14. Visual Aids
 - **The Step Chart**: Traffic vs Server Count (Server count lagging slightly behind traffic).
