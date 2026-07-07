@@ -14,7 +14,7 @@
 
 ---
 
-## 🗺️ How the 11 Topics Interlock
+## 🗺️ How the 18 Topics Interlock
 
 ```mermaid
 flowchart TD
@@ -29,21 +29,32 @@ flowchart TD
     CONTRACT --> VER["⑤ Versioning<br/>evolve without breaking"]
     CONTRACT --> PAG["⑥ Pagination &amp; Filtering<br/>bound every list"]
     CONTRACT --> IDEM["⑦ Idempotency<br/>safe retries"]
+    CONTRACT --> DOC["⑫ Docs &amp; OpenAPI<br/>machine-readable contract"]
+    CONTRACT --> ERR["⑬ Error Handling<br/>one error surface"]
+    CONTRACT --> ASY["⑭ Async / Long-Running<br/>202 + operation resource"]
+    CONTRACT --> BAT["⑮ Bulk &amp; Batch<br/>207 multi-status"]
+    CONTRACT --> HM["⑯ HATEOAS<br/>hypermedia (optional L3)"]
 
     F --> EDGE["Edge / security layer"]
     EDGE --> AUTHN["⑧ Authentication<br/>who are you?"]
     AUTHN --> AUTHZ["⑨ Authorization<br/>what can you do?"]
     EDGE --> RL["⑩ Rate Limiting<br/>the governor"]
+    EDGE --> CORS["⑰ CORS / SOP<br/>browser-facing rules"]
     AUTHN --> GW["⑪ API Gateway<br/>the front door"]
     AUTHZ --> GW
     RL --> GW
     GW -->|routes to| REST
     GW -->|routes to| GRPC
 
+    DOC --> SDK["⑱ SDK / Client<br/>the client side of the contract"]
+    IDEM --> SDK
+    PAG --> SDK
+
     style F fill:#ede9fe,color:#000
     style CONTRACT fill:#cffafe,color:#000
     style EDGE fill:#fef3c7,color:#000
     style GW fill:#dcfce7,color:#000
+    style SDK fill:#dcfce7,color:#000
 ```
 
 > **The spine:** *Fundamentals → pick a style → harden the contract (versioning, pagination, idempotency) → protect the edge (authN → authZ, rate limiting) → put it all behind a gateway.*
@@ -65,6 +76,13 @@ flowchart TD
 | 9 | [Authorization](./Authorization.md) | What can you do? | Authenticated ≠ authorized; object-level checks prevent IDOR (OWASP #1) |
 | 10 | [Rate Limiting](./Rate_Limiting.md) | The governor | Token bucket; shared Redis; return `429` + `Retry-After`, never `500` |
 | 11 | [API Gateway](./API_Gateway.md) | The front door | Cross-cutting concerns once at the edge; not a SPOF, not a god-object |
+| 12 | [API Documentation & OpenAPI](./API_Documentation_OpenAPI.md) | The contract, machine-readable | Spec-first; docs-as-product; contract-test in CI so the spec can't lie |
+| 13 | [API Error Handling Design](./API_Error_Handling_Design.md) | One consistent error surface | Single envelope + stable codes; RFC 7807/9457; retryable vs not; leak nothing |
+| 14 | [Async APIs & Long-Running Operations](./Async_APIs_Long_Running_Operations.md) | When a request outlives the connection | `202 Accepted` + operation resource; poll or webhook; TTL'd results |
+| 15 | [Bulk & Batch APIs](./Bulk_Batch_APIs.md) | Many items in one call | `207 Multi-Status` per-item results; batch idempotency; chunk + async for the huge ones |
+| 16 | [HATEOAS & Hypermedia](./HATEOAS_Hypermedia.md) | Responses carry the next actions | Richardson maturity 0→3; most stop at L2; L3 pays off for workflow/state-machine APIs |
+| 17 | [CORS & the Same-Origin Policy](./CORS_Same_Origin_Policy.md) | Browser-facing rules | CORS *relaxes* the SOP for the browser — it protects users, never your server |
+| 18 | [SDK & Client Design](./SDK_Client_Design.md) | The client side of the contract | Bake in retries/backoff/idempotency + auto-paging; version the SDK with the API |
 
 ---
 
