@@ -15,21 +15,29 @@
 
 ---
 
-## 🗺️ How the 10 Topics Interlock
+## 🗺️ How the 19 Topics Interlock
 
 ```mermaid
 flowchart TD
     FOUND["Foundations — the rules objects must obey"]
     FOUND --> OOD["① Object-Oriented Design (the four pillars)"]
     FOUND --> SOLID["② SOLID Principles (five rules for change)"]
+    FOUND --> COMP["⑪ Composition vs Inheritance (the is-a test)"]
 
     BUILD["Building blocks — shape &amp; wire the classes"]
     BUILD --> PAT["③ Design Patterns (named recipes)"]
+    PAT --> CRE["⑫ Creational — how objects are made"]
+    PAT --> STR["⑬ Structural — how objects compose"]
+    PAT --> BEH["⑭ Behavioral — how objects collaborate"]
     BUILD --> CLS["④ Class Design (cohesion &amp; coupling)"]
     BUILD --> IFACE["⑤ Interface Design (contracts)"]
     BUILD --> DI["⑥ Dependency Injection (wiring)"]
+    BUILD --> ERR["⑮ Error Handling &amp; Exception Design"]
+    BUILD --> TEST["⑯ Designing for Testability"]
+    BUILD --> CONC["⑰ Concurrency &amp; Thread Safety"]
     OOD --> BUILD
     SOLID --> BUILD
+    COMP --> BUILD
 
     DOMAIN["Domain &amp; behavior — model the business"]
     DOMAIN --> DDD["⑦ Domain-Driven Design (bounded contexts)"]
@@ -41,13 +49,20 @@ flowchart TD
     COMM --> SEQ["⑩ Sequence Diagrams (interaction notation)"]
     DOMAIN --> COMM
 
+    PRACTICE["Quality &amp; practice — keep it clean, then rehearse"]
+    PRACTICE --> SMELL["⑱ Code Smells &amp; Refactoring"]
+    PRACTICE --> LLD["⑲ Common LLD Interview Problems"]
+    COMM --> PRACTICE
+
     style FOUND fill:#ede9fe,color:#000
     style BUILD fill:#cffafe,color:#000
+    style PAT fill:#e0f2fe,color:#000
     style DOMAIN fill:#dcfce7,color:#000
     style COMM fill:#fef3c7,color:#000
+    style PRACTICE fill:#fee2e2,color:#000
 ```
 
-> **The spine:** *master the four pillars and five rules → use them to shape classes, interfaces, patterns, and the wiring between them → apply that toolkit to model the domain's language and lifecycles → draw and whiteboard the result so the team agrees before anyone commits code.* Patterns (③) are SOLID (②) made concrete; DI (⑥) is dependency inversion made runnable; UML (⑨) and sequence diagrams (⑩) are how everything above gets communicated and interview-whiteboarded.
+> **The spine:** *master the four pillars, five rules, and the compose-vs-inherit test → use them to shape classes, interfaces, patterns (③, deep-dived across the three GoF families ⑫⑬⑭), and the wiring, error contracts, testability, and thread-safety of those classes → apply that toolkit to model the domain's language and lifecycles → draw and whiteboard the result → keep it clean with refactoring and rehearse on the classic LLD prompts.* Patterns (③) are SOLID (②) made concrete; DI (⑥) is dependency inversion made runnable and the enabler of testability (⑯); UML (⑨) and sequence diagrams (⑩) are how everything above gets communicated; and Common LLD Problems (⑲) is where the whole toolkit gets exercised under interview conditions.
 
 ---
 
@@ -65,6 +80,17 @@ flowchart TD
 | 8 | [State Machines](./State_Machines.md) | A subway turnstile — one state, drawn arrows only | Make illegal states unrepresentable; every transition is a loggable, auditable event |
 | 9 | [UML Diagrams](./UML_Diagrams.md) | The architect's floor plan | A filled diamond vs a hollow triangle settles ownership vs inheritance in one glyph; sketch, don't paint |
 | 10 | [Sequence Diagrams](./Sequence_Diagrams.md) | A music score for a request | Time flows down; the diagram shows the order, waiting, and fan-out that code hides |
+| 11 | [Composition vs Inheritance](./Composition_vs_Inheritance.md) | Lego bricks, not a family tree | Inheritance only when is-a holds behaviorally (LSP); otherwise compose — dodge the fragile base class and subclass explosion |
+| 12 | [Creational Design Patterns](./Creational_Design_Patterns.md) | Who builds the object, and how | Singleton (the abused global), Factory Method vs Abstract Factory, Builder, Prototype — decouple *what* you get from *how* it's made |
+| 13 | [Structural Design Patterns](./Structural_Design_Patterns.md) | Fitting pieces without welding | Adapter *changes* · Decorator *adds* · Proxy *controls* · Facade *simplifies* · Composite · Bridge · Flyweight |
+| 14 | [Behavioral Design Patterns](./Behavioral_Design_Patterns.md) | Who does what, and how it varies | Strategy, Observer, Command, Template Method, Chain of Responsibility, Mediator, Visitor, Iterator; intent over shape |
+| 15 | [Error Handling & Exception Design](./Error_Handling_Exception_Design.md) | Failure is part of the contract | Checked vs unchecked, coherent exception hierarchies, Result/Either types, translate at boundaries — the signature should say what can go wrong |
+| 16 | [Designing for Testability](./Designing_for_Testability.md) | If it's hard to test, it's badly coupled | Seams + test doubles (dummy/stub/fake/spy/mock); inject the Clock; push logic out of humble objects — DI is the enabler |
+| 17 | [Concurrency Patterns & Thread Safety](./Concurrency_Patterns_Thread_Safety.md) | Make this class safe under threads | Immutability, confinement, guarded state, double-checked locking, producer-consumer, readers-writer, actors; races & the four deadlock conditions |
+| 18 | [Code Smells & Refactoring](./Code_Smells_Refactoring.md) | The nose knows before the tests fail | Smell catalog (God class, feature envy, shotgun surgery) → named refactorings → refactor-to-patterns, under a green suite |
+| 19 | [Common LLD Interview Problems](./Common_LLD_Interview_Problems.md) | The parking lot and its cousins | A repeatable 35-minute method + parking lot / elevator / LRU cache worked in full, each mapped to the patterns it exercises |
+
+> **Reading order:** 1–10 are the original core (foundations → building blocks → domain → communication). 11–19 go deeper: 11 splits out compose-vs-inherit; 12–14 are the per-family pattern deep-dives that hang off ③; 15–17 round out class-level concerns (errors, testability, threads); 18–19 are quality and interview practice.
 
 ---
 
@@ -84,9 +110,11 @@ flowchart LR
 
 | Goal | Path | Why |
 |------|------|-----|
-| **⚡ Interview in 48h** | 1 → 2 → 3 → 4 → 9 | Pillars + rules + patterns + class shape + how to draw it = the most-asked 80% |
-| **🏗️ Deep mastery** | 1→2 → 3→4→5→6 → 7→8 → 9→10 | Rules → building blocks → domain modeling → communicating it, in dependency order |
-| **🧩 "Design the classes"** | 1 → 4 → 5 → 6 | The OOD mental model, then the shape of classes/interfaces and how they're wired together |
+| **⚡ Interview in 48h** | 1 → 2 → 3 → 4 → 9 → 19 | Pillars + rules + patterns + class shape + how to draw it + one worked LLD problem = the most-asked 80% |
+| **🏗️ Deep mastery** | 1→2→11 → 3→12→13→14 → 4→5→6→15→16→17 → 7→8 → 9→10 → 18→19 | Rules → pattern deep-dives → building blocks & class concerns → domain → communication → quality & practice, in dependency order |
+| **🧩 "Design the classes"** | 1 → 11 → 4 → 5 → 6 → 16 | The OOD mental model, compose-vs-inherit, then the shape/wiring of classes and how to keep them testable |
+| **🎨 Pattern deep-dive** | 3 → 12 → 13 → 14 (+ 18 refactor-to-patterns) | The overview, then each GoF family in full, then how refactoring converges on them |
+| **🅿️ LLD problem prep** | 19 → back-fill 3/12/13/14 + 8 + 17 as each problem demands | Learn the 35-min method first, then deepen the exact patterns each prompt exercises |
 | **🏢 Domain-modeling focus** | 2 → 7 → 8 (+ [03 · System Decomposition](../03_High_Level_Design/System_Decomposition.md)) | SOLID discipline → bounded contexts → lifecycle correctness |
 
 > **Study each file by** attempting the 🏋️ **Practice Drills before the solutions**, rehearsing the 🎤 **Interview Q&A out loud**, and reading 🎯 **Staff+ Nuances** for senior-level depth.
@@ -106,6 +134,15 @@ DDD       ubiquitous language kills the translator · split by BOUNDED CONTEXT, 
 STATE     one named state at a time · only drawn arrows are legal transitions · every transition = an auditable event
 UML       shared symbol set (hollow triangle=is-a, filled diamond=owns lifecycle) · sketch to agree, don't paint for art
 SEQUENCE  time flows down · shows ORDER + WAITING + FAN-OUT that code hides · design the interaction before you code it
+COMP/INH  inherit ONLY when is-a holds behaviorally (LSP) · else compose/delegate · fragile base class + subclass explosion are the tax on inheritance
+CREATIONAL who builds it: Singleton (⚠ global-in-disguise) · Factory Method vs Abstract Factory · Builder (>4 args) · Prototype (clone)
+STRUCTURAL Adapter=CHANGE iface · Decorator=ADD (same iface, stackable) · Proxy=CONTROL access · Facade=SIMPLIFY · Composite · Bridge · Flyweight
+BEHAVIORAL Strategy(client picks) vs Template Method(inheritance hook) · Observer vs pub/sub · Command · Chain of Responsibility · Mediator · Visitor
+ERRORS    error contract IS the interface · exception hierarchy, don't catch(Exception) · Result/Either · translate at boundaries · fail fast
+TESTABILITY hard-to-test = badly coupled · seams + doubles (dummy/stub/fake/spy/mock) · inject the Clock · humble object · DI is the enabler
+CONCURRENCY immutability > confinement > guarded state · atomicity vs visibility · DCL needs volatile · avoid deadlock via lock ordering
+SMELLS    God class · feature envy · shotgun surgery · duplicated code → named refactoring → refactor-to-pattern, always under a green suite
+LLD DRILL clarify → nouns=entities → responsibilities → relationships → patterns → concurrency/edge cases → walk an example (parking lot is the classic)
 RECURRING every layer here is the SAME idea at a different zoom: hide the how, expose a stable contract, let the pieces vary independently
 ```
 
