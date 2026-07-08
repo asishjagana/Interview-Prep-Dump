@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="qobg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="qoar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:12px;font-weight:800}
+      .nd{fill:#0f172a;font-size:11px;font-weight:700}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .mono{font-family:'Consolas',monospace;fill:#e2e8f0;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="520" rx="16" fill="url(#qobg)"/>
+  <text x="30" y="40" class="t">The optimizer: one SQL query, many plans, pick the cheapest</text>
+  <text x="30" y="62" class="sub">SQL says WHAT you want; the cost-based optimizer decides HOW, using table statistics</text>
+
+  <!-- SQL -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="82" width="700" height="46" rx="8" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="44" y="102" class="mono">SELECT * FROM orders o JOIN users u ON o.user_id = u.id</text>
+    <text x="44" y="120" class="mono">WHERE u.country = 'JP' AND o.total &gt; 100;</text>
+  </g>
+
+  <!-- optimizer -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="290" y="142" width="180" height="46" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="380" y="163" text-anchor="middle" class="hd">COST-BASED OPTIMIZER</text>
+    <text x="380" y="180" text-anchor="middle" class="nd" font-size="10">uses statistics + cardinality</text>
+    <path d="M380 128 L380 142" stroke="#94a3b8" marker-end="url(#qoar)"/>
+  </g>
+
+  <!-- candidate plans -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <path d="M340 188 L180 208" stroke="#64748b" marker-end="url(#qoar)"/>
+    <path d="M380 188 L380 208" stroke="#64748b" marker-end="url(#qoar)"/>
+    <path d="M420 188 L580 208" stroke="#64748b" marker-end="url(#qoar)"/>
+    <!-- plan A -->
+    <rect x="40" y="210" width="210" height="96" rx="8" fill="#0b1220" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="52" y="230" class="hd" fill="#fca5a5">Plan A — cost 150000</text>
+    <text x="52" y="248" class="cap" font-size="10">Seq Scan orders (1M)</text>
+    <text x="52" y="264" class="cap" font-size="10">Nested Loop join</text>
+    <text x="52" y="280" class="cap" font-size="10">Seq Scan users (100k)</text>
+    <text x="52" y="298" class="cap" font-size="9" fill="#f87171">✗ scans everything</text>
+    <!-- plan B -->
+    <rect x="275" y="210" width="210" height="96" rx="8" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="287" y="230" class="hd" fill="#6ee7b7">Plan B — cost 320 ✓</text>
+    <text x="287" y="248" class="cap" font-size="10">Index Scan users(country)</text>
+    <text x="287" y="264" class="cap" font-size="10">Nested Loop</text>
+    <text x="287" y="280" class="cap" font-size="10">Index Scan orders(user_id)</text>
+    <text x="287" y="298" class="cap" font-size="9" fill="#6ee7b7">✓ few JP users → seek</text>
+    <!-- plan C -->
+    <rect x="510" y="210" width="220" height="96" rx="8" fill="#0b1220" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="522" y="230" class="hd" fill="#fbbf24">Plan C — cost 9000</text>
+    <text x="522" y="248" class="cap" font-size="10">Hash Join</text>
+    <text x="522" y="264" class="cap" font-size="10">build hash on users</text>
+    <text x="522" y="280" class="cap" font-size="10">probe with orders</text>
+    <text x="522" y="298" class="cap" font-size="9" fill="#fbbf24">good if many rows</text>
+  </g>
+
+  <!-- join algos -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="322" width="700" height="86" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1.5"/>
+    <text x="48" y="346" class="hd" fill="#e2e8f0" font-size="13">JOIN ALGORITHMS — the optimizer picks one per join</text>
+    <text x="48" y="368" class="cap" font-size="11">Nested Loop — small outer + indexed inner (few rows)   ·   Hash Join — large unsorted sets, equality only</text>
+    <text x="48" y="388" class="cap" font-size="11">Merge Join — both inputs already sorted on the join key (great with sorted indexes)</text>
+  </g>
+
+  <!-- read the plan -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="422" width="700" height="46" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="48" y="446" class="hd" fill="#93c5fd" font-size="12">READ EXPLAIN ANALYZE: compare estimated rows vs ACTUAL rows — big gap = stale stats</text>
+    <text x="48" y="462" class="cap" font-size="10">watch for: Seq Scan on big table · rows off by 100× · Nested Loop over many rows</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.6s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="482" width="700" height="30" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="502" text-anchor="middle" class="hd">Don't guess — EXPLAIN ANALYZE, read the plan, fix the estimate or add the index</text>
+  </g>
+</svg>

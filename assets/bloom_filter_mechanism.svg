@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="blbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="blar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .bit{fill:#f8fafc;font-size:13px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="520" rx="16" fill="url(#blbg)"/>
+  <text x="30" y="40" class="t">Bloom filter: "definitely not here" or "maybe here"</text>
+  <text x="30" y="62" class="sub">a tiny bit array + k hash functions answers set membership with no false negatives, some false positives</text>
+
+  <!-- ADD -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="94" class="hd" fill="#6ee7b7">ADD "apple" → hash 3 times → set those bits to 1</text>
+    <rect x="30" y="104" width="120" height="34" rx="8" fill="#14532d" stroke="#16a34a"/><text x="90" y="126" text-anchor="middle" class="cap">"apple"</text>
+    <path d="M152 121 L196 121" stroke="#94a3b8" marker-end="url(#blar)"/>
+    <text x="205" y="118" class="cap" font-size="10">h1=2, h2=5, h3=9</text>
+  </g>
+
+  <!-- bit array -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <g font-family="monospace">
+      <!-- 12 cells -->
+      <rect x="30" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="56" y="176" text-anchor="middle" class="bit">0</text><text x="56" y="205" text-anchor="middle" class="sub" font-size="9">0</text>
+      <rect x="86" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="112" y="176" text-anchor="middle" class="bit">0</text><text x="112" y="205" text-anchor="middle" class="sub" font-size="9">1</text>
+      <rect x="142" y="150" width="52" height="40" rx="4" fill="#166534" stroke="#22c55e"/><text x="168" y="176" text-anchor="middle" class="bit">1</text><text x="168" y="205" text-anchor="middle" class="sub" font-size="9">2</text>
+      <rect x="198" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="224" y="176" text-anchor="middle" class="bit">0</text><text x="224" y="205" text-anchor="middle" class="sub" font-size="9">3</text>
+      <rect x="254" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="280" y="176" text-anchor="middle" class="bit">0</text><text x="280" y="205" text-anchor="middle" class="sub" font-size="9">4</text>
+      <rect x="310" y="150" width="52" height="40" rx="4" fill="#166534" stroke="#22c55e"/><text x="336" y="176" text-anchor="middle" class="bit">1</text><text x="336" y="205" text-anchor="middle" class="sub" font-size="9">5</text>
+      <rect x="366" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="392" y="176" text-anchor="middle" class="bit">0</text><text x="392" y="205" text-anchor="middle" class="sub" font-size="9">6</text>
+      <rect x="422" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="448" y="176" text-anchor="middle" class="bit">0</text><text x="448" y="205" text-anchor="middle" class="sub" font-size="9">7</text>
+      <rect x="478" y="150" width="52" height="40" rx="4" fill="#78350f" stroke="#f59e0b"/><text x="504" y="176" text-anchor="middle" class="bit">1</text><text x="504" y="205" text-anchor="middle" class="sub" font-size="9">8</text>
+      <rect x="534" y="150" width="52" height="40" rx="4" fill="#166534" stroke="#22c55e"/><text x="560" y="176" text-anchor="middle" class="bit">1</text><text x="560" y="205" text-anchor="middle" class="sub" font-size="9">9</text>
+      <rect x="590" y="150" width="52" height="40" rx="4" fill="#1e293b" stroke="#475569"/><text x="616" y="176" text-anchor="middle" class="bit">0</text><text x="616" y="205" text-anchor="middle" class="sub" font-size="9">10</text>
+      <rect x="646" y="150" width="52" height="40" rx="4" fill="#78350f" stroke="#f59e0b"/><text x="672" y="176" text-anchor="middle" class="bit">1</text><text x="672" y="205" text-anchor="middle" class="sub" font-size="9">11</text>
+    </g>
+    <text x="146" y="234" class="cap" font-size="9" fill="#22c55e">apple set 2,5,9</text>
+    <text x="470" y="234" class="cap" font-size="9" fill="#f59e0b">"mango" earlier set 8,11</text>
+  </g>
+
+  <!-- QUERY definitely not -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="250" width="340" height="94" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="48" y="274" class="hd" fill="#fca5a5">QUERY "grape" → h=3,6,10</text>
+    <text x="48" y="296" class="cap" font-size="11">bit 3=0 → at least one bit is 0</text>
+    <text x="48" y="316" class="cap" font-size="11">⇒ "grape" was DEFINITELY never added</text>
+    <text x="48" y="336" class="cap" font-size="10" fill="#fca5a5">NO false negatives — a 0 bit is proof of absence</text>
+  </g>
+
+  <!-- QUERY maybe -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="390" y="250" width="340" height="94" rx="10" fill="#0b1220" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="408" y="274" class="hd" fill="#fbbf24">QUERY "kiwi" → h=2,8,11</text>
+    <text x="408" y="296" class="cap" font-size="11">bits 2,8,11 all = 1 (set by apple+mango)</text>
+    <text x="408" y="316" class="cap" font-size="11">⇒ "kiwi" is MAYBE present (must verify)</text>
+    <text x="408" y="336" class="cap" font-size="10" fill="#fbbf24">FALSE POSITIVE possible — collisions flip the same bits</text>
+  </g>
+
+  <!-- tradeoff -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="356" width="700" height="82" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="48" y="380" class="hd" fill="#93c5fd">WHY IT'S USEFUL — avoid an expensive lookup for things that aren't there</text>
+    <text x="48" y="402" class="cap" font-size="11">LSM/Cassandra: skip reading an SSTable that can't contain the key · CDN/cache: skip a miss lookup</text>
+    <text x="48" y="422" class="cap" font-size="11">~10 bits/item → ~1% false positive · NO deletes (standard Bloom) · size fixed up front</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.5s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="452" width="700" height="44" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="479" text-anchor="middle" class="hd">"No" is certain, "yes" needs verification — trade a little accuracy for huge space savings</text>
+  </g>
+</svg>

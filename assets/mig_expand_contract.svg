@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="migbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="migar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .nd{fill:#f8fafc;font-size:11px;font-weight:700}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .step{fill:#0f172a;font-size:14px;font-weight:800}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="520" rx="16" fill="url(#migbg)"/>
+  <text x="30" y="40" class="t">Expand / Contract: change a hot schema with zero downtime</text>
+  <text x="30" y="62" class="sub">never change a column in place — add the new, migrate to it, then remove the old, in separate deploys</text>
+
+  <!-- timeline bar -->
+  <line x1="60" y1="96" x2="700" y2="96" stroke="#475569" stroke-width="2"/>
+  <text x="60" y="88" class="sub">time →</text>
+
+  <!-- EXPAND -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <circle cx="140" cy="96" r="7" fill="#16a34a"/>
+    <rect x="60" y="120" width="180" height="150" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="150" y="142" text-anchor="middle" class="hd" fill="#6ee7b7">1. EXPAND</text>
+    <text x="72" y="164" class="cap" font-size="10">add NEW column /</text>
+    <text x="72" y="178" class="cap" font-size="10">table (nullable)</text>
+    <rect x="72" y="188" width="156" height="24" rx="4" fill="#14532d"/><text x="150" y="204" text-anchor="middle" class="nd" font-size="10">ADD full_name (null)</text>
+    <text x="72" y="230" class="cap" font-size="10">app writes BOTH</text>
+    <text x="72" y="244" class="cap" font-size="10">old + new (dual write)</text>
+    <text x="72" y="262" class="cap" font-size="9" fill="#6ee7b7">✓ backward compatible</text>
+  </g>
+
+  <!-- MIGRATE / BACKFILL -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <circle cx="380" cy="96" r="7" fill="#f59e0b"/>
+    <rect x="290" y="120" width="180" height="150" rx="10" fill="#0b1220" stroke="#f59e0b" stroke-width="2"/>
+    <text x="380" y="142" text-anchor="middle" class="hd" fill="#fbbf24">2. MIGRATE</text>
+    <text x="302" y="164" class="cap" font-size="10">BACKFILL old rows</text>
+    <text x="302" y="178" class="cap" font-size="10">in batches</text>
+    <rect x="302" y="188" width="156" height="24" rx="4" fill="#78350f"/><text x="380" y="204" text-anchor="middle" class="nd" font-size="9">UPDATE ... LIMIT 1000</text>
+    <text x="302" y="230" class="cap" font-size="10">reads prefer new,</text>
+    <text x="302" y="244" class="cap" font-size="10">fall back to old</text>
+    <text x="302" y="262" class="cap" font-size="9" fill="#fbbf24">✓ throttled, resumable</text>
+  </g>
+
+  <!-- CONTRACT -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <circle cx="620" cy="96" r="7" fill="#2563eb"/>
+    <rect x="520" y="120" width="180" height="150" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="610" y="142" text-anchor="middle" class="hd" fill="#93c5fd">3. CONTRACT</text>
+    <text x="532" y="164" class="cap" font-size="10">app uses NEW only</text>
+    <text x="532" y="178" class="cap" font-size="10">stop writing old</text>
+    <rect x="532" y="188" width="156" height="24" rx="4" fill="#1e3a5f"/><text x="610" y="204" text-anchor="middle" class="nd" font-size="10">DROP old column</text>
+    <text x="532" y="230" class="cap" font-size="10">only after new is</text>
+    <text x="532" y="244" class="cap" font-size="10">fully backfilled &amp; live</text>
+    <text x="532" y="262" class="cap" font-size="9" fill="#93c5fd">✓ safe to roll back until here</text>
+  </g>
+
+  <path d="M240 195 L288 195" stroke="#94a3b8" marker-end="url(#migar)"/>
+  <path d="M470 195 L518 195" stroke="#94a3b8" marker-end="url(#migar)"/>
+
+  <!-- online DDL note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.6s" fill="freeze"/>
+    <rect x="60" y="290" width="640" height="80" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1.5"/>
+    <text x="78" y="314" class="hd" fill="#e2e8f0">ONLINE DDL — the alter must not lock the hot table</text>
+    <text x="78" y="336" class="cap" font-size="11">❌ ALTER TABLE that rewrites/locks → writes blocked → outage</text>
+    <text x="78" y="356" class="cap" font-size="11">✓ pg: ADD COLUMN (no default rewrite), CREATE INDEX CONCURRENTLY · MySQL: ALGORITHM=INPLACE · gh-ost / pt-osc</text>
+  </g>
+
+  <!-- rollback -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.6s" fill="freeze"/>
+    <rect x="60" y="384" width="640" height="60" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="78" y="408" class="hd" fill="#fca5a5">EACH STEP IS ITS OWN DEPLOY — and reversible until CONTRACT</text>
+    <text x="78" y="430" class="cap" font-size="11">migrations are versioned, ordered, forward-only in prod; test on a prod-size copy first</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.8s" dur="0.6s" fill="freeze"/>
+    <rect x="60" y="458" width="640" height="40" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="483" text-anchor="middle" class="hd">Expand → Migrate → Contract: old and new coexist so deploy &amp; schema never must be in lockstep</text>
+  </g>
+</svg>

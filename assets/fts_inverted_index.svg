@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="ftsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="ftsar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .nd{fill:#0f172a;font-size:11px;font-weight:700}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .term{fill:#fde68a;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="520" rx="16" fill="url(#ftsbg)"/>
+  <text x="30" y="40" class="t">The inverted index: term → the documents that contain it</text>
+  <text x="30" y="62" class="sub">a forward index maps doc→words; invert it to word→docs and search becomes a hash lookup</text>
+
+  <!-- docs -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="92" class="hd" fill="#93c5fd">DOCUMENTS (raw)</text>
+    <rect x="30" y="102" width="200" height="40" rx="6" fill="#0b1220" stroke="#2563eb"/><text x="42" y="120" class="cap" font-size="10">doc1: "the quick brown fox"</text><text x="42" y="135" class="cap" font-size="9" fill="#64748b">id 1</text>
+    <rect x="30" y="150" width="200" height="40" rx="6" fill="#0b1220" stroke="#2563eb"/><text x="42" y="168" class="cap" font-size="10">doc2: "quick foxes run"</text><text x="42" y="183" class="cap" font-size="9" fill="#64748b">id 2</text>
+    <rect x="30" y="198" width="200" height="40" rx="6" fill="#0b1220" stroke="#2563eb"/><text x="42" y="216" class="cap" font-size="10">doc3: "the brown dog"</text><text x="42" y="231" class="cap" font-size="9" fill="#64748b">id 3</text>
+  </g>
+
+  <!-- analyzer -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <path d="M232 170 L282 170" stroke="#94a3b8" marker-end="url(#ftsar)"/>
+    <rect x="284" y="130" width="120" height="80" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="344" y="152" text-anchor="middle" class="hd">ANALYZER</text>
+    <text x="344" y="170" text-anchor="middle" class="nd" font-size="9">lowercase</text>
+    <text x="344" y="184" text-anchor="middle" class="nd" font-size="9">tokenize</text>
+    <text x="344" y="198" text-anchor="middle" class="nd" font-size="9">stem · stop-words</text>
+    <text x="284" y="228" class="cap" font-size="9">"foxes"→"fox", drop "the"</text>
+  </g>
+
+  <!-- inverted index -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <path d="M406 170 L456 170" stroke="#94a3b8" marker-end="url(#ftsar)"/>
+    <rect x="458" y="92" width="272" height="150" rx="8" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="472" y="112" class="hd" fill="#6ee7b7">INVERTED INDEX (postings)</text>
+    <text x="472" y="134" class="term">quick</text><text x="560" y="134" class="cap">→ [doc1, doc2]</text>
+    <text x="472" y="154" class="term">brown</text><text x="560" y="154" class="cap">→ [doc1, doc3]</text>
+    <text x="472" y="174" class="term">fox</text><text x="560" y="174" class="cap">→ [doc1, doc2]</text>
+    <text x="472" y="194" class="term">run</text><text x="560" y="194" class="cap">→ [doc2]</text>
+    <text x="472" y="214" class="term">dog</text><text x="560" y="214" class="cap">→ [doc3]</text>
+    <text x="472" y="234" class="cap" font-size="9" fill="#64748b">each posting also stores term frequency + positions</text>
+  </g>
+
+  <!-- query flow -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="262" width="700" height="96" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="286" class="hd" fill="#c4b5fd">QUERY "quick fox" → analyze → lookup → rank</text>
+    <text x="48" y="308" class="cap" font-size="11">1. analyze query the SAME way → terms [quick, fox]</text>
+    <text x="48" y="326" class="cap" font-size="11">2. lookup postings: quick→[1,2] ∩ fox→[1,2] = {doc1, doc2}</text>
+    <text x="48" y="344" class="cap" font-size="11">3. score each match by relevance (BM25) → return ranked, not just matched</text>
+  </g>
+
+  <!-- relevance -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="372" width="700" height="82" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1.5"/>
+    <text x="48" y="396" class="hd" fill="#e2e8f0">RELEVANCE = TF-IDF / BM25 — SQL LIKE can't do this</text>
+    <text x="48" y="418" class="cap" font-size="11">TF: term appears often in THIS doc ↑   ·   IDF: term is rare across ALL docs ↑</text>
+    <text x="48" y="436" class="cap" font-size="11">BM25 adds saturation + length normalization → the default modern scorer</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.6s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="466" width="700" height="40" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="491" text-anchor="middle" class="hd">Search returns RANKED results; a DB returns MATCHING rows. Different tool, kept in sync via CDC.</text>
+  </g>
+</svg>

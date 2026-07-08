@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="nsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="nsar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .col{fill:#f8fafc;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="520" rx="16" fill="url(#nsbg)"/>
+  <text x="30" y="40" class="t">NewSQL: SQL + ACID of relational, horizontal scale of NoSQL</text>
+  <text x="30" y="62" class="sub">the old choice was "scale OR transactions"; distributed SQL refuses to pick</text>
+
+  <!-- three columns -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.6s" fill="freeze"/>
+    <!-- traditional SQL -->
+    <rect x="30" y="86" width="220" height="180" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="140" y="110" text-anchor="middle" class="hd" fill="#93c5fd">Traditional SQL</text>
+    <text x="140" y="126" text-anchor="middle" class="cap" font-size="10">(Postgres, MySQL)</text>
+    <text x="46" y="150" class="cap">✓ ACID transactions</text>
+    <text x="46" y="170" class="cap">✓ SQL + joins</text>
+    <text x="46" y="190" class="cap">✓ strong consistency</text>
+    <text x="46" y="212" class="cap" fill="#fca5a5">✗ scales UP only</text>
+    <text x="46" y="232" class="cap" fill="#fca5a5">✗ writes = single node</text>
+    <text x="46" y="252" class="cap" fill="#fca5a5">✗ manual sharding pain</text>
+
+    <!-- NoSQL -->
+    <rect x="270" y="86" width="220" height="180" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2"/>
+    <text x="380" y="110" text-anchor="middle" class="hd" fill="#fca5a5">NoSQL</text>
+    <text x="380" y="126" text-anchor="middle" class="cap" font-size="10">(Cassandra, Dynamo)</text>
+    <text x="286" y="150" class="cap">✓ scales OUT horizontally</text>
+    <text x="286" y="170" class="cap">✓ high availability</text>
+    <text x="286" y="190" class="cap">✓ huge write throughput</text>
+    <text x="286" y="212" class="cap" fill="#fca5a5">✗ no cross-shard txns</text>
+    <text x="286" y="232" class="cap" fill="#fca5a5">✗ eventual consistency</text>
+    <text x="286" y="252" class="cap" fill="#fca5a5">✗ limited joins / SQL</text>
+
+    <!-- NewSQL -->
+    <rect x="510" y="86" width="220" height="180" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="620" y="110" text-anchor="middle" class="hd" fill="#6ee7b7">NewSQL / Distributed SQL</text>
+    <text x="620" y="126" text-anchor="middle" class="cap" font-size="10">(Spanner, CockroachDB, TiDB)</text>
+    <text x="526" y="150" class="cap" fill="#6ee7b7">✓ ACID transactions</text>
+    <text x="526" y="170" class="cap" fill="#6ee7b7">✓ SQL + joins</text>
+    <text x="526" y="190" class="cap" fill="#6ee7b7">✓ scales OUT horizontally</text>
+    <text x="526" y="210" class="cap" fill="#6ee7b7">✓ strong consistency</text>
+    <text x="526" y="230" class="cap" fill="#fbbf24">~ higher write latency</text>
+    <text x="526" y="250" class="cap" fill="#fbbf24">~ operational complexity</text>
+
+    <path d="M252 176 L268 176" stroke="#94a3b8" marker-end="url(#nsar)"/>
+    <path d="M492 176 L508 176" stroke="#94a3b8" marker-end="url(#nsar)"/>
+  </g>
+
+  <!-- how: consensus + clocks -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="282" width="700" height="96" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="306" class="hd" fill="#c4b5fd">HOW IT WORKS — shard + consensus per shard + synchronized clocks</text>
+    <text x="48" y="328" class="cap" font-size="11">data auto-split into ranges; each range REPLICATED via Raft/Paxos (consensus quorum = strong consistency)</text>
+    <text x="48" y="348" class="cap" font-size="11">cross-shard txns: 2PC coordinated across Raft groups (atomic, but a network round-trip)</text>
+    <text x="48" y="368" class="cap" font-size="11">Spanner: TrueTime — GPS/atomic clocks give bounded uncertainty → globally-ordered commit timestamps</text>
+  </g>
+
+  <!-- CAP framing -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="392" width="700" height="66" rx="10" fill="#0b1220" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="48" y="416" class="hd" fill="#fbbf24">CAP: it's CP — chooses Consistency over Availability during a partition</text>
+    <text x="48" y="438" class="cap" font-size="11">a minority partition can't reach quorum → it rejects writes rather than diverge (PACELC: also picks C over L)</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="472" width="700" height="34" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="494" text-anchor="middle" class="hd">"Don't shard Postgres by hand at scale" — the re-platform rung of the scaling ladder</text>
+  </g>
+</svg>

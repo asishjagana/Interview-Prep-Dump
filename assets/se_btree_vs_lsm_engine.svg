@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="sebg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="sear" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .nd{fill:#0f172a;font-size:11px;font-weight:700}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="540" rx="16" fill="url(#sebg)"/>
+  <text x="30" y="40" class="t">The storage engine: update-in-place vs log-structured</text>
+  <text x="30" y="62" class="sub">the layer under the index decides whether a write is a random seek or a sequential append</text>
+
+  <!-- B-TREE PAGE ENGINE (left) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="80" width="350" height="250" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="48" y="104" class="hd" fill="#93c5fd">B-TREE ENGINE — pages, update in place</text>
+    <text x="48" y="122" class="cap">write = find the page, modify it, fsync (random I/O)</text>
+    <rect x="48" y="138" width="90" height="26" rx="4" fill="#60a5fa"/><text x="93" y="156" text-anchor="middle" class="nd">page 42</text>
+    <rect x="150" y="138" width="90" height="26" rx="4" fill="#60a5fa"/><text x="195" y="156" text-anchor="middle" class="nd">page 43</text>
+    <rect x="252" y="138" width="90" height="26" rx="4" fill="#60a5fa"/><text x="297" y="156" text-anchor="middle" class="nd">page 44</text>
+    <g><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" begin="1s" repeatCount="indefinite"/>
+      <path d="M195 138 L195 118" stroke="#f87171" stroke-width="2" marker-end="url(#sear)"/>
+      <text x="200" y="115" class="cap" fill="#fca5a5" font-size="10">seek + overwrite</text>
+    </g>
+    <text x="48" y="196" class="cap">WAL first (durability), then the page is mutated</text>
+    <rect x="48" y="208" width="294" height="24" rx="4" fill="#1e3a5f"/><text x="195" y="224" text-anchor="middle" class="cap" font-size="10">WAL: append redo record → fsync → apply to page</text>
+    <text x="48" y="258" class="hd" fill="#93c5fd" font-size="12">Read: 1 lookup, no merge</text>
+    <text x="48" y="278" class="hd" fill="#93c5fd" font-size="12">Write: random seek + rebalance</text>
+    <text x="48" y="306" class="cap">Read amp: LOW · Write amp: MED · Space amp: LOW</text>
+  </g>
+
+  <!-- LSM ENGINE (right) -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="400" y="80" width="330" height="250" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="418" y="104" class="hd" fill="#6ee7b7">LSM ENGINE — append, compact later</text>
+    <text x="418" y="122" class="cap">write = append to memtable (sequential, no seek)</text>
+    <rect x="418" y="136" width="150" height="28" rx="4" fill="#34d399"/><text x="493" y="155" text-anchor="middle" class="nd">MemTable (RAM)</text>
+    <g><animate attributeName="opacity" values="1;0.3;1" dur="1.2s" begin="1s" repeatCount="indefinite"/>
+      <path d="M580 150 L600 150" stroke="#6ee7b7" stroke-width="2" marker-end="url(#sear)"/>
+      <text x="588" y="142" class="cap" fill="#6ee7b7" font-size="10">write</text>
+    </g>
+    <path d="M493 164 L493 182" stroke="#94a3b8" marker-end="url(#sear)"/><text x="510" y="180" class="cap" font-size="10">flush when full</text>
+    <rect x="418" y="188" width="80" height="22" rx="4" fill="#bbf7d0"/><text x="458" y="204" text-anchor="middle" class="nd">SSTable L0</text>
+    <rect x="508" y="188" width="80" height="22" rx="4" fill="#bbf7d0"/><text x="548" y="204" text-anchor="middle" class="nd">SSTable L0</text>
+    <path d="M493 210 L560 232" stroke="#94a3b8" marker-end="url(#sear)"/><text x="500" y="228" class="cap" font-size="10">compact</text>
+    <rect x="560" y="222" width="150" height="24" rx="4" fill="#16a34a"/><text x="635" y="238" text-anchor="middle" class="nd" fill="#fff">merged L1 (sorted)</text>
+    <text x="418" y="272" class="hd" fill="#6ee7b7" font-size="12">Write: sequential append (fast)</text>
+    <text x="418" y="292" class="hd" fill="#6ee7b7" font-size="12">Read: check memtable + N SSTables</text>
+    <text x="418" y="316" class="cap">Read amp: HIGH · Write amp: HIGH · Space amp: MED</text>
+  </g>
+
+  <!-- amplification bars -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="346" width="700" height="110" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1.5"/>
+    <text x="48" y="370" class="hd" fill="#e2e8f0">THE THREE AMPLIFICATIONS — you can only optimize two</text>
+    <text x="48" y="392" class="cap" font-size="11">READ amp — extra reads per lookup (files/pages touched)</text>
+    <rect x="360" y="384" width="60" height="10" rx="3" fill="#2563eb"/><text x="426" y="393" class="cap" font-size="9" fill="#93c5fd">B-tree low</text>
+    <rect x="500" y="384" width="180" height="10" rx="3" fill="#16a34a"/><text x="500" y="380" class="cap" font-size="9" fill="#6ee7b7">LSM high</text>
+    <text x="48" y="416" class="cap" font-size="11">WRITE amp — bytes written to disk per byte of data</text>
+    <rect x="360" y="408" width="110" height="10" rx="3" fill="#2563eb"/>
+    <rect x="500" y="408" width="150" height="10" rx="3" fill="#16a34a"/>
+    <text x="48" y="440" class="cap" font-size="11">SPACE amp — disk used per byte of live data</text>
+    <rect x="360" y="432" width="55" height="10" rx="3" fill="#2563eb"/>
+    <rect x="500" y="432" width="95" height="10" rx="3" fill="#16a34a"/>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="466" width="700" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="494" text-anchor="middle" class="hd">Read-heavy OLTP → B-tree. Write firehose → LSM. The WAL makes both crash-safe.</text>
+  </g>
+</svg>

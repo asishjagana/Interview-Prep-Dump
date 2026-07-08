@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="grbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="grar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .node{fill:#f8fafc;font-size:12px;font-weight:700}
+      .edge{fill:#94a3b8;font-size:10px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="520" rx="16" fill="url(#grbg)"/>
+  <text x="30" y="40" class="t">Graph DB: relationships are first-class, traversal is O(neighbors)</text>
+  <text x="30" y="62" class="sub">a deep "friends of friends of friends" query is a JOIN explosion in SQL, a pointer-walk in a graph DB</text>
+
+  <!-- LEFT: relational joins -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="82" width="340" height="250" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2"/>
+    <text x="48" y="106" class="hd" fill="#fca5a5">RELATIONAL — "3 levels of friends"</text>
+    <rect x="48" y="120" width="140" height="30" rx="4" fill="#1e293b" stroke="#475569"/><text x="118" y="140" text-anchor="middle" class="cap">users</text>
+    <rect x="200" y="120" width="150" height="30" rx="4" fill="#1e293b" stroke="#475569"/><text x="275" y="140" text-anchor="middle" class="cap">friendships (join table)</text>
+    <text x="48" y="176" class="cap" font-size="11">SELECT ... FROM friendships f1</text>
+    <text x="48" y="194" class="cap" font-size="11">JOIN friendships f2 ON f1.friend=f2.user</text>
+    <text x="48" y="212" class="cap" font-size="11">JOIN friendships f3 ON f2.friend=f3.user</text>
+    <text x="48" y="230" class="cap" font-size="11">WHERE f1.user = :me ...</text>
+    <text x="48" y="262" class="cap" font-size="11" fill="#fca5a5">each hop = another JOIN over the whole table</text>
+    <text x="48" y="282" class="cap" font-size="11" fill="#fca5a5">cost grows exponentially with depth</text>
+    <text x="48" y="308" class="cap" font-size="10">6 hops on a social graph → often minutes / times out</text>
+  </g>
+
+  <!-- RIGHT: graph traversal -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="390" y="82" width="340" height="250" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="408" y="106" class="hd" fill="#6ee7b7">GRAPH — index-free adjacency</text>
+    <!-- nodes -->
+    <circle cx="440" cy="170" r="18" fill="#34d399"/><text x="440" y="174" text-anchor="middle" class="node" font-size="10">me</text>
+    <circle cx="540" cy="140" r="16" fill="#60a5fa"/><text x="540" y="144" text-anchor="middle" class="node" font-size="9">A</text>
+    <circle cx="540" cy="200" r="16" fill="#60a5fa"/><text x="540" y="204" text-anchor="middle" class="node" font-size="9">B</text>
+    <circle cx="640" cy="130" r="16" fill="#818cf8"/><text x="640" y="134" text-anchor="middle" class="node" font-size="9">C</text>
+    <circle cx="650" cy="180" r="16" fill="#818cf8"/><text x="650" y="184" text-anchor="middle" class="node" font-size="9">D</text>
+    <line x1="457" y1="163" x2="524" y2="145" stroke="#94a3b8" marker-end="url(#grar)"/><text x="480" y="147" class="edge">FRIEND</text>
+    <line x1="457" y1="177" x2="524" y2="195" stroke="#94a3b8" marker-end="url(#grar)"/>
+    <line x1="556" y1="135" x2="624" y2="130" stroke="#94a3b8" marker-end="url(#grar)"/>
+    <line x1="556" y1="195" x2="634" y2="182" stroke="#94a3b8" marker-end="url(#grar)"/>
+    <text x="408" y="250" class="cap" font-size="11">each node stores DIRECT POINTERS to its neighbors</text>
+    <text x="408" y="270" class="cap" font-size="11" fill="#6ee7b7">traverse = follow pointers, O(neighbors) per hop</text>
+    <text x="408" y="290" class="cap" font-size="11">MATCH (me)-[:FRIEND*1..3]->(f) RETURN f</text>
+    <text x="408" y="312" class="cap" font-size="10">cost depends on the LOCAL neighborhood, not table size</text>
+  </g>
+
+  <!-- model -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="344" width="700" height="72" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="48" y="368" class="hd" fill="#93c5fd">PROPERTY GRAPH MODEL</text>
+    <text x="48" y="390" class="cap" font-size="11">NODES (entities: User, Product) + EDGES (relationships: FRIEND, BOUGHT) + PROPERTIES on both</text>
+    <text x="48" y="410" class="cap" font-size="11">query languages: Cypher (Neo4j), Gremlin (Apache TinkerPop), GQL (ISO standard)</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.6s" fill="freeze"/>
+    <rect x="30" y="430" width="700" height="66" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="456" text-anchor="middle" class="hd">Use a graph DB when the RELATIONSHIPS &amp; multi-hop traversals are the query</text>
+    <text x="380" y="480" text-anchor="middle" class="cap">social networks · fraud rings · recommendations · knowledge graphs · network/IT topology</text>
+  </g>
+</svg>
