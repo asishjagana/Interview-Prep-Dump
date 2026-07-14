@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="ohbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="ohar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#ohbg)"/>
+  <text x="30" y="40" class="t">Off-heap cache: huge + local, without the GC pause</text>
+  <text x="30" y="62" class="sub">the third option between on-heap local (fast, GC-limited) and network Redis (unlimited, but a hop away)</text>
+
+  <!-- three columns -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <!-- on-heap -->
+    <rect x="30" y="82" width="222" height="220" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="141" y="106" text-anchor="middle" class="hd" fill="#93c5fd">ON-HEAP LOCAL</text>
+    <text x="141" y="122" text-anchor="middle" class="cap" font-size="10">(Caffeine, HashMap)</text>
+    <text x="46" y="146" class="cap" fill="#6ee7b7">✓ nanosecond access</text>
+    <text x="46" y="166" class="cap" fill="#6ee7b7">✓ real objects, no serde</text>
+    <text x="46" y="186" class="cap" fill="#fca5a5">✗ counts toward GC heap</text>
+    <text x="46" y="206" class="cap" fill="#fca5a5">✗ big heap = long GC pause</text>
+    <text x="46" y="224" class="cap" fill="#fca5a5">  = P99 latency spikes</text>
+    <text x="46" y="246" class="cap">limit: ~ tens of GB heap</text>
+    <text x="46" y="272" class="cap" font-size="10">best for: small hot set</text>
+
+    <!-- off-heap -->
+    <rect x="269" y="82" width="222" height="220" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="380" y="106" text-anchor="middle" class="hd" fill="#6ee7b7">OFF-HEAP EMBEDDED</text>
+    <text x="380" y="122" text-anchor="middle" class="cap" font-size="10">(Ehcache off-heap, Chronicle</text>
+    <text x="380" y="136" text-anchor="middle" class="cap" font-size="10">Map, MapDB, RocksDB-local)</text>
+    <text x="285" y="160" class="cap" fill="#6ee7b7">✓ in-process, no network hop</text>
+    <text x="285" y="180" class="cap" fill="#6ee7b7">✓ INVISIBLE to the GC</text>
+    <text x="285" y="200" class="cap" fill="#6ee7b7">✓ 100s of GB locally</text>
+    <text x="285" y="220" class="cap" fill="#fbbf24">~ serialize on put/get</text>
+    <text x="285" y="238" class="cap" fill="#fbbf24">~ manual memory mgmt</text>
+    <text x="285" y="258" class="cap">µs access (serde cost)</text>
+    <text x="285" y="282" class="cap" font-size="10">best for: big local dataset</text>
+
+    <!-- distributed -->
+    <rect x="508" y="82" width="222" height="220" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="619" y="106" text-anchor="middle" class="hd" fill="#fbbf24">DISTRIBUTED (Redis)</text>
+    <text x="619" y="122" text-anchor="middle" class="cap" font-size="10">(network-attached)</text>
+    <text x="524" y="146" class="cap" fill="#6ee7b7">✓ shared across instances</text>
+    <text x="524" y="166" class="cap" fill="#6ee7b7">✓ ~unlimited (cluster)</text>
+    <text x="524" y="186" class="cap" fill="#6ee7b7">✓ one source of truth</text>
+    <text x="524" y="206" class="cap" fill="#fca5a5">✗ network round-trip</text>
+    <text x="524" y="224" class="cap" fill="#fca5a5">✗ serialization too</text>
+    <text x="524" y="246" class="cap">sub-ms — ms access</text>
+    <text x="524" y="272" class="cap" font-size="10">best for: shared truth</text>
+  </g>
+
+  <!-- GC explanation -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="316" width="700" height="86" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="48" y="340" class="hd" fill="#fca5a5">WHY OFF-HEAP EXISTS — the GC pause IS tail latency</text>
+    <text x="48" y="362" class="cap">a 50 GB on-heap cache = 50 GB the garbage collector must scan → multi-hundred-ms stop-the-world pauses</text>
+    <text x="48" y="382" class="cap">off-heap = raw memory (ByteBuffer/Unsafe/mmap) the GC never walks → millions of entries, NO pause contribution</text>
+    <text x="48" y="397" class="cap" font-size="10">the cost you accept: values are serialized bytes, not live objects → serde CPU on every put/get</text>
+  </g>
+
+  <!-- embedded KV note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="416" width="700" height="60" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="440" class="hd" fill="#c4b5fd">EMBEDDED KV STORES (RocksDB / LMDB) — off-heap taken further: spill to local SSD</text>
+    <text x="48" y="462" class="cap">an in-process store bigger than RAM, mmap'd; LSM/B-tree on local disk · no server, no network · µs–ms</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="490" width="700" height="50" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="511" text-anchor="middle" class="hd">Reach off-heap when the local set is too big for the heap but you can't afford a network hop</text>
+    <text x="380" y="530" text-anchor="middle" class="cap" fill="#166534">on-heap (small+hot) → off-heap (big+local, GC-free) → embedded KV (bigger than RAM) → Redis (shared)</text>
+  </g>
+</svg>

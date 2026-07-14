@@ -202,6 +202,32 @@ quadrantChart
 
 **The rule that saves the most CPU: don't compress what's already dense.** Compressing 83 bytes of already-compact Protobuf with gzip in this session actually made it **larger** — 83 raw high-entropy bytes became 106 bytes after gzip, a 28% *increase*, because gzip's container framing (~18 bytes of header/CRC) plus Huffman table overhead costs more than a nearly-incompressible payload can save. The same logic applies to JPEG, PNG, MP4, and anything already gzipped/zipped — their bytes are already close to maximum entropy; re-compressing wastes CPU for zero (or negative) gain. Check `Content-Type` / a "already encoded" flag before reflexively wrapping a response in another compression pass.
 
+### Compression Dictionaries — beating the small-message penalty
+
+Everything above assumes a payload big enough for the compressor to *find* its own redundancy. But a huge amount of real traffic is **many small, structurally-similar messages** — a Kafka topic of JSON events, per-request API responses, individual cache values, RPC payloads. Each is only a few hundred bytes, and general-purpose compression is nearly useless on them: the algorithm builds its dictionary *from the message itself*, and a 200-byte message is too short to contain repeated patterns worth exploiting. Worse, the compressor's own framing/table overhead (the ~18 bytes seen above) can *exceed* the savings — the same small-payload penalty that made 83 bytes grow to 106.
+
+**The fix: a trained dictionary.** Both **zstd** (`--train`) and **Brotli** let you *pre-train* a dictionary on a representative sample of your messages, then ship that dictionary to both ends once. The compressor now starts each message with a shared "head start" — the common field names, common substrings, and structural boilerplate that repeat across *every* message but appear only *once* in any single one. Redundancy that was invisible within a lone 200-byte message becomes compressible because it's captured in the shared dictionary instead.
+
+```mermaid
+flowchart LR
+    subgraph NO["No dictionary — each small message alone"]
+        M1["msg 200B<br/>(field names, boilerplate<br/>appear once → not compressible)"] --> C1["~180B<br/>barely shrinks / may grow"]
+    end
+    subgraph YES["Trained dictionary — shared boilerplate pre-loaded"]
+        T["dictionary trained on 1000s of<br/>sample messages (shipped once)"] --> M2["msg 200B"]
+        M2 --> C2["~60B<br/>only the message's UNIQUE bytes remain"]
+    end
+    style C1 fill:#fee2e2,stroke:#dc2626,color:#000
+    style C2 fill:#dcfce7,stroke:#16a34a,color:#000
+```
+
+- **The win is large and specific to small payloads.** zstd's own documentation reports dictionary training giving *dramatic* ratio improvements on small files (often several-fold) — precisely the regime where dictionary-less compression fails. On large payloads the effect fades to nothing, because a big message already contains enough internal redundancy to build its own dictionary. So dictionaries are the answer to "my messages are too small to compress," not a general upgrade.
+- **The cost is operational, not CPU.** A dictionary is *shared state both ends must agree on*: you train it offline on a corpus, version it, and distribute it to every producer and consumer. If the message distribution drifts (new fields, new event types), a stale dictionary quietly loses effectiveness and must be retrained and re-rolled out — a versioning-and-deployment problem that rhymes with schema evolution (§4). Mismatched dictionary versions between sender and receiver break decoding, so the dictionary id must travel or be negotiated, exactly like a schema id.
+- **Brotli ships a built-in one — that's *why* it wins on the web.** Brotli's edge over gzip on web content (§Staff+ Nuances) isn't a better algorithm so much as a **static dictionary of common web strings** (HTML tags, JS/CSS tokens, frequent words) baked into the format. It's the same idea as a trained zstd dictionary, generalized to "the whole web looks similar" — which is also why that advantage evaporates on binary payloads that don't resemble web text.
+- **Where it lands in this section.** This is the small-value complement to the in-cache compression point in §6: compressing a large Redis value with LZ4 saves RAM on its own, but a *pool of small, similar* cache values (or Kafka records, or RPC responses) needs a **shared trained dictionary** to compress at all — the per-value redundancy only exists *across* values, so it has to be captured once and shared.
+
+> **Compression dictionaries in one line:** train a shared dictionary on a sample of your small, similar messages and ship it to both ends, so each tiny message compresses against the *fleet's* common boilerplate instead of only its own too-short body — a several-fold win in exactly the small-payload regime where plain compression fails, paid for with the operational cost of versioning and distributing shared state.
+
 ---
 
 ## 6. Where Compression Lives — and the CRIME/BREACH Caution
@@ -478,7 +504,6 @@ LATENCY-CRITICAL READ → FlatBuffers/Cap'n Proto (zero-copy, bigger wire size, 
 - [Database_Connection_Pooling.md](./Database_Connection_Pooling.md) and [Prefetching_Lazy_Loading.md](./Prefetching_Lazy_Loading.md) — the other two levers (in [06 · Caching & Performance](./README.md)'s "efficiency" cluster) for cutting the cost of a request that isn't a cache hit.
 
 **Gaps this topic exposes (candidates for the section's Gap Analysis):**
-- A dedicated treatment of **compression dictionaries** (zstd/Brotli trained dictionaries for small, similar messages) — mentioned in Staff+ Nuances but genuinely under-covered anywhere in the repo.
 - **Schema registry architecture and HA** (Confluent Schema Registry as its own distributed system) is only touched here; a full treatment belongs with [09_Message_Queues_Event_Streaming](../09_Message_Queues_Event_Streaming/).
 
 **External classics:**

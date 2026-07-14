@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="aebg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="aear" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#aebg)"/>
+  <text x="30" y="40" class="t">Adaptive eviction: let the workload tune recency vs frequency</text>
+  <text x="30" y="62" class="sub">fixed LRU/LFU bet on one signal; adaptive policies watch their own mistakes and shift the balance</text>
+
+  <!-- ghost list concept -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="80" width="700" height="70" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="104" class="hd" fill="#c4b5fd">THE KEY TRICK — GHOST LISTS: remember KEYS you just evicted (metadata only, no values)</text>
+    <text x="48" y="126" class="cap">a hit on a ghost = "I evicted this too soon" → a free signal to grow the segment that would have kept it</text>
+    <text x="48" y="143" class="cap" font-size="10">the cache learns from its own misses without paying to store the data twice</text>
+  </g>
+
+  <!-- ARC -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="162" width="350" height="160" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="48" y="186" class="hd" fill="#6ee7b7">ARC — Adaptive Replacement Cache</text>
+    <rect x="48" y="198" width="150" height="26" rx="4" fill="#064e3b" stroke="#16a34a"/><text x="123" y="215" text-anchor="middle" class="cap" font-size="10">T1: recent (seen once)</text>
+    <rect x="210" y="198" width="150" height="26" rx="4" fill="#1e3a8a" stroke="#2563eb"/><text x="285" y="215" text-anchor="middle" class="cap" font-size="10">T2: frequent (seen 2+)</text>
+    <rect x="48" y="230" width="150" height="22" rx="4" fill="#1e293b" stroke="#475569" stroke-dasharray="3 2"/><text x="123" y="245" text-anchor="middle" class="cap" font-size="9">B1 ghost (recency)</text>
+    <rect x="210" y="230" width="150" height="22" rx="4" fill="#1e293b" stroke="#475569" stroke-dasharray="3 2"/><text x="285" y="245" text-anchor="middle" class="cap" font-size="9">B2 ghost (frequency)</text>
+    <text x="48" y="274" class="cap" font-size="10">hit in B1 → grow T1 (favor recency)</text>
+    <text x="48" y="290" class="cap" font-size="10">hit in B2 → grow T2 (favor frequency)</text>
+    <text x="48" y="308" class="cap" font-size="10" fill="#6ee7b7">self-tunes p; scan-resistant · ZFS ARC</text>
+  </g>
+
+  <!-- W-TinyLFU -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+    <rect x="390" y="162" width="340" height="160" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="408" y="186" class="hd" fill="#fbbf24">W-TinyLFU — Caffeine's default</text>
+    <rect x="408" y="198" width="90" height="26" rx="4" fill="#78350f" stroke="#d97706"/><text x="453" y="215" text-anchor="middle" class="cap" font-size="9">Window LRU ~1%</text>
+    <text x="502" y="215" class="cap" font-size="14">→</text>
+    <rect x="520" y="198" width="120" height="26" rx="4" fill="#1e3a8a" stroke="#2563eb"/><text x="580" y="215" text-anchor="middle" class="cap" font-size="9">Main SLRU ~99%</text>
+    <text x="408" y="246" class="cap" font-size="10">admission gate = Count-Min Sketch frequency:</text>
+    <text x="408" y="262" class="cap" font-size="10">admit new key only if est.freq > victim's</text>
+    <text x="408" y="280" class="cap" font-size="10">sketch HALVED periodically → tracks recent freq</text>
+    <text x="408" y="300" class="cap" font-size="10" fill="#fbbf24">recency (window) + frequency (sketch) + scan-</text>
+    <text x="408" y="314" class="cap" font-size="10" fill="#fbbf24">resistance (SLRU) in one design</text>
+  </g>
+
+  <!-- Other policies row -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="334" width="226" height="120" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="143" y="356" text-anchor="middle" class="lbl" fill="#93c5fd">2Q</text>
+    <text x="46" y="378" class="cap" font-size="10">two queues: A1 (FIFO,</text>
+    <text x="46" y="394" class="cap" font-size="10">first-timers) + Am (LRU,</text>
+    <text x="46" y="410" class="cap" font-size="10">proven). Scan-resistant,</text>
+    <text x="46" y="426" class="cap" font-size="10">cheaper than ARC.</text>
+    <text x="46" y="446" class="cap" font-size="9">Postgres buffer lineage</text>
+
+    <rect x="267" y="334" width="226" height="120" rx="10" fill="#0b1220" stroke="#db2777" stroke-width="1.5"/>
+    <text x="380" y="356" text-anchor="middle" class="lbl" fill="#f9a8d4">S3-FIFO</text>
+    <text x="283" y="378" class="cap" font-size="10">3 FIFO queues (small/</text>
+    <text x="283" y="394" class="cap" font-size="10">main/ghost). Simple +</text>
+    <text x="283" y="410" class="cap" font-size="10">scan-resistant; quickly</text>
+    <text x="283" y="426" class="cap" font-size="10">drops one-hit-wonders.</text>
+    <text x="283" y="446" class="cap" font-size="9">modern (2023), FIFO-friendly</text>
+
+    <rect x="504" y="334" width="226" height="120" rx="10" fill="#0b1220" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="617" y="356" text-anchor="middle" class="lbl" fill="#67e8f9">CLOCK / second-chance</text>
+    <text x="520" y="378" class="cap" font-size="10">ring + reference bit.</text>
+    <text x="520" y="394" class="cap" font-size="10">Approximates LRU with</text>
+    <text x="520" y="410" class="cap" font-size="10">O(1) &amp; no lock churn.</text>
+    <text x="520" y="426" class="cap" font-size="10">Great for concurrency.</text>
+    <text x="520" y="446" class="cap" font-size="9">OS pages, Postgres clock-sweep</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="466" width="700" height="74" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="490" text-anchor="middle" class="hd">You rarely implement these — you CONFIGURE them (Caffeine, ZFS, Postgres, RocksDB)</text>
+    <text x="380" y="512" text-anchor="middle" class="cap" fill="#166534">know the NAMES + the trick (ghost lists / admission / second-chance) + the real home</text>
+    <text x="380" y="530" text-anchor="middle" class="cap" fill="#166534">CLOCK when concurrency matters · W-TinyLFU for best hit ratio · ARC when you can't tune by hand</text>
+  </g>
+</svg>

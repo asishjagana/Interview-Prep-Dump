@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="pdsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="pdsar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .q{fill:#f8fafc;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#pdsbg)"/>
+  <text x="30" y="40" class="t">Probabilistic structures: trade a bounded error for tiny, fixed memory</text>
+  <text x="30" y="62" class="sub">answer "member? frequency? how many distinct?" in KB, not GB — the answer is approximate, on purpose</text>
+
+  <!-- The trade banner -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="80" width="700" height="42" rx="8" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="380" y="100" text-anchor="middle" class="q" fill="#c4b5fd">EXACT set/counter = O(n) memory · PROBABILISTIC = O(1) fixed memory + a known, tunable error rate</text>
+    <text x="380" y="116" text-anchor="middle" class="cap">the error is always ONE-SIDED — you know exactly which way it can be wrong</text>
+  </g>
+
+  <!-- Four cards -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.5s" fill="freeze"/>
+    <!-- Bloom -->
+    <rect x="30" y="136" width="220" height="176" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="140" y="160" text-anchor="middle" class="hd" fill="#6ee7b7">BLOOM FILTER</text>
+    <text x="140" y="178" text-anchor="middle" class="cap" font-size="10">"is X in the set?"</text>
+    <text x="46" y="200" class="cap">bit array + k hash fns</text>
+    <text x="46" y="220" class="cap" fill="#6ee7b7">"NO" = definitely absent</text>
+    <text x="46" y="240" class="cap" fill="#fbbf24">"YES" = probably present</text>
+    <text x="46" y="260" class="cap">no false negatives ✓</text>
+    <text x="46" y="280" class="cap">can't delete (→ counting/Cuckoo)</text>
+    <text x="46" y="300" class="cap" font-size="10">CACHE: penetration defense</text>
+
+    <!-- Cuckoo -->
+    <rect x="270" y="136" width="220" height="176" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="380" y="160" text-anchor="middle" class="hd" fill="#93c5fd">CUCKOO FILTER</text>
+    <text x="380" y="178" text-anchor="middle" class="cap" font-size="10">"is X in the set?" + delete</text>
+    <text x="286" y="200" class="cap">stores fingerprints in buckets</text>
+    <text x="286" y="220" class="cap" fill="#6ee7b7">supports DELETION ✓</text>
+    <text x="286" y="240" class="cap">better space at low FP rates</text>
+    <text x="286" y="260" class="cap">lookup = 2 bucket probes</text>
+    <text x="286" y="280" class="cap" fill="#fbbf24">insert can fail if too full</text>
+    <text x="286" y="300" class="cap" font-size="10">the modern Bloom alternative</text>
+
+    <!-- CMS -->
+    <rect x="510" y="136" width="220" height="176" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="620" y="160" text-anchor="middle" class="hd" fill="#fbbf24">COUNT-MIN SKETCH</text>
+    <text x="620" y="178" text-anchor="middle" class="cap" font-size="10">"how often has X appeared?"</text>
+    <text x="526" y="200" class="cap">d rows × w counters, k hashes</text>
+    <text x="526" y="220" class="cap">estimate = MIN over rows</text>
+    <text x="526" y="240" class="cap" fill="#fbbf24">over-counts, never under ✓</text>
+    <text x="526" y="260" class="cap">finds heavy hitters</text>
+    <text x="526" y="280" class="cap" font-size="10">CACHE: W-TinyLFU admission,</text>
+    <text x="526" y="298" class="cap" font-size="10">hot-key detection</text>
+  </g>
+
+  <!-- HLL full-width -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="324" width="700" height="86" rx="10" fill="#0b1220" stroke="#db2777" stroke-width="2"/>
+    <text x="48" y="348" class="hd" fill="#f9a8d4">HYPERLOGLOG — "how many DISTINCT items?" (cardinality)</text>
+    <text x="48" y="370" class="cap">counts millions of uniques in ~12 KB by tracking the longest run of leading zeros in item hashes</text>
+    <text x="48" y="390" class="cap">~2% standard error · mergeable across shards (union = element-wise max) · Redis PFADD/PFCOUNT</text>
+    <text x="48" y="405" class="cap" font-size="10">CACHE/ANALYTICS: unique visitors, distinct IPs, dedup counts — where COUNT(DISTINCT) would blow up memory</text>
+  </g>
+
+  <!-- sizing + rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="422" width="700" height="56" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1.5"/>
+    <text x="48" y="444" class="hd" fill="#e2e8f0">BLOOM SIZING (memorize):  m = −n·ln(p) / (ln2)²   ·   k = (m/n)·ln2</text>
+    <text x="48" y="465" class="cap">n items, target false-positive rate p → bits m and optimal hash count k · ~9.6 bits/item gives p≈1%</text>
+  </g>
+
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="490" width="700" height="50" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="511" text-anchor="middle" class="hd">Reach for these when EXACT is too big: a small, bounded, one-sided error buys enormous space savings</text>
+    <text x="380" y="530" text-anchor="middle" class="cap" fill="#166534">membership → Bloom/Cuckoo · frequency → Count-Min · cardinality → HyperLogLog</text>
+  </g>
+</svg>

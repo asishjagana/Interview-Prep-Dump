@@ -75,6 +75,15 @@ flowchart TD
 | 14 | [Performance Metrics](./Performance_Metrics.md) | The car's dashboard | Never trust the average — P99 is the unluckiest user's experience, and it's what makes a page feel broken |
 | 15 | [Profiling & Benchmarking](./Profiling_Benchmarking.md) | Heart monitor, then the Olympic dash | Profile to find the real bottleneck, benchmark to prove the fix worked; sample in production, trace only locally |
 
+### Deep-dive companions (building blocks the files above lean on)
+
+| # | Topic | One-line | Key takeaway |
+|---|-------|----------|--------------|
+| 16 | [Probabilistic Data Structures](./Probabilistic_Data_Structures.md) | Approximate answers, tiny memory | Bloom/Cuckoo filters (membership), Count-Min Sketch (frequency, the engine behind W-TinyLFU + hot-key detection), HyperLogLog (cardinality) — trade a bounded error for huge space savings |
+| 17 | [Adaptive Eviction Policies](./Adaptive_Eviction_Policies.md) | Eviction that learns the workload | ARC, 2Q, W-TinyLFU, S3-FIFO, and CLOCK/second-chance — production policies that beat plain LRU/LFU by balancing recency and frequency (Caffeine, ZFS ARC, Postgres clock-sweep) |
+| 18 | [Request Coalescing & Hedged Requests](./Request_Coalescing_Hedged_Requests.md) | Spend work to cut the tail | Coalescing *removes* duplicate work (collapse N misses into one origin call → protect the backend); hedging *adds* it (fire a backup after a delay → protect the user from a slow tail) |
+| 19 | [Off-Heap & Embedded Caches](./Off_Heap_Embedded_Caches.md) | Big + local, without the GC pause | The third tier between on-heap local and network Redis: off-heap (Ehcache/Chronicle Map) and embedded KV (RocksDB/LMDB) hold huge datasets in-process without letting cache size drive GC pauses into your P99 |
+
 ---
 
 ## 🧭 Suggested Study Paths

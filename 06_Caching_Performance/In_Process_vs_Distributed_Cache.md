@@ -499,9 +499,7 @@ PITFALLS
 - [Data_Compression_Serialization.md](./Data_Compression_Serialization.md) — the serialize/deserialize cost quantified in section 5.
 - [Database_Connection_Pooling.md](./Database_Connection_Pooling.md) — the pooled-connection assumption behind the "0.3-1ms" round-trip figures.
 - [Latency_Numbers_Every_Programmer_Should_Know.md](../01_Planning_Foundations/Latency_Numbers_Every_Programmer_Should_Know.md) — the raw memory/network/disk latency figures this file's numbers are built on.
-
-**Gaps this topic exposes (candidates for the section's Gap Analysis):**
-- A dedicated look at **off-heap/embedded local stores** (Ehcache off-heap, Chronicle Map, RocksDB-backed caches) as a third option between "in-heap local" and "network-attached distributed" — mentioned in Staff+ Nuances but not covered as its own topic anywhere in the repo.
+- [Off_Heap_Embedded_Caches.md](./Off_Heap_Embedded_Caches.md) — the third option between "in-heap local" and "network-attached distributed": Ehcache off-heap, Chronicle Map, and RocksDB-backed embedded stores that hold huge datasets locally while dodging the GC pause this file's Staff+ Nuances flag.
 
 **External classics:**
 - [Caffeine wiki](https://github.com/ben-manes/caffeine/wiki) — the Window TinyLFU design and benchmarks behind the modern JVM local-cache default.
