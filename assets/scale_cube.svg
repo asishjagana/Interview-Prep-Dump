@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="scbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="scarx" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3b82f6"/></marker>
+    <marker id="scary" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#22c55e"/></marker>
+    <marker id="scarz" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a78bfa"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .axl{font-size:22px;font-weight:800}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#scbg)"/>
+  <text x="30" y="40" class="t">The AKF Scale Cube — three orthogonal axes of scaling</text>
+  <text x="30" y="62" class="sub">any real scaling strategy is a point inside this cube — X clones, Y splits by function, Z shards the data</text>
+
+  <!-- ===== base cube frame + origin (fade 1) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <!-- back square -->
+    <path d="M220,330 L385,330 L385,165 L220,165 Z" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <!-- front square -->
+    <path d="M135,385 L300,385 L300,220 L135,220 Z" fill="none" stroke="#64748b" stroke-width="1.5"/>
+    <!-- connectors -->
+    <line x1="300" y1="385" x2="385" y2="330" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="300" y1="220" x2="385" y2="165" stroke="#475569" stroke-width="1.5"/>
+    <line x1="135" y1="220" x2="220" y2="165" stroke="#475569" stroke-width="1.5"/>
+    <!-- origin corner -->
+    <circle cx="135" cy="385" r="6" fill="#f8fafc"/>
+    <text x="46" y="410" class="cap" fill="#cbd5e1">&#9673; ORIGIN = MONOLITH: 1 server, all code + all data</text>
+  </g>
+
+  <!-- ===== X axis (fade 2, blue) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <line x1="135" y1="385" x2="292" y2="385" stroke="#3b82f6" stroke-width="3.5" marker-end="url(#scarx)"/>
+    <text x="210" y="373" text-anchor="middle" class="axl" fill="#60a5fa">X</text>
+    <!-- X card -->
+    <rect x="425" y="92" width="310" height="74" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="441" y="115" class="hd" fill="#93c5fd">X-AXIS &#183; CLONE (horizontal duplication)</text>
+    <text x="441" y="136" class="cap">N identical copies behind a load balancer, each ~1/N of traffic</text>
+    <text x="441" y="155" class="cap" fill="#6ee7b7">= horizontal autoscaling &#183; EASIEST, no code change</text>
+  </g>
+
+  <!-- ===== Y axis (fade 3, green) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+    <line x1="135" y1="385" x2="135" y2="227" stroke="#22c55e" stroke-width="3.5" marker-end="url(#scary)"/>
+    <text x="118" y="300" text-anchor="middle" class="axl" fill="#4ade80">Y</text>
+    <!-- Y card -->
+    <rect x="425" y="178" width="310" height="74" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="441" y="201" class="hd" fill="#6ee7b7">Y-AXIS &#183; SPLIT BY FUNCTION (microservices)</text>
+    <text x="441" y="222" class="cap">orders / users / payments split by business capability</text>
+    <text x="441" y="241" class="cap" fill="#fbbf24">scales the org + lets hot services scale independently</text>
+  </g>
+
+  <!-- ===== Z axis (fade 4, purple) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.5s" fill="freeze"/>
+    <line x1="135" y1="385" x2="213" y2="335" stroke="#a78bfa" stroke-width="3.5" marker-end="url(#scarz)"/>
+    <text x="188" y="378" text-anchor="middle" class="axl" fill="#c4b5fd">Z</text>
+    <!-- Z card -->
+    <rect x="425" y="264" width="310" height="74" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="441" y="287" class="hd" fill="#c4b5fd">Z-AXIS &#183; SHARD THE DATA (partitioning)</text>
+    <text x="441" y="308" class="cap">users A&#8211;M | N&#8211;Z &#183; shard by region / hash(key)</text>
+    <text x="441" y="327" class="cap" fill="#fca5a5">scales data volume + writes &#183; HARDEST</text>
+  </g>
+
+  <!-- ===== far corner + cost legend (fade 5) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.7s" dur="0.5s" fill="freeze"/>
+    <circle cx="385" cy="165" r="6" fill="#f472b6"/>
+    <text x="395" y="162" class="lbl" fill="#f9a8d4">X+Y+Z</text>
+    <text x="395" y="178" class="cap" fill="#f9a8d4">fully scaled</text>
+    <!-- cost legend bar -->
+    <rect x="30" y="424" width="705" height="40" rx="10" fill="#0b1220" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="46" y="442" class="cap" fill="#e2e8f0" font-weight="700">COST / INVASIVENESS &#8594;</text>
+    <text x="46" y="458" class="cap"><tspan fill="#60a5fa" font-weight="700">X cheapest</tspan> (no code change) &#183; <tspan fill="#4ade80" font-weight="700">Y = org + hot-service scaling</tspan> &#183; <tspan fill="#c4b5fd" font-weight="700">Z hardest</tspan> (rebalancing, cross-shard joins)</text>
+  </g>
+
+  <!-- ===== bottom callout (fade 6) ===== -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="474" width="705" height="64" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="382" y="499" text-anchor="middle" class="hd">Three ORTHOGONAL axes &#8212; real systems combine all three</text>
+    <text x="382" y="522" text-anchor="middle" class="cap" fill="#166534">e.g. a user-service <tspan font-weight="700">(Y)</tspan>, sharded by region <tspan font-weight="700">(Z)</tspan>, cloned 5&#215; per shard <tspan font-weight="700">(X)</tspan></text>
+  </g>
+</svg>

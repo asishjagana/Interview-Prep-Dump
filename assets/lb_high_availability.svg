@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="habg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="haar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="haarg" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .lyr{fill:#f8fafc;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .tag{fill:#94a3b8;font-size:10px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#habg)"/>
+  <text x="30" y="38" class="t">Removing every SPOF — including the balancer itself</text>
+  <text x="30" y="58" class="sub">each layer takes out a single point of failure: global entry · the VIP · the LB pair · the fleet</text>
+
+  <!-- LAYER 1: DNS / Anycast -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="72" width="700" height="56" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="46" y="94" class="lyr" fill="#c4b5fd">① DNS / ANYCAST — global entry point</text>
+    <text x="46" y="114" class="cap">multiple A-records + one anycast IP announced from many sites via BGP → nearest/healthy site; a dead site withdraws its route</text>
+    <text x="712" y="98" text-anchor="end" class="tag">global</text>
+  </g>
+
+  <!-- connector DNS -> VIP -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.7s" dur="0.4s" fill="freeze"/>
+    <line x1="380" y1="128" x2="380" y2="152" stroke="#94a3b8" stroke-width="2" marker-end="url(#haar)"/>
+  </g>
+
+  <!-- LAYER 2: VRRP PAIR -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="170" class="lyr" fill="#fbbf24">② VRRP PAIR — one floating VIP, active-passive</text>
+    <text x="712" y="170" text-anchor="end" class="tag">regional · on-prem canonical</text>
+
+    <!-- LB-A active -->
+    <rect x="30" y="182" width="215" height="96" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="137" y="205" text-anchor="middle" class="lbl" fill="#6ee7b7">LB-A · ACTIVE (MASTER)</text>
+    <text x="137" y="224" text-anchor="middle" class="cap">priority 150 → wins election</text>
+    <rect x="52" y="236" width="171" height="30" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="137" y="256" text-anchor="middle" class="hd">holds Floating VIP 10.0.0.100</text>
+
+    <!-- heartbeat -->
+    <line x1="245" y1="220" x2="345" y2="220" stroke="#6ee7b7" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#haarg)"/>
+    <text x="295" y="212" text-anchor="middle" class="tag" fill="#6ee7b7">VRRP adverts</text>
+    <text x="295" y="238" text-anchor="middle" class="tag" fill="#6ee7b7">(heartbeat ~1s)</text>
+
+    <!-- LB-B passive -->
+    <rect x="345" y="182" width="215" height="96" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="452" y="205" text-anchor="middle" class="lbl" fill="#93c5fd">LB-B · PASSIVE (BACKUP)</text>
+    <text x="452" y="224" text-anchor="middle" class="cap">priority 100 → hot spare</text>
+    <text x="452" y="252" text-anchor="middle" class="cap">listens for A's adverts, idle</text>
+
+    <!-- side note active/passive vs active/active -->
+    <rect x="572" y="182" width="158" height="96" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1.5"/>
+    <text x="586" y="202" class="cap" fill="#93c5fd" font-weight="700">Active-Passive (VRRP)</text>
+    <text x="586" y="218" class="tag">one hot spare, VIP fails over</text>
+    <text x="586" y="242" class="cap" fill="#6ee7b7" font-weight="700">Active-Active (ECMP/BGP)</text>
+    <text x="586" y="258" class="tag">all nodes serve; routers</text>
+    <text x="586" y="270" class="tag">hash-spread the traffic</text>
+  </g>
+
+  <!-- LAYER 3: FAILOVER CALLOUT -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="290" width="700" height="76" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.8"/>
+    <text x="46" y="312" class="lyr" fill="#fca5a5">FAILOVER (sub-second)</text>
+    <text x="46" y="333" class="cap">LB-A dies → LB-B misses N heartbeats past the timeout → promotes itself to MASTER →</text>
+    <text x="46" y="352" class="cap">sends a <tspan fill="#fbbf24" font-weight="700">gratuitous ARP</tspan> so switches re-point the MAC → VIP 10.0.0.100 now answers on LB-B. Clients never re-dial.</text>
+  </g>
+
+  <!-- connector VIP -> backend -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.4s" fill="freeze"/>
+    <line x1="380" y1="366" x2="380" y2="392" stroke="#94a3b8" stroke-width="2" marker-end="url(#haar)"/>
+  </g>
+
+  <!-- LAYER 4: BACKEND FLEET -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="396" width="700" height="72" rx="10" fill="#0b1220" stroke="#0ea5e9" stroke-width="2"/>
+    <text x="46" y="418" class="lyr" fill="#7dd3fc">③ BACKEND FLEET — what the LBs balance across</text>
+    <rect x="120" y="428" width="86" height="30" rx="6" fill="#0f2233" stroke="#0ea5e9" stroke-width="1.5"/><text x="163" y="448" text-anchor="middle" class="cap">app-1</text>
+    <rect x="222" y="428" width="86" height="30" rx="6" fill="#0f2233" stroke="#0ea5e9" stroke-width="1.5"/><text x="265" y="448" text-anchor="middle" class="cap">app-2</text>
+    <rect x="324" y="428" width="86" height="30" rx="6" fill="#0f2233" stroke="#0ea5e9" stroke-width="1.5"/><text x="367" y="448" text-anchor="middle" class="cap">app-3</text>
+    <rect x="426" y="428" width="86" height="30" rx="6" fill="#0f2233" stroke="#0ea5e9" stroke-width="1.5"/><text x="469" y="448" text-anchor="middle" class="cap">app-4</text>
+    <rect x="528" y="428" width="86" height="30" rx="6" fill="#0f2233" stroke="#0ea5e9" stroke-width="1.5"/><text x="571" y="448" text-anchor="middle" class="cap">app-5</text>
+    <text x="712" y="418" text-anchor="end" class="tag">already redundant</text>
+  </g>
+
+  <!-- bottom callout bar -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.0s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="490" width="700" height="50" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="512" text-anchor="middle" class="hd">Each layer removes a single point of failure — including the balancer itself.</text>
+    <text x="380" y="530" text-anchor="middle" class="cap" fill="#166534">DNS/anycast (global) → VRRP/ECMP VIP (regional) → the LB pair → the backend fleet</text>
+  </g>
+</svg>

@@ -63,6 +63,12 @@ flowchart TD
 | 8 | [High Availability: Active-Active vs Active-Passive](./High_Availability_Active_Active_vs_Active_Passive.md) | Spare tire vs multi-engine plane | Active-passive is simple and consistent but wastes capacity; active-active uses every node and fails over instantly at the cost of harder consistency |
 | 9 | [Auto-scaling: Horizontal vs Vertical](./Auto_scaling_Horizontal_vs_Vertical.md) | Bigger suit vs hiring more workers | Vertical hits a hardware ceiling and needs a reboot; horizontal is unbounded but demands a stateless app and a scaling policy (reactive/predictive) |
 | 10 | [Sticky Sessions vs Stateless Design](./Sticky_Sessions_vs_Stateless_Design.md) | Family doctor's drawer vs urgent care | Stickiness pins a user to one server and breaks scaling/failover; externalized state (Redis/JWT) is what makes horizontal scaling and HA actually work |
+| 11 | [Load Shedding & Graceful Degradation](./Load_Shedding_Graceful_Degradation.md) | A brownout, not a blackout | When the fleet is saturated and autoscaling is 90s away, drop/deprioritize traffic instantly (admission control, bounded queues) and serve reduced-quality responses instead of collapsing |
+| 12 | [Load Balancer High Availability](./Load_Balancer_High_Availability.md) | Who balances the balancer? | The LB is a SPOF too — VRRP/keepalived floating VIPs (active-passive), ECMP/BGP (active-active), and DNS/anycast on top remove it, with connection-state sync + draining so failover drops no in-flight work |
+| 13 | [Client-Side vs Server-Side Load Balancing](./Client_Side_vs_Server_Side_Load_Balancing.md) | Ask the concierge vs read the directory | Server-side = a middle proxy picks (language-agnostic, extra hop); client-side = the client picks from a discovered list (no hop, fat client); the service-mesh sidecar is client-side LB extracted into a co-located proxy |
+| 14 | [The Scale Cube (X, Y, Z Axis Scaling)](./Scale_Cube_XYZ_Axis_Scaling.md) | Three orthogonal ways to grow | X = clone behind an LB (easy), Y = split by function/microservice, Z = partition the data (shard) — orthogonal and combinable; the vocabulary tying this folder to decomposition (03) and sharding (05) |
+
+> **Global-scale note:** looking for *global* / multi-region load balancing (GeoDNS, anycast, planet-scale routing)? That story lives in [06 · GSLB](../06_Caching_Performance/GSLB.md) — this folder's [Load Balancer High Availability](./Load_Balancer_High_Availability.md) covers the regional/VIP layer beneath it.
 
 ---
 
