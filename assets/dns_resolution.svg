@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="dnsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="dnsar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="dnsback" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .step{fill:#fbbf24;font-size:11px;font-weight:800}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#dnsbg)"/>
+  <text x="30" y="40" class="t">DNS resolution: turning www.example.com into 93.184.216.34</text>
+  <text x="30" y="62" class="sub">the stub asks once; the recursive resolver does the iterating — root, then TLD, then authoritative</text>
+
+  <!-- CACHE LAYERS on the left -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="82" width="200" height="150" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="130" y="104" text-anchor="middle" class="hd" fill="#c4b5fd">CACHE LAYERS (checked first)</text>
+    <text x="46" y="128" class="cap" fill="#6ee7b7">1. Browser cache  (~60s TTL)</text>
+    <text x="46" y="150" class="cap" fill="#6ee7b7">2. OS / stub cache (respects TTL)</text>
+    <text x="46" y="172" class="cap" fill="#6ee7b7">3. Recursive resolver cache</text>
+    <text x="62" y="190" class="cap">(the big shared one, per-record TTL)</text>
+    <text x="46" y="214" class="cap" fill="#fbbf24">HIT at any layer = answer in &lt;1ms,</text>
+    <text x="62" y="228" class="cap" fill="#fbbf24">the hops below are SKIPPED</text>
+  </g>
+
+  <!-- STUB / BROWSER -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="252" width="200" height="70" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="130" y="278" text-anchor="middle" class="hd" fill="#93c5fd">BROWSER / STUB RESOLVER</text>
+    <text x="130" y="298" text-anchor="middle" class="cap">asks ONE question, wants ONE answer</text>
+    <text x="130" y="314" text-anchor="middle" class="cap" font-size="10">"what is the A record for www.example.com?"</text>
+  </g>
+
+  <!-- RECURSIVE RESOLVER -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <rect x="280" y="252" width="200" height="70" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="380" y="278" text-anchor="middle" class="hd" fill="#6ee7b7">RECURSIVE RESOLVER</text>
+    <text x="380" y="298" text-anchor="middle" class="cap">ISP box / 8.8.8.8 / 1.1.1.1</text>
+    <text x="380" y="314" text-anchor="middle" class="cap" font-size="10">does the ITERATING on the stub's behalf</text>
+    <!-- stub -> recursive -->
+    <path d="M230,287 L276,287" stroke="#94a3b8" stroke-width="2" marker-end="url(#dnsar)"/>
+    <text x="253" y="278" text-anchor="middle" class="step">UDP:53</text>
+  </g>
+
+  <!-- ROOT -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <rect x="530" y="92" width="200" height="56" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="630" y="116" text-anchor="middle" class="hd" fill="#fbbf24">ROOT SERVER  (.)</text>
+    <text x="630" y="136" text-anchor="middle" class="cap" font-size="10">"ask the .com TLD, here's its NS"</text>
+    <path d="M480,270 C505,220 505,170 526,140" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#dnsar)"/>
+    <text x="472" y="182" class="step">(1) .com?</text>
+  </g>
+
+  <!-- TLD -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="530" y="162" width="200" height="56" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="630" y="186" text-anchor="middle" class="hd" fill="#fbbf24">TLD SERVER  (.com)</text>
+    <text x="630" y="206" text-anchor="middle" class="cap" font-size="10">"ask example.com's authoritative NS"</text>
+    <path d="M480,278 C505,250 505,215 526,200" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#dnsar)"/>
+    <text x="466" y="246" class="step">(2) example.com?</text>
+  </g>
+
+  <!-- AUTHORITATIVE -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze"/>
+    <rect x="530" y="232" width="200" height="60" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="630" y="256" text-anchor="middle" class="hd" fill="#6ee7b7">AUTHORITATIVE  (example.com)</text>
+    <text x="630" y="276" text-anchor="middle" class="cap" font-size="10">owns the zone — the source of truth</text>
+    <text x="630" y="288" text-anchor="middle" class="cap" fill="#93c5fd" font-size="10">A www = 93.184.216.34  TTL 300</text>
+    <path d="M480,290 C505,285 505,270 526,266" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#dnsar)"/>
+    <text x="486" y="310" class="step">(3) A record?</text>
+  </g>
+
+  <!-- answer back -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.3s" dur="0.5s" fill="freeze"/>
+    <path d="M280,308 L232,308" stroke="#6ee7b7" stroke-width="2.5" marker-end="url(#dnsback)"/>
+    <text x="256" y="322" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="10">A = 93.184.216.34</text>
+    <text x="256" y="335" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="9">(cached at every layer for TTL secs)</text>
+  </g>
+
+  <!-- iterative note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.7s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="358" width="700" height="66" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="48" y="382" class="hd" fill="#93c5fd">RECURSIVE (stub↔resolver) vs ITERATIVE (resolver↔hierarchy)</text>
+    <text x="48" y="404" class="cap">the stub makes ONE recursive query and waits — "just give me the final answer."</text>
+    <text x="48" y="419" class="cap">the resolver makes THREE iterative queries (root → TLD → authoritative), each a referral, then caches every step by its TTL.</text>
+  </g>
+
+  <!-- TTL tradeoff -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="4.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="434" width="700" height="52" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="48" y="456" class="hd" fill="#fca5a5">TTL IS THE KNOB — low = fast failover, more queries · high = fewer queries, slow cutover</text>
+    <text x="48" y="476" class="cap">TTL 300s: resolvers re-ask every 5 min → migrate/failover in minutes, but ~QPS higher · TTL 86400s: cached a full day → cheap, but a moved IP takes a day to propagate.</text>
+  </g>
+
+  <!-- rule callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="4.7s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="496" width="700" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="516" text-anchor="middle" class="hd">Every request starts here — a cache hit answers in &lt;1ms; a full cold resolution is 4 round-trips</text>
+    <text x="380" y="534" text-anchor="middle" class="cap" fill="#166534">browser → OS → recursive resolver → (root → TLD → authoritative) → answer, then cached by TTL at every hop</text>
+  </g>
+</svg>

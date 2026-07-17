@@ -65,6 +65,19 @@ flowchart TD
 | 9 | [Webhooks](./Webhooks.md) | Leaving your number at a restaurant | Inversion of control — the provider calls you via POST; ack fast (200 OK) or expect retries |
 | 10 | [Message Queues & Pub/Sub](./Message_Queues_PubSub.md) | Deli ticket line vs magazine subscription | A broker decouples producer from consumer; at-least-once + idempotency is the default safe delivery guarantee |
 
+### Deep-dive companions (the wire underneath the wire, and the design-question staples)
+
+| # | Topic | One-line | Key takeaway |
+|---|-------|----------|--------------|
+| 11 | [DNS Deep Dive](./DNS_Deep_Dive.md) | The internet's phone book | Every request's first hop: stub → recursive → root/TLD/authoritative, cached by TTL at every layer; a cold lookup is ~4 round-trips, a cache hit is <1ms |
+| 12 | [TLS/SSL Handshake](./TLS_SSL_Handshake.md) | Sealing the envelope before you send it | TLS 1.3 cut the handshake to 1-RTT (0-RTT on resume); certificate chains prove identity — the connection-setup latency that HTTP/2 and QUIC exist to shave |
+| 13 | [WebRTC](./WebRTC.md) | A direct phone line between two browsers | Peer-to-peer media over UDP: signaling sets it up, STUN/TURN/ICE punch through NAT, then media flows P2P; SFU topology scales the group call — sub-500ms vs HLS's multi-second |
+| 14 | [Video Streaming (HLS & DASH)](./Video_Streaming_Protocols_HLS_DASH.md) | One upload, every screen | HTTP adaptive bitrate: chop video into cacheable segments + a manifest, let the player pick quality per segment — how one stream serves a phone on 3G and a TV on fiber via CDN |
+| 15 | [MQTT / AMQP / IoT Protocols](./MQTT_AMQP_IoT_Protocols.md) | A 2-byte message for a coin-cell sensor | HTTP is too heavy for constrained devices; MQTT's tiny header + pub/sub + QoS 0/1/2 + LWT/retained is the IoT answer, AMQP the heavier enterprise cousin |
+| 16 | [OSI Model & TCP/IP Stack](./OSI_Model_TCP_IP_Stack.md) | The 7-layer shared vocabulary | What actually happens L1→L7 when a request is sent; encapsulation adds a header per layer; the model that makes "L4 vs L7" and "it's a layer-3 problem" mean something |
+| 17 | [RPC Fundamentals (Thrift)](./RPC_Fundamentals_Thrift.md) | Calling a remote function as if it were local | Stubs + an IDL + marshalling hide the network — the paradigm behind Thrift/gRPC/JSON-RPC; just don't forget the network is *not* local (the Fallacies of Distributed Computing) |
+| 18 | [HTTP Semantics & Headers Deep Dive](./HTTP_Semantics_Headers_Deep_Dive.md) | The metadata negotiation layer | Content negotiation, cookies, CORS preflight, conditional requests (ETag/304), keep-alive — the header mechanics between HTTP versions and API style |
+
 ---
 
 ## 🧭 Suggested Study Paths

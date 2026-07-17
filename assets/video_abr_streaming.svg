@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="vbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="var" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .flow{stroke:#94a3b8;stroke-width:2;fill:none;marker-end:url(#var)}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#vbg)"/>
+  <text x="30" y="40" class="t">HTTP Adaptive Bitrate (ABR) streaming</text>
+  <text x="30" y="62" class="sub">one upload → a ladder of renditions cut into cacheable chunks → the PLAYER picks the quality the network can sustain</text>
+
+  <!-- STAGE 1: encode ladder -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="82" width="150" height="200" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="105" y="104" text-anchor="middle" class="hd" fill="#93c5fd">1 · ENCODE LADDER</text>
+    <text x="105" y="120" text-anchor="middle" class="cap" font-size="10">source → N renditions</text>
+    <rect x="44" y="132" width="122" height="26" rx="5" fill="#1e3a8a"/><text x="52" y="149" class="cap">1080p · 6 Mbps</text>
+    <rect x="44" y="164" width="122" height="26" rx="5" fill="#1d4ed8"/><text x="52" y="181" class="cap">720p · 3 Mbps</text>
+    <rect x="44" y="196" width="122" height="26" rx="5" fill="#2563eb"/><text x="52" y="213" class="cap">480p · 1.5 Mbps</text>
+    <rect x="44" y="228" width="122" height="26" rx="5" fill="#3b82f6"/><text x="52" y="245" class="cap">240p · 0.5 Mbps</text>
+    <text x="105" y="272" text-anchor="middle" class="cap" font-size="10">each cut into 2–6 s segments</text>
+  </g>
+
+  <!-- STAGE 2: segments + manifest -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.5s" fill="freeze"/>
+    <line x1="182" y1="182" x2="212" y2="182" class="flow"/>
+    <rect x="214" y="82" width="150" height="200" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="289" y="104" text-anchor="middle" class="hd" fill="#6ee7b7">2 · SEGMENTS + MANIFEST</text>
+    <text x="228" y="128" class="cap">seg_001.m4s  seg_002.m4s …</text>
+    <rect x="228" y="136" width="26" height="18" rx="3" fill="#166534"/>
+    <rect x="258" y="136" width="26" height="18" rx="3" fill="#166534"/>
+    <rect x="288" y="136" width="26" height="18" rx="3" fill="#166534"/>
+    <rect x="318" y="136" width="26" height="18" rx="3" fill="#166534"/>
+    <text x="228" y="180" class="cap" fill="#fbbf24">master.m3u8 / .mpd</text>
+    <text x="228" y="198" class="cap" font-size="10">lists each rendition + bitrate</text>
+    <text x="228" y="222" class="cap" fill="#6ee7b7">"just plain HTTP files"</text>
+    <text x="228" y="240" class="cap" font-size="10">infinitely cacheable · no</text>
+    <text x="228" y="254" class="cap" font-size="10">special server, no RTMP</text>
+  </g>
+
+  <!-- STAGE 3: CDN -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.3s" dur="0.5s" fill="freeze"/>
+    <line x1="366" y1="182" x2="396" y2="182" class="flow"/>
+    <rect x="398" y="82" width="150" height="200" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="473" y="104" text-anchor="middle" class="hd" fill="#fbbf24">3 · CDN EDGE</text>
+    <text x="473" y="120" text-anchor="middle" class="cap" font-size="10">segments cached at the edge</text>
+    <circle cx="440" cy="160" r="14" fill="#78350f"/><text x="440" y="164" text-anchor="middle" class="cap" font-size="9">edge</text>
+    <circle cx="506" cy="150" r="14" fill="#78350f"/><text x="506" y="154" text-anchor="middle" class="cap" font-size="9">edge</text>
+    <circle cx="473" cy="200" r="14" fill="#78350f"/><text x="473" y="204" text-anchor="middle" class="cap" font-size="9">edge</text>
+    <text x="412" y="238" class="cap" font-size="10">one origin push → served</text>
+    <text x="412" y="252" class="cap" font-size="10">to millions, scales trivially</text>
+    <text x="412" y="270" class="cap" fill="#6ee7b7" font-size="10">firewall-friendly (port 443)</text>
+  </g>
+
+  <!-- STAGE 4: player ABR -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <line x1="548" y1="182" x2="578" y2="182" class="flow"/>
+    <rect x="580" y="82" width="150" height="200" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="655" y="104" text-anchor="middle" class="hd" fill="#c4b5fd">4 · PLAYER (ABR)</text>
+    <text x="594" y="126" class="cap" font-size="10">phone on 4G · measures bw</text>
+    <rect x="600" y="136" width="110" height="120" rx="14" fill="#020617" stroke="#475569" stroke-width="2"/>
+    <text x="655" y="158" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="11">bw good → 1080p</text>
+    <text x="655" y="190" text-anchor="middle" class="cap" fill="#fca5a5" font-size="11">bw drops ↓</text>
+    <text x="655" y="212" text-anchor="middle" class="cap" fill="#fbbf24" font-size="11">step down → 480p</text>
+    <text x="655" y="240" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="10">recovers → step up again</text>
+    <text x="655" y="272" text-anchor="middle" class="cap" font-size="10">switch per segment</text>
+  </g>
+
+  <!-- latency tiers -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="300" width="700" height="96" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="48" y="324" class="hd" fill="#fca5a5">LATENCY TIERS — the trade you pick per use case</text>
+    <rect x="48" y="336" width="150" height="46" rx="6" fill="#052e16" stroke="#16a34a"/>
+    <text x="123" y="356" text-anchor="middle" class="cap" fill="#6ee7b7">WebRTC &lt; 0.5 s</text>
+    <text x="123" y="373" text-anchor="middle" class="cap" font-size="10">interactive (calls)</text>
+    <rect x="212" y="336" width="150" height="46" rx="6" fill="#0b1220" stroke="#22c55e"/>
+    <text x="287" y="356" text-anchor="middle" class="cap">LL-HLS ~2–5 s</text>
+    <text x="287" y="373" text-anchor="middle" class="cap" font-size="10">chunked transfer</text>
+    <rect x="376" y="336" width="170" height="46" rx="6" fill="#0b1220" stroke="#d97706"/>
+    <text x="461" y="356" text-anchor="middle" class="cap">HLS/DASH ~10–30 s</text>
+    <text x="461" y="373" text-anchor="middle" class="cap" font-size="10">standard live/VOD</text>
+    <text x="562" y="356" class="cap" font-size="10">longer segment/buffer</text>
+    <text x="562" y="373" class="cap" font-size="10">= more latency, more</text>
+    <text x="562" y="388" class="cap" font-size="10">resilience + cacheability</text>
+  </g>
+
+  <!-- bottom callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="410" width="700" height="60" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="434" text-anchor="middle" class="hd">Break video into cacheable HTTP chunks + let the PLAYER adapt quality</text>
+    <text x="380" y="456" text-anchor="middle" class="cap" fill="#166534">that's how ONE stream serves a phone on 3G and a TV on fiber — from the same CDN edge cache</text>
+  </g>
+
+  <!-- HLS vs DASH note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="484" width="700" height="56" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="506" class="hd" fill="#c4b5fd">HLS (Apple · .m3u8) vs MPEG-DASH (open standard · .mpd, codec-agnostic)</text>
+    <text x="48" y="528" class="cap">both are the same recipe — HTTP + a manifest + segments — differing only in file format · DRM: FairPlay (HLS) / Widevine (DASH)</text>
+  </g>
+</svg>

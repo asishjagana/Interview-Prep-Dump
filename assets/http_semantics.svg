@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="hsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="hsar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .mono{font-family:'Consolas','Courier New',monospace;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .tag{fill:#0f172a;font-size:9px;font-weight:800}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#hsbg)"/>
+  <text x="30" y="38" class="t">HTTP headers: the request/response metadata negotiation layer</text>
+  <text x="30" y="58" class="sub">who you are (cookies/auth) · what you accept (negotiation) · what you already have (conditional) · who's allowed (CORS)</text>
+
+  <!-- REQUEST box -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="74" width="352" height="238" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="200" y="94" text-anchor="middle" class="hd" fill="#93c5fd">REQUEST  (client to server)</text>
+    <text x="38" y="116" class="mono" fill="#f8fafc">GET /api/items HTTP/1.1</text>
+    <text x="38" y="134" class="mono" fill="#cbd5e1">Host: api.shop.com</text>
+    <text x="38" y="154" class="mono" fill="#6ee7b7">Accept: application/json</text>
+    <text x="38" y="170" class="mono" fill="#6ee7b7">Accept-Language: en-US</text>
+    <text x="38" y="186" class="mono" fill="#6ee7b7">Accept-Encoding: gzip, br</text>
+    <text x="266" y="170" class="tag" fill="#6ee7b7">NEGOTIATION</text>
+    <text x="38" y="208" class="mono" fill="#93c5fd">Cookie: session=abc123</text>
+    <text x="38" y="224" class="mono" fill="#93c5fd">Authorization: Bearer eyJ...</text>
+    <text x="272" y="224" class="tag" fill="#93c5fd">IDENTITY</text>
+    <text x="38" y="246" class="mono" fill="#fbbf24">If-None-Match: "v7"</text>
+    <text x="266" y="246" class="tag" fill="#fbbf24">CONDITIONAL</text>
+    <text x="38" y="268" class="mono" fill="#c4b5fd">Origin: https://shop.com</text>
+    <text x="304" y="268" class="tag" fill="#c4b5fd">CORS</text>
+    <text x="38" y="290" class="mono" fill="#cbd5e1">Connection: keep-alive</text>
+    <text x="256" y="290" class="tag" fill="#fca5a5">REUSE CONN</text>
+  </g>
+
+  <!-- RESPONSE box -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="384" y="74" width="352" height="238" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="560" y="94" text-anchor="middle" class="hd" fill="#6ee7b7">RESPONSE  (server to client)</text>
+    <text x="398" y="116" class="mono" fill="#f8fafc">HTTP/1.1 200 OK</text>
+    <text x="398" y="136" class="mono" fill="#6ee7b7">Content-Type: application/json</text>
+    <text x="398" y="152" class="mono" fill="#6ee7b7">Content-Encoding: gzip</text>
+    <text x="398" y="174" class="mono" fill="#93c5fd">Set-Cookie: session=abc123;</text>
+    <text x="398" y="190" class="mono" fill="#93c5fd">  HttpOnly; Secure; SameSite=Lax</text>
+    <text x="398" y="212" class="mono" fill="#fbbf24">ETag: "v7"</text>
+    <text x="398" y="228" class="mono" fill="#fbbf24">Last-Modified: Tue, 15 Jul...</text>
+    <text x="398" y="250" class="mono" fill="#cbd5e1">Cache-Control: max-age=60</text>
+    <text x="398" y="272" class="mono" fill="#c4b5fd">Access-Control-Allow-Origin:</text>
+    <text x="398" y="288" class="mono" fill="#c4b5fd">  https://shop.com</text>
+    <text x="398" y="304" class="mono" fill="#cbd5e1">Vary: Accept-Encoding, Origin</text>
+  </g>
+
+  <!-- CORS PREFLIGHT panel -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="326" width="352" height="150" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="38" y="348" class="hd" fill="#c4b5fd">CORS PREFLIGHT (non-simple request)</text>
+    <text x="38" y="368" class="cap">1. Browser sends OPTIONS first (no body):</text>
+    <text x="48" y="384" class="mono" fill="#c4b5fd">Origin: https://app.com</text>
+    <text x="48" y="400" class="mono" fill="#c4b5fd">Access-Control-Request-Method: PUT</text>
+    <text x="38" y="422" class="cap">2. Server approves what's allowed:</text>
+    <text x="48" y="438" class="mono" fill="#6ee7b7">Access-Control-Allow-Origin: https://app.com</text>
+    <text x="48" y="454" class="mono" fill="#6ee7b7">Access-Control-Allow-Methods: PUT</text>
+    <text x="48" y="470" class="cap" fill="#fbbf24">3. THEN the browser sends the real PUT</text>
+  </g>
+
+  <!-- CONDITIONAL GET panel -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.5s" fill="freeze"/>
+    <rect x="384" y="326" width="352" height="150" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="1.5"/>
+    <text x="398" y="348" class="hd" fill="#fbbf24">CONDITIONAL GET (304 = save bandwidth)</text>
+    <text x="398" y="368" class="cap">1st GET returns body + a validator:</text>
+    <text x="408" y="384" class="mono" fill="#fbbf24">200 OK   ETag: "v7"   (full body sent)</text>
+    <text x="398" y="406" class="cap">2nd GET asks "still v7?":</text>
+    <text x="408" y="422" class="mono" fill="#fbbf24">If-None-Match: "v7"</text>
+    <text x="398" y="444" class="cap">Unchanged to server responds:</text>
+    <text x="408" y="460" class="mono" fill="#6ee7b7">304 Not Modified  (NO body to use cache)</text>
+  </g>
+
+  <!-- bottom callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <rect x="24" y="490" width="712" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="511" text-anchor="middle" class="hd">Headers are the metadata negotiation layer wrapped around every request and response</text>
+    <text x="380" y="530" text-anchor="middle" class="cap" fill="#166534">who you are (cookies/auth) · what you can accept (negotiation) · what you already have (conditional) · who's allowed (CORS)</text>
+  </g>
+</svg>

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="wrbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="wrar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="wrgr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="wram" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .phase{fill:#94a3b8;font-size:11px;font-weight:800;letter-spacing:1px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#wrbg)"/>
+  <text x="30" y="38" class="t">WebRTC: signaling sets it up, ICE punches through NAT, media flows P2P</text>
+  <text x="30" y="58" class="sub">two browsers behind routers become a direct encrypted media pipe — sub-500ms, no server in the media path</text>
+
+  <!-- PHASE 1: SIGNALING -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="84" class="phase" fill="#93c5fd">1 · SIGNALING  (you build this — usually a WebSocket)</text>
+
+    <!-- Peer A -->
+    <rect x="30" y="94" width="150" height="72" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="105" y="118" text-anchor="middle" class="lbl" fill="#93c5fd">Peer A</text>
+    <text x="105" y="136" text-anchor="middle" class="cap" font-size="10">browser + camera</text>
+    <text x="105" y="154" text-anchor="middle" class="cap" font-size="10">behind NAT router</text>
+
+    <!-- Signaling server -->
+    <rect x="305" y="94" width="150" height="72" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="118" text-anchor="middle" class="lbl" fill="#c4b5fd">Signaling Server</text>
+    <text x="380" y="136" text-anchor="middle" class="cap" font-size="10">relays SDP + ICE</text>
+    <text x="380" y="154" text-anchor="middle" class="cap" font-size="10">(NOT part of WebRTC)</text>
+
+    <!-- Peer B -->
+    <rect x="580" y="94" width="150" height="72" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="655" y="118" text-anchor="middle" class="lbl" fill="#93c5fd">Peer B</text>
+    <text x="655" y="136" text-anchor="middle" class="cap" font-size="10">browser + camera</text>
+    <text x="655" y="154" text-anchor="middle" class="cap" font-size="10">behind NAT router</text>
+
+    <!-- dashed signaling lines -->
+    <line x1="180" y1="122" x2="303" y2="122" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#wrar)"/>
+    <line x1="580" y1="122" x2="457" y2="122" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#wrar)"/>
+    <text x="242" y="115" text-anchor="middle" class="cap" font-size="9" fill="#c4b5fd">SDP offer</text>
+    <text x="518" y="115" text-anchor="middle" class="cap" font-size="9" fill="#c4b5fd">SDP answer</text>
+    <text x="380" y="182" text-anchor="middle" class="cap" font-size="10">"here's my media (codecs) + candidate addresses" — exchanged out-of-band before any media</text>
+  </g>
+
+  <!-- PHASE 2: NAT TRAVERSAL -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="216" class="phase" fill="#fbbf24">2 · NAT TRAVERSAL  (ICE gathers candidates; STUN discovers, TURN relays)</text>
+
+    <!-- STUN -->
+    <rect x="30" y="228" width="230" height="96" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="145" y="250" text-anchor="middle" class="hd" fill="#6ee7b7">STUN server</text>
+    <text x="46" y="272" class="cap">peer asks: "what is my</text>
+    <text x="46" y="288" class="cap">public IP:port?"</text>
+    <text x="46" y="306" class="cap" fill="#6ee7b7">✓ cheap — just an answer</text>
+    <text x="46" y="320" class="cap" font-size="10">enables direct hole-punching</text>
+
+    <!-- ICE -->
+    <rect x="285" y="228" width="190" height="96" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="380" y="250" text-anchor="middle" class="hd" fill="#93c5fd">ICE agent</text>
+    <text x="300" y="272" class="cap">gathers candidates:</text>
+    <text x="300" y="288" class="cap" font-size="10">host · server-reflexive · relay</text>
+    <text x="300" y="306" class="cap" font-size="10">tries pairs, picks best path</text>
+    <text x="300" y="320" class="cap" font-size="10">connectivity checks</text>
+
+    <!-- TURN -->
+    <rect x="500" y="228" width="230" height="96" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2"/>
+    <text x="615" y="250" text-anchor="middle" class="hd" fill="#fca5a5">TURN server (relay)</text>
+    <text x="516" y="272" class="cap">used when direct P2P fails</text>
+    <text x="516" y="288" class="cap" font-size="10">(symmetric NAT / strict firewall)</text>
+    <text x="516" y="306" class="cap" fill="#fca5a5">✗ relays ALL media bytes</text>
+    <text x="516" y="320" class="cap" font-size="10">expensive bandwidth · last resort</text>
+  </g>
+
+  <!-- PHASE 3: MEDIA -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.1s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="356" class="phase" fill="#6ee7b7">3 · MEDIA FLOWS  (encrypted, over UDP, bypassing the signaling server)</text>
+
+    <rect x="30" y="368" width="150" height="58" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="105" y="392" text-anchor="middle" class="lbl" fill="#6ee7b7">Peer A</text>
+    <text x="105" y="410" text-anchor="middle" class="cap" font-size="10">audio/video/data</text>
+
+    <rect x="580" y="368" width="150" height="58" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="655" y="392" text-anchor="middle" class="lbl" fill="#6ee7b7">Peer B</text>
+    <text x="655" y="410" text-anchor="middle" class="cap" font-size="10">audio/video/data</text>
+
+    <!-- direct media path -->
+    <line x1="180" y1="390" x2="578" y2="390" stroke="#6ee7b7" stroke-width="3" marker-end="url(#wrgr)"/>
+    <line x1="580" y1="404" x2="182" y2="404" stroke="#6ee7b7" stroke-width="3" marker-end="url(#wrgr)"/>
+    <text x="380" y="384" text-anchor="middle" class="cap" fill="#6ee7b7">DIRECT P2P — SRTP media, DTLS key exchange, SCTP data channels</text>
+
+    <!-- fallback relay note -->
+    <line x1="255" y1="418" x2="505" y2="418" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#wram)"/>
+    <text x="380" y="418" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">…or via TURN relay if the direct path is blocked</text>
+  </g>
+
+  <!-- bottom callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="438" width="700" height="50" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="459" text-anchor="middle" class="hd">Signaling sets it up; STUN/TURN/ICE punch through NAT; then media flows P2P (or relayed)</text>
+    <text x="380" y="478" text-anchor="middle" class="cap" fill="#166534">sub-500ms interactive latency — versus multi-second buffering for HLS/DASH broadcast</text>
+  </g>
+
+  <!-- footnote -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="3.3s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="498" width="700" height="46" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="519" class="cap" fill="#c4b5fd">Rule of thumb: ~85% of calls connect P2P (host/STUN); the rest fall back to TURN.</text>
+    <text x="48" y="537" class="cap" font-size="10">TURN is a cost line item — you pay for every relayed byte — so you provision it for the minority that need it.</text>
+  </g>
+</svg>

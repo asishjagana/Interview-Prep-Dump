@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="mqbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="mqar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="mqarg" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .flow{stroke:#94a3b8;stroke-width:1.5;fill:none}
+      .flowg{stroke:#6ee7b7;stroke-width:1.5;fill:none}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#mqbg)"/>
+  <text x="30" y="40" class="t">MQTT: pub/sub for coin-cell sensors on flaky 2G</text>
+  <text x="30" y="62" class="sub">tiny 2-byte fixed header + one persistent TCP connection + a central broker — not HTTP-per-reading</text>
+
+  <!-- TOPOLOGY -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <!-- publishers -->
+    <rect x="30" y="82" width="150" height="150" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="105" y="104" text-anchor="middle" class="hd" fill="#93c5fd">CONSTRAINED DEVICES</text>
+    <text x="105" y="119" text-anchor="middle" class="cap" font-size="10">(publishers)</text>
+    <text x="46" y="144" class="cap">temp sensor  home/kitchen/temperature</text>
+    <text x="46" y="166" class="cap">GPS unit     fleet/truck7/gps</text>
+    <text x="46" y="188" class="cap">door contact home/front/door</text>
+    <text x="46" y="214" class="cap" fill="#fbbf24">battery + 2G → header must be tiny</text>
+
+    <!-- broker -->
+    <rect x="305" y="98" width="150" height="118" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="380" y="122" text-anchor="middle" class="hd" fill="#6ee7b7">BROKER</text>
+    <text x="380" y="138" text-anchor="middle" class="cap" font-size="10">(Mosquitto / EMQX /</text>
+    <text x="380" y="152" text-anchor="middle" class="cap" font-size="10">AWS IoT Core)</text>
+    <text x="380" y="176" text-anchor="middle" class="cap">routes by topic</text>
+    <text x="380" y="196" text-anchor="middle" class="cap" fill="#6ee7b7">holds retained + LWT</text>
+
+    <!-- subscribers -->
+    <rect x="580" y="82" width="150" height="150" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="655" y="104" text-anchor="middle" class="hd" fill="#fbbf24">SUBSCRIBERS</text>
+    <text x="655" y="119" text-anchor="middle" class="cap" font-size="10">(topic filters)</text>
+    <text x="596" y="146" class="cap">dashboard</text>
+    <text x="596" y="162" class="cap" fill="#93c5fd">home/+/temperature</text>
+    <text x="596" y="188" class="cap">mobile app</text>
+    <text x="596" y="204" class="cap" fill="#93c5fd">fleet/#</text>
+
+    <!-- arrows -->
+    <path class="flow" d="M182,157 L303,157" marker-end="url(#mqar)"/>
+    <text x="242" y="150" text-anchor="middle" class="cap" font-size="10">PUBLISH</text>
+    <path class="flowg" d="M457,157 L578,157" marker-end="url(#mqarg)"/>
+    <text x="518" y="150" text-anchor="middle" class="cap" font-size="10" fill="#6ee7b7">deliver</text>
+    <text x="518" y="176" text-anchor="middle" class="cap" font-size="10">+ = 1 level, # = all levels</text>
+  </g>
+
+  <!-- QoS LANES -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="262" class="lbl">Three delivery guarantees (QoS) — pay in round-trips for certainty</text>
+
+    <!-- QoS0 -->
+    <rect x="30" y="276" width="222" height="118" rx="10" fill="#0b1220" stroke="#64748b" stroke-width="2"/>
+    <text x="141" y="298" text-anchor="middle" class="hd" fill="#cbd5e1">QoS 0 — at most once</text>
+    <text x="141" y="314" text-anchor="middle" class="cap" font-size="10">fire-and-forget</text>
+    <path class="flow" d="M50,344 L232,344" marker-end="url(#mqar)"/>
+    <text x="141" y="338" text-anchor="middle" class="cap" font-size="10">PUBLISH</text>
+    <text x="141" y="362" text-anchor="middle" class="cap" fill="#fca5a5">1 msg · may be dropped</text>
+    <text x="141" y="380" text-anchor="middle" class="cap" font-size="10">cheapest · telemetry you can lose</text>
+
+    <!-- QoS1 -->
+    <rect x="269" y="276" width="222" height="118" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="380" y="298" text-anchor="middle" class="hd" fill="#6ee7b7">QoS 1 — at least once</text>
+    <text x="380" y="314" text-anchor="middle" class="cap" font-size="10">PUBLISH then PUBACK</text>
+    <path class="flow" d="M289,338 L471,338" marker-end="url(#mqar)"/>
+    <text x="380" y="333" text-anchor="middle" class="cap" font-size="9">PUBLISH</text>
+    <path class="flowg" d="M471,356 L289,356" marker-end="url(#mqarg)"/>
+    <text x="380" y="351" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">PUBACK</text>
+    <text x="380" y="380" text-anchor="middle" class="cap" fill="#fbbf24">may duplicate · the IoT default</text>
+
+    <!-- QoS2 -->
+    <rect x="508" y="276" width="222" height="118" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="619" y="298" text-anchor="middle" class="hd" fill="#c4b5fd">QoS 2 — exactly once</text>
+    <text x="619" y="313" text-anchor="middle" class="cap" font-size="9">PUBLISH/PUBREC/PUBREL/PUBCOMP</text>
+    <text x="524" y="332" class="cap" font-size="10">→ PUBLISH</text>
+    <text x="524" y="348" class="cap" font-size="10" fill="#6ee7b7">← PUBREC</text>
+    <text x="620" y="332" class="cap" font-size="10">→ PUBREL</text>
+    <text x="620" y="348" class="cap" font-size="10" fill="#6ee7b7">← PUBCOMP</text>
+    <text x="619" y="372" text-anchor="middle" class="cap">4-step handshake</text>
+    <text x="619" y="388" text-anchor="middle" class="cap" fill="#fca5a5">no dupes · slowest · billing</text>
+  </g>
+
+  <!-- retained + LWT note -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="408" width="700" height="60" rx="10" fill="#0b1220" stroke="#0ea5e9" stroke-width="1.5"/>
+    <text x="48" y="432" class="hd" fill="#7dd3fc">RETAINED MESSAGE + LAST WILL &amp; TESTAMENT — state on a stateless wire</text>
+    <text x="48" y="452" class="cap">Retained = broker keeps the last value per topic → a new subscriber gets it instantly, no wait for the next reading.</text>
+    <text x="48" y="466" class="cap" font-size="10">LWT = client registers a "death notice" on connect; if it drops off ungracefully, the broker publishes it for everyone.</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="482" width="700" height="50" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="503" text-anchor="middle" class="hd">HTTP is too heavy for a coin-cell sensor on 2G — MQTT's 2-byte header + pub/sub + QoS is the IoT answer</text>
+    <text x="380" y="522" text-anchor="middle" class="cap" fill="#166534">lose-able telemetry → QoS 0 · commands / must-arrive → QoS 1 · billing / exactly-once → QoS 2</text>
+  </g>
+</svg>
