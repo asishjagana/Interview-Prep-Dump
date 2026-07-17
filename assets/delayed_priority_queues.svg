@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="dpbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="dpar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .sec{fill:#e2e8f0;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .wire{stroke:#94a3b8;stroke-width:1.6;fill:none}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#dpbg)"/>
+  <text x="30" y="40" class="t">Delayed delivery &amp; priority queues</text>
+  <text x="30" y="62" class="sub">schedule a message for later, and serve the important work first — the two things Kafka can't do natively</text>
+
+  <!-- ================= SECTION A: DELAYED DELIVERY ================= -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="90" class="sec" fill="#93c5fd">① DELAYED / SCHEDULED DELIVERY — release a message only when its time arrives</text>
+
+    <!-- producer -->
+    <rect x="30" y="102" width="120" height="58" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="90" y="126" text-anchor="middle" class="lbl">PRODUCER</text>
+    <text x="90" y="144" text-anchor="middle" class="cap" font-size="10">tag: "deliver at T+30s"</text>
+    <line x1="150" y1="131" x2="196" y2="131" class="wire" marker-end="url(#dpar)"/>
+
+    <!-- timing wheel / delay buffer -->
+    <rect x="200" y="94" width="196" height="78" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="298" y="112" text-anchor="middle" class="cap" fill="#c4b5fd" font-weight="700">DELAY BUFFER · TIMING WHEEL</text>
+    <circle cx="248" cy="142" r="20" fill="none" stroke="#c4b5fd" stroke-width="1.6"/>
+    <line x1="248" y1="142" x2="248" y2="126" stroke="#fbbf24" stroke-width="2"/>
+    <line x1="248" y1="142" x2="260" y2="150" stroke="#fbbf24" stroke-width="2"/>
+    <line x1="248" y1="122" x2="248" y2="127" stroke="#c4b5fd" stroke-width="1.4"/>
+    <line x1="268" y1="142" x2="263" y2="142" stroke="#c4b5fd" stroke-width="1.4"/>
+    <line x1="248" y1="162" x2="248" y2="157" stroke="#c4b5fd" stroke-width="1.4"/>
+    <line x1="228" y1="142" x2="233" y2="142" stroke="#c4b5fd" stroke-width="1.4"/>
+    <text x="352" y="138" text-anchor="middle" class="cap" font-size="10">slots tick;</text>
+    <text x="352" y="152" text-anchor="middle" class="cap" font-size="10">O(1) bucketing</text>
+    <text x="352" y="166" text-anchor="middle" class="cap" font-size="10" fill="#6ee7b7">fires on due</text>
+    <line x1="396" y1="131" x2="442" y2="131" class="wire" marker-end="url(#dpar)"/>
+    <text x="419" y="124" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">on expiry</text>
+
+    <!-- ready queue -->
+    <rect x="446" y="102" width="110" height="58" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="501" y="126" text-anchor="middle" class="lbl" fill="#6ee7b7">READY QUEUE</text>
+    <text x="501" y="144" text-anchor="middle" class="cap" font-size="10">now visible</text>
+    <line x1="556" y1="131" x2="602" y2="131" class="wire" marker-end="url(#dpar)"/>
+
+    <!-- consumer -->
+    <rect x="606" y="102" width="124" height="58" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="668" y="135" text-anchor="middle" class="lbl">CONSUMER</text>
+
+    <!-- implementations note -->
+    <rect x="30" y="182" width="700" height="44" rx="10" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+    <text x="46" y="202" class="cap" fill="#e2e8f0">HOW: SQS <tspan fill="#93c5fd">DelaySeconds</tspan> (≤ 15 min) · RabbitMQ <tspan fill="#93c5fd">per-msg TTL → dead-letter-exchange</tspan> trick · <tspan fill="#c4b5fd">timing wheel</tspan> / external scheduler + DB (poll due rows)</text>
+    <text x="46" y="218" class="cap" fill="#fca5a5">Kafka has NO native delay — build it with a "retry-topic ladder" or an external store keyed by fire time</text>
+  </g>
+
+  <!-- ================= SECTION B: PRIORITY QUEUE ================= -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="262" class="sec" fill="#fbbf24">② PRIORITY QUEUE — three lanes, one consumer, highest non-empty always served first</text>
+
+    <!-- HIGH lane -->
+    <rect x="30" y="278" width="210" height="30" rx="8" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="44" y="298" class="cap" fill="#6ee7b7" font-weight="700">HIGH  ▓▓▓▓▓▓  (always drained first)</text>
+    <line x1="240" y1="293" x2="292" y2="315" class="wire" marker-end="url(#dpar)"/>
+    <!-- MED lane -->
+    <rect x="30" y="316" width="210" height="30" rx="8" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="44" y="336" class="cap" fill="#93c5fd" font-weight="700">MEDIUM  ▓▓▓▓</text>
+    <line x1="240" y1="331" x2="292" y2="335" class="wire" marker-end="url(#dpar)"/>
+    <!-- LOW lane -->
+    <rect x="30" y="354" width="210" height="30" rx="8" fill="#0b1220" stroke="#dc2626" stroke-width="2"/>
+    <text x="44" y="374" class="cap" fill="#fca5a5" font-weight="700">LOW  ▓▓▓▓▓▓▓▓  (waiting…)</text>
+    <line x1="240" y1="369" x2="292" y2="347" class="wire" marker-end="url(#dpar)"/>
+
+    <!-- scheduler -->
+    <rect x="296" y="300" width="150" height="82" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="371" y="332" text-anchor="middle" class="lbl" fill="#fbbf24">SCHEDULER</text>
+    <text x="371" y="350" text-anchor="middle" class="cap" font-size="10">picks highest</text>
+    <text x="371" y="364" text-anchor="middle" class="cap" font-size="10">non-empty lane</text>
+    <line x1="446" y1="341" x2="498" y2="341" class="wire" marker-end="url(#dpar)"/>
+
+    <!-- consumer -->
+    <rect x="502" y="314" width="124" height="54" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="564" y="345" text-anchor="middle" class="lbl">CONSUMER</text>
+
+    <!-- kafka priority note (right column) -->
+    <rect x="640" y="278" width="90" height="106" rx="10" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+    <text x="685" y="300" text-anchor="middle" class="cap" font-size="9" fill="#fca5a5">Kafka: NO</text>
+    <text x="685" y="314" text-anchor="middle" class="cap" font-size="9" fill="#fca5a5">native priority</text>
+    <text x="685" y="336" text-anchor="middle" class="cap" font-size="9">use separate</text>
+    <text x="685" y="350" text-anchor="middle" class="cap" font-size="9">topics +</text>
+    <text x="685" y="364" text-anchor="middle" class="cap" font-size="9">weighted</text>
+    <text x="685" y="378" text-anchor="middle" class="cap" font-size="9">polling</text>
+  </g>
+
+  <!-- starvation + mitigation -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="394" width="392" height="42" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="1.8"/>
+    <text x="46" y="413" class="hd" fill="#fca5a5">⚠ STARVATION</text>
+    <text x="46" y="430" class="cap">LOW lane never runs while HIGH stays non-empty under sustained load</text>
+    <rect x="430" y="394" width="300" height="42" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="446" y="413" class="hd" fill="#6ee7b7">FIX</text>
+    <text x="446" y="430" class="cap">aging (boost priority by wait time) · weighted round-robin</text>
+  </g>
+
+  <!-- bottom rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="448" width="700" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="470" text-anchor="middle" class="hd">Kafka gives you neither delay nor priority natively — RabbitMQ &amp; SQS do</text>
+    <text x="380" y="490" text-anchor="middle" class="cap" fill="#166534">on Kafka you build them with extra topics, timing wheels, or an external scheduler — never free reordering of an append-only log</text>
+  </g>
+</svg>

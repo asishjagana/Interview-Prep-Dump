@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="kpkbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="kpkar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#kpkbg)"/>
+  <text x="30" y="40" class="t">Same log, three storage models</text>
+  <text x="30" y="62" class="sub">all durable partitioned logs — they differ in WHERE the data lives and WHO runs it</text>
+
+  <!-- three columns -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <!-- KAFKA -->
+    <rect x="30" y="82" width="222" height="300" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="141" y="106" text-anchor="middle" class="hd" fill="#93c5fd">KAFKA</text>
+    <text x="141" y="122" text-anchor="middle" class="cap" font-size="10">compute + storage COUPLED</text>
+    <rect x="46" y="134" width="190" height="52" rx="6" fill="#111e36" stroke="#2563eb" stroke-width="1"/>
+    <text x="141" y="153" text-anchor="middle" class="lbl" font-size="11">Broker = serve + STORE</text>
+    <text x="141" y="170" text-anchor="middle" class="cap" font-size="10">its own partitions on disk</text>
+    <text x="46" y="206" class="cap" fill="#6ee7b7">✓ the standard; huge ecosystem</text>
+    <text x="46" y="226" class="cap" fill="#6ee7b7">✓ KRaft (ZooKeeper retired)</text>
+    <text x="46" y="246" class="cap" fill="#6ee7b7">✓ tiered storage now optional</text>
+    <text x="46" y="266" class="cap" fill="#fca5a5">✗ scaling REBALANCES = moves data</text>
+    <text x="46" y="286" class="cap" fill="#fca5a5">✗ ops-heavy to run yourself</text>
+    <text x="46" y="316" class="cap">unit: PARTITIONS</text>
+    <text x="46" y="340" class="cap" font-size="10">best for: self-hosted platform,</text>
+    <text x="46" y="356" class="cap" font-size="10">largest connector ecosystem</text>
+
+    <!-- PULSAR -->
+    <rect x="269" y="82" width="222" height="300" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="380" y="106" text-anchor="middle" class="hd" fill="#6ee7b7">PULSAR</text>
+    <text x="380" y="122" text-anchor="middle" class="cap" font-size="10">compute / storage SEPARATED</text>
+    <rect x="285" y="134" width="190" height="30" rx="6" fill="#111e36" stroke="#16a34a" stroke-width="1"/>
+    <text x="380" y="153" text-anchor="middle" class="lbl" font-size="11">STATELESS brokers</text>
+    <rect x="285" y="168" width="190" height="30" rx="6" fill="#0d2818" stroke="#16a34a" stroke-width="1"/>
+    <text x="380" y="187" text-anchor="middle" class="lbl" font-size="11">BookKeeper bookies (SEGMENTS)</text>
+    <text x="285" y="218" class="cap" fill="#6ee7b7">✓ scale compute w/o moving data</text>
+    <text x="285" y="238" class="cap" fill="#6ee7b7">✓ segments spread across bookies</text>
+    <text x="285" y="258" class="cap" fill="#6ee7b7">✓ native tiered storage → S3</text>
+    <text x="285" y="278" class="cap" fill="#6ee7b7">✓ multi-tenancy + geo-replication</text>
+    <text x="285" y="298" class="cap" fill="#fbbf24">~ two systems to operate</text>
+    <text x="285" y="322" class="cap">unit: PARTITIONS / segments</text>
+    <text x="285" y="346" class="cap" font-size="10">best for: multi-tenant SaaS,</text>
+    <text x="285" y="362" class="cap" font-size="10">elastic scale, queue + stream</text>
+
+    <!-- KINESIS -->
+    <rect x="508" y="82" width="222" height="300" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="619" y="106" text-anchor="middle" class="hd" fill="#fbbf24">KINESIS</text>
+    <text x="619" y="122" text-anchor="middle" class="cap" font-size="10">storage HIDDEN (fully managed)</text>
+    <rect x="524" y="134" width="190" height="52" rx="6" fill="#111e36" stroke="#d97706" stroke-width="1"/>
+    <text x="619" y="153" text-anchor="middle" class="lbl" font-size="11">AWS runs everything</text>
+    <text x="619" y="170" text-anchor="middle" class="cap" font-size="10">no brokers, no bookies</text>
+    <text x="524" y="206" class="cap" fill="#6ee7b7">✓ zero servers to run</text>
+    <text x="524" y="226" class="cap" fill="#6ee7b7">✓ resharding to scale</text>
+    <text x="524" y="246" class="cap" fill="#6ee7b7">✓ 24h → 365d retention</text>
+    <text x="524" y="266" class="cap" fill="#fca5a5">✗ fixed 1MB/s in, 2MB/s out / shard</text>
+    <text x="524" y="286" class="cap" fill="#fca5a5">✗ AWS-locked; shard limits</text>
+    <text x="524" y="316" class="cap">unit: SHARDS (≈ partitions)</text>
+    <text x="524" y="340" class="cap" font-size="10">best for: all-in-on-AWS,</text>
+    <text x="524" y="356" class="cap" font-size="10">pay-per-use, zero ops</text>
+  </g>
+
+  <!-- storage model band -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="396" width="700" height="70" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="420" class="hd" fill="#c4b5fd">THE ONE AXIS THAT DIVIDES THEM — where does partition data live?</text>
+    <text x="48" y="442" class="cap">Kafka: ON the broker (couple) → rebalancing physically copies logs · Pulsar: on separate bookies (split) → add brokers instantly</text>
+    <text x="48" y="459" class="cap">Kinesis: you never see it (managed) → capacity comes in fixed shard units you resize by resharding</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="478" width="700" height="62" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="500" text-anchor="middle" class="hd">Same log idea, three storage models</text>
+    <text x="380" y="521" text-anchor="middle" class="cap" fill="#166534">Kafka COUPLES compute+storage · Pulsar SPLITS them (BookKeeper) · Kinesis HIDES them (managed shards)</text>
+    <text x="380" y="536" text-anchor="middle" class="cap" fill="#166534" font-size="10">pick by ops appetite: run-it-yourself &amp; ecosystem → Kafka · elastic + multi-tenant → Pulsar · zero-ops on AWS → Kinesis</text>
+  </g>
+</svg>

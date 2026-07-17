@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="srbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="srar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .mono{font-family:'Consolas','Courier New',monospace}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#srbg)"/>
+  <text x="30" y="40" class="t">Schema Registry: ship the ID, not the schema</text>
+  <text x="30" y="62" class="sub">a central version store keyed by subject enforces that no schema change can break a live consumer</text>
+
+  <!-- data flow row -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <!-- producer -->
+    <rect x="30" y="84" width="200" height="118" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2"/>
+    <text x="130" y="108" text-anchor="middle" class="hd" fill="#93c5fd">PRODUCER</text>
+    <text x="46" y="132" class="cap">1. serialize record (Avro)</text>
+    <text x="46" y="152" class="cap">2. register / look up schema</text>
+    <text x="46" y="170" class="cap" fill="#6ee7b7">   → gets numeric schema ID</text>
+    <text x="46" y="190" class="cap">3. write [id + bytes] to topic</text>
+
+    <!-- registry -->
+    <rect x="280" y="84" width="200" height="118" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="380" y="108" text-anchor="middle" class="hd" fill="#c4b5fd">SCHEMA REGISTRY</text>
+    <text x="296" y="132" class="cap">subject → versioned schemas</text>
+    <text x="296" y="152" class="cap mono">order-value: v1, v2, v3 ...</text>
+    <text x="296" y="172" class="cap">each version has an integer ID</text>
+    <text x="296" y="192" class="cap" fill="#fbbf24">the contract enforcer</text>
+
+    <!-- consumer -->
+    <rect x="530" y="84" width="200" height="118" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+    <text x="630" y="108" text-anchor="middle" class="hd" fill="#6ee7b7">CONSUMER</text>
+    <text x="546" y="132" class="cap">1. read 4-byte ID off wire</text>
+    <text x="546" y="152" class="cap">2. fetch that schema version</text>
+    <text x="546" y="170" class="cap" fill="#6ee7b7">   (cached after first hit)</text>
+    <text x="546" y="190" class="cap">3. deserialize with it</text>
+
+    <!-- arrows producer->registry, registry->consumer -->
+    <line x1="230" y1="120" x2="278" y2="120" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#srar)"/>
+    <line x1="530" y1="120" x2="482" y2="120" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#srar)"/>
+  </g>
+
+  <!-- wire format bar -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="216" width="700" height="86" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="1.5"/>
+    <text x="48" y="240" class="hd" fill="#fbbf24">THE WIRE FORMAT — the schema is NOT in every message, just a 5-byte ID</text>
+    <rect x="48" y="252" width="70"  height="30" rx="5" fill="#1e293b" stroke="#64748b"/><text x="83"  y="272" text-anchor="middle" class="cap mono">magic 0x0</text>
+    <rect x="122" y="252" width="150" height="30" rx="5" fill="#3730a3" stroke="#7c3aed"/><text x="197" y="272" text-anchor="middle" class="lbl mono">4-byte schema ID</text>
+    <rect x="276" y="252" width="380" height="30" rx="5" fill="#14532d" stroke="#16a34a"/><text x="466" y="272" text-anchor="middle" class="lbl mono">Avro binary payload (compact, no field names)</text>
+    <text x="48" y="298" class="cap" font-size="10">consumers look up the ID once, cache the schema locally → tiny messages, self-describing stream</text>
+  </g>
+
+  <!-- compatibility panel -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="316" width="700" height="130" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="48" y="340" class="hd" fill="#93c5fd">COMPATIBILITY MODES — the registry rejects any change that breaks a live consumer</text>
+    <text x="48" y="362" class="cap"><tspan fill="#6ee7b7" font-weight="700">BACKWARD</tspan>  new consumer reads OLD data  ·  safe: ADD field with default, REMOVE a field</text>
+    <text x="48" y="382" class="cap"><tspan fill="#6ee7b7" font-weight="700">FORWARD</tspan>   old consumer reads NEW data  ·  safe: ADD a field, REMOVE an optional field</text>
+    <text x="48" y="402" class="cap"><tspan fill="#6ee7b7" font-weight="700">FULL</tspan>      both directions must hold  ·  only additive-with-default changes survive</text>
+    <text x="48" y="428" class="cap" fill="#6ee7b7">✓ add optional / defaulted field</text>
+    <text x="300" y="428" class="cap" fill="#fca5a5">✗ remove required field  ✗ rename field  ✗ change a field's type</text>
+  </g>
+
+  <!-- callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="460" width="700" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="492" text-anchor="middle" class="hd">Ship the schema ID, not the schema —</text>
+    <text x="380" y="512" text-anchor="middle" class="hd">and let the registry reject any change that would break a live consumer.</text>
+    <text x="380" y="531" text-anchor="middle" class="cap" fill="#166534">producers fail fast at registration time, not consumers at 3 a.m. on a poison message</text>
+  </g>
+</svg>

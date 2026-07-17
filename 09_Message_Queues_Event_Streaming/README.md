@@ -61,6 +61,17 @@ flowchart TD
 | 9 | [Change Data Capture (CDC)](./Change_Data_Capture_CDC.md) | The professional eavesdropper on the DB log | Tail the binlog/WAL (Debezium) instead of dual writes or polling; keeps search/cache/lake in sync with zero DB impact |
 | 10 | [Stream Processing](./Stream_Processing.md) | The guard watching the live feed, not the tape | Kafka Streams/Flink transform and aggregate over windows (tumbling/hopping/session) as events arrive, not in a nightly batch |
 
+### Deep-dive companions (governance, storage semantics, and design-question staples)
+
+| # | Topic | One-line | Key takeaway |
+|---|-------|----------|--------------|
+| 11 | [Schema Registry & Message Schema Evolution](./Schema_Registry_Message_Schema_Evolution.md) | The contract enforcer for events | Ship a 5-byte schema ID, not the schema; compatibility modes (backward/forward/full) let the registry reject any change that would break a live consumer |
+| 12 | [Log Compaction & Retention Policies](./Log_Compaction_Retention_Policies.md) | Delete by age vs delete by being superseded | Time/size retention drops old segments; compaction keeps the latest value per key — so a compacted topic is a durable key→value table (stream–table duality) |
+| 13 | [Delayed Messages & Priority Queues](./Delayed_Messages_Priority_Queues.md) | The "deliver this later / this one first" bin | SQS delay + RabbitMQ TTL→dead-letter-exchange + timing wheels give scheduled delivery; priority risks starvation; Kafka has neither natively — you build them |
+| 14 | [Kafka vs Pulsar vs Kinesis](./Kafka_vs_Pulsar_vs_Kinesis.md) | Same log, three storage models | Kafka couples compute+storage, Pulsar splits them (BookKeeper + tiered storage), Kinesis hides them behind managed shards — pick by ecosystem, elasticity, or zero-ops |
+| 15 | [Kafka Streams vs Flink](./Kafka_Streams_vs_Flink.md) | A library you deploy vs a cluster you run | Kafka Streams embeds in your app (Kafka-only, simplest); Flink is a cluster for heavy stateful, event-time, watermarked, exactly-once processing across many sources |
+| 16 | [Fan-out on Write vs Read](./Fan_out_on_Write_vs_Read.md) | Precompute every feed vs assemble on demand | Push = fast reads, costly writes (the celebrity fan-out explosion); pull = cheap writes, costly reads; real newsfeeds (Twitter/Instagram) go hybrid |
+
 ---
 
 ## 🧭 Suggested Study Paths

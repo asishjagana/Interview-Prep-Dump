@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="lcbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="lcar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .off{fill:#94a3b8;font-size:10px}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#lcbg)"/>
+  <text x="30" y="40" class="t">Retention vs Compaction: two ways a log forgets</text>
+  <text x="30" y="62" class="sub">the same append-only log; delete by AGE (stream) or delete by being SUPERSEDED (compacted key→value table)</text>
+
+  <!-- the source log -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <text x="30" y="88" class="lbl">THE LOG (append-only, keyed records) — offsets 0 → 6</text>
+    <!-- 7 records -->
+    <g>
+      <rect x="30"  y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="76"  y="116" text-anchor="middle" class="off">offset 0</text>
+      <text x="76"  y="136" text-anchor="middle" class="lbl">K1=v1</text>
+
+      <rect x="130" y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="176" y="116" text-anchor="middle" class="off">offset 1</text>
+      <text x="176" y="136" text-anchor="middle" class="lbl">K2=v1</text>
+
+      <rect x="230" y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="276" y="116" text-anchor="middle" class="off">offset 2</text>
+      <text x="276" y="136" text-anchor="middle" class="lbl">K1=v2</text>
+
+      <rect x="330" y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="376" y="116" text-anchor="middle" class="off">offset 3</text>
+      <text x="376" y="136" text-anchor="middle" class="lbl">K3=v1</text>
+
+      <rect x="430" y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#16a34a" stroke-width="2"/>
+      <text x="476" y="116" text-anchor="middle" class="off">offset 4</text>
+      <text x="476" y="136" text-anchor="middle" class="lbl" fill="#6ee7b7">K1=v3</text>
+
+      <rect x="530" y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="576" y="116" text-anchor="middle" class="off">offset 5</text>
+      <text x="576" y="136" text-anchor="middle" class="lbl">K2=v2</text>
+
+      <rect x="630" y="98" width="92" height="50" rx="8" fill="#0b1220" stroke="#dc2626" stroke-width="2"/>
+      <text x="676" y="116" text-anchor="middle" class="off">offset 6</text>
+      <text x="676" y="136" text-anchor="middle" class="lbl" fill="#fca5a5">K2=&#8709;</text>
+    </g>
+    <text x="630" y="160" text-anchor="middle" class="off" fill="#fca5a5">tombstone</text>
+  </g>
+
+  <!-- DELETE panel -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="176" width="340" height="196" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="200" y="200" text-anchor="middle" class="hd" fill="#fbbf24">TIME / SIZE RETENTION</text>
+    <text x="200" y="216" text-anchor="middle" class="cap" font-size="10">cleanup.policy = delete</text>
+    <text x="46" y="240" class="cap">drops the OLDEST segments once past</text>
+    <text x="46" y="256" class="cap">retention.ms / retention.bytes —</text>
+    <text x="46" y="272" class="cap" fill="#fbbf24">regardless of key.</text>
+    <!-- segments -->
+    <rect x="46" y="286" width="150" height="46" rx="7" fill="#1a1206" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="121" y="306" text-anchor="middle" class="cap" fill="#fca5a5">seg 0: off 0-3</text>
+    <text x="121" y="323" text-anchor="middle" class="cap" fill="#fca5a5" font-weight="700">DROPPED (aged out)</text>
+    <line x1="52" y1="330" x2="190" y2="290" stroke="#dc2626" stroke-width="1.2"/>
+    <rect x="204" y="286" width="150" height="46" rx="7" fill="#06210f" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="279" y="306" text-anchor="middle" class="cap" fill="#6ee7b7">seg 1: off 4-6</text>
+    <text x="279" y="323" text-anchor="middle" class="cap" fill="#6ee7b7" font-weight="700">KEPT (recent)</text>
+    <text x="46" y="356" class="cap" font-size="10">result: keep newest offsets · old values of</text>
+    <text x="46" y="368" class="cap" font-size="10">K1/K2 gone only because they were OLD</text>
+  </g>
+
+  <!-- COMPACT panel -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <rect x="390" y="176" width="340" height="196" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="560" y="200" text-anchor="middle" class="hd" fill="#6ee7b7">LOG COMPACTION</text>
+    <text x="560" y="216" text-anchor="middle" class="cap" font-size="10">cleanup.policy = compact</text>
+    <text x="406" y="240" class="cap">keeps only the LATEST value per KEY;</text>
+    <text x="406" y="256" class="cap">superseded values (K1=v1,v2 · K2=v1,v2)</text>
+    <text x="406" y="272" class="cap" fill="#fca5a5">removed. Order &amp; offsets preserved.</text>
+    <!-- kept entries -->
+    <rect x="406" y="286" width="96" height="46" rx="7" fill="#06210f" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="454" y="313" text-anchor="middle" class="lbl" fill="#6ee7b7">K1=v3</text>
+    <rect x="512" y="286" width="96" height="46" rx="7" fill="#06210f" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="560" y="313" text-anchor="middle" class="lbl" fill="#6ee7b7">K3=v1</text>
+    <rect x="618" y="286" width="96" height="46" rx="7" fill="#1a1206" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="666" y="307" text-anchor="middle" class="cap" fill="#fca5a5">K2=&#8709; tombstone</text>
+    <text x="666" y="323" text-anchor="middle" class="cap" font-size="9">purged after delete.retention.ms</text>
+    <text x="406" y="356" class="cap" font-size="10">result = a TABLE: {K1:v3, K3:v1}</text>
+    <text x="406" y="368" class="cap" font-size="10">K2 deleted (tombstone), kept briefly so</text>
+  </g>
+
+  <!-- stream-table duality callout -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="384" width="700" height="60" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="48" y="408" class="hd" fill="#c4b5fd">STREAM &#8211; TABLE DUALITY</text>
+    <text x="48" y="428" class="cap">replay a compacted topic and you get a TABLE — the latest value per key. The changelog IS the table:</text>
+    <text x="48" y="440" class="cap" font-size="10">Kafka Streams KTable, __consumer_offsets, and Kafka Connect config topics are all compacted for exactly this reason.</text>
+  </g>
+
+  <!-- rule -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.9s" dur="0.5s" fill="freeze"/>
+    <rect x="30" y="456" width="700" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="380" y="482" text-anchor="middle" class="hd">Retention deletes by AGE; compaction deletes by being SUPERSEDED</text>
+    <text x="380" y="504" text-anchor="middle" class="cap" fill="#166534">a compacted topic is a durable key &#8594; latest-value table you can bootstrap full state from by replaying</text>
+    <text x="380" y="524" text-anchor="middle" class="cap" fill="#166534" font-size="10">the active (head) segment is never compacted or deleted — only closed segments are eligible</text>
+  </g>
+</svg>
