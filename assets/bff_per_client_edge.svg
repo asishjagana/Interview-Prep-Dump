@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 580" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bffbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="bfarR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="bfarA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <marker id="bfarG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="bfarB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="580" rx="16" fill="url(#bffbg)"/>
+  <text x="30" y="40" class="t">Backend for Frontend (BFF): one edge per client</text>
+  <text x="30" y="62" class="sub">one shared general API for everyone, or a dedicated aggregation edge tailored to each client experience?</text>
+
+  <!-- ============ LEFT: SINGLE SHARED API ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="80" width="352" height="292" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="202" y="104" text-anchor="middle" class="hd" fill="#fca5a5">A. ONE SHARED GENERAL API</text>
+    <text x="202" y="120" text-anchor="middle" class="cap" font-size="10">every client hits the same one-size-fits-none endpoint</text>
+
+    <!-- clients -->
+    <rect x="42" y="140" width="66" height="26" rx="6" class="node" stroke="#fbbf24"/>
+    <text x="75" y="157" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24">Mobile</text>
+    <rect x="42" y="186" width="66" height="26" rx="6" class="node" stroke="#fbbf24"/>
+    <text x="75" y="203" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24">Web</text>
+    <rect x="42" y="232" width="66" height="26" rx="6" class="node" stroke="#fbbf24"/>
+    <text x="75" y="249" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24">TV</text>
+
+    <!-- shared API -->
+    <rect x="150" y="168" width="92" height="62" rx="8" class="node" stroke="#dc2626"/>
+    <text x="196" y="194" text-anchor="middle" class="lbl" font-size="11">Shared</text>
+    <text x="196" y="210" text-anchor="middle" class="lbl" font-size="11">General API</text>
+
+    <!-- client -> api arrows -->
+    <line x1="108" y1="153" x2="148" y2="184" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#bfarR)"/>
+    <line x1="108" y1="199" x2="148" y2="199" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#bfarR)"/>
+    <line x1="108" y1="245" x2="148" y2="214" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#bfarR)"/>
+
+    <!-- microservices -->
+    <rect x="286" y="140" width="78" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="325" y="156" text-anchor="middle" class="cap" font-size="9">User</text>
+    <rect x="286" y="170" width="78" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="325" y="186" text-anchor="middle" class="cap" font-size="9">Feed</text>
+    <rect x="286" y="200" width="78" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="325" y="216" text-anchor="middle" class="cap" font-size="9">Catalog</text>
+    <rect x="286" y="230" width="78" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="325" y="246" text-anchor="middle" class="cap" font-size="9">Orders</text>
+    <!-- api -> services fan-out -->
+    <line x1="242" y1="192" x2="284" y2="152" stroke="#fca5a5" stroke-width="1.6" marker-end="url(#bfarR)"/>
+    <line x1="242" y1="196" x2="284" y2="182" stroke="#fca5a5" stroke-width="1.6" marker-end="url(#bfarR)"/>
+    <line x1="242" y1="200" x2="284" y2="212" stroke="#fca5a5" stroke-width="1.6" marker-end="url(#bfarR)"/>
+    <line x1="242" y1="204" x2="284" y2="242" stroke="#fca5a5" stroke-width="1.6" marker-end="url(#bfarR)"/>
+
+    <text x="42" y="288" class="cap" fill="#fca5a5">✗ over-fetching on mobile — fields it never shows</text>
+    <text x="42" y="308" class="cap" fill="#fca5a5">✗ chatty round-trips — 5 calls to build 1 screen</text>
+    <text x="42" y="328" class="cap" fill="#fbbf24">~ one-size-fits-none payload for all clients</text>
+    <text x="42" y="348" class="cap" fill="#fbbf24">~ versioning tension: web vs mobile evolve apart</text>
+  </g>
+
+  <!-- ============ RIGHT: BFF PER CLIENT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="382" y="80" width="352" height="292" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="558" y="104" text-anchor="middle" class="hd" fill="#6ee7b7">B. A BFF PER CLIENT EXPERIENCE</text>
+    <text x="558" y="120" text-anchor="middle" class="cap" font-size="10">each BFF is owned by that client's frontend team</text>
+
+    <!-- clients -->
+    <rect x="398" y="138" width="58" height="26" rx="6" class="node" stroke="#93c5fd"/>
+    <text x="427" y="155" text-anchor="middle" class="cap" font-size="10" fill="#93c5fd">Mobile</text>
+    <rect x="398" y="184" width="58" height="26" rx="6" class="node" stroke="#93c5fd"/>
+    <text x="427" y="201" text-anchor="middle" class="cap" font-size="10" fill="#93c5fd">Web</text>
+    <rect x="398" y="230" width="58" height="26" rx="6" class="node" stroke="#93c5fd"/>
+    <text x="427" y="247" text-anchor="middle" class="cap" font-size="10" fill="#93c5fd">TV</text>
+
+    <!-- BFFs -->
+    <rect x="476" y="136" width="92" height="30" rx="7" class="node" stroke="#16a34a"/>
+    <text x="522" y="155" text-anchor="middle" class="lbl" font-size="10">Mobile BFF</text>
+    <rect x="476" y="182" width="92" height="30" rx="7" class="node" stroke="#16a34a"/>
+    <text x="522" y="201" text-anchor="middle" class="lbl" font-size="10">Web BFF</text>
+    <rect x="476" y="228" width="92" height="30" rx="7" class="node" stroke="#16a34a"/>
+    <text x="522" y="247" text-anchor="middle" class="lbl" font-size="10">TV BFF</text>
+
+    <!-- client -> its own BFF -->
+    <line x1="456" y1="151" x2="474" y2="151" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#bfarG)"/>
+    <line x1="456" y1="197" x2="474" y2="197" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#bfarG)"/>
+    <line x1="456" y1="243" x2="474" y2="243" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#bfarG)"/>
+
+    <!-- shared microservices (same set) -->
+    <rect x="632" y="138" width="80" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="672" y="154" text-anchor="middle" class="cap" font-size="9">User</text>
+    <rect x="632" y="168" width="80" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="672" y="184" text-anchor="middle" class="cap" font-size="9">Feed</text>
+    <rect x="632" y="198" width="80" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="672" y="214" text-anchor="middle" class="cap" font-size="9">Catalog</text>
+    <rect x="632" y="228" width="80" height="24" rx="5" class="node" stroke="#334155"/>
+    <text x="672" y="244" text-anchor="middle" class="cap" font-size="9">Orders</text>
+    <!-- each BFF aggregates from shared services -->
+    <line x1="568" y1="149" x2="630" y2="150" stroke="#6ee7b7" stroke-width="1.6" marker-end="url(#bfarG)"/>
+    <line x1="568" y1="155" x2="630" y2="182" stroke="#6ee7b7" stroke-width="1.4" marker-end="url(#bfarG)"/>
+    <line x1="568" y1="197" x2="630" y2="182" stroke="#6ee7b7" stroke-width="1.6" marker-end="url(#bfarG)"/>
+    <line x1="568" y1="203" x2="630" y2="210" stroke="#6ee7b7" stroke-width="1.4" marker-end="url(#bfarG)"/>
+    <line x1="568" y1="243" x2="630" y2="240" stroke="#6ee7b7" stroke-width="1.6" marker-end="url(#bfarG)"/>
+    <line x1="568" y1="237" x2="630" y2="210" stroke="#6ee7b7" stroke-width="1.4" marker-end="url(#bfarG)"/>
+
+    <text x="398" y="288" class="cap" fill="#6ee7b7">✓ tailored payload — exactly what each client shows</text>
+    <text x="398" y="308" class="cap" fill="#6ee7b7">✓ aggregate + trim + reshape → ONE round trip</text>
+    <text x="398" y="328" class="cap" fill="#6ee7b7">✓ frontend team owns &amp; versions its own edge</text>
+    <text x="398" y="348" class="cap" fill="#93c5fd">~ same shared downstream services behind all BFFs</text>
+  </g>
+
+  <!-- ============ TAKEAWAY BAND: tailored vs generic ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="382" width="708" height="82" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="44" y="406" class="hd" fill="#c4b5fd">GENERIC vs TAILORED — same downstream, different edge</text>
+
+    <rect x="44" y="416" width="330" height="38" rx="7" class="node" stroke="#dc2626"/>
+    <text x="209" y="433" text-anchor="middle" class="cap" fill="#fca5a5" font-size="10">Shared API → generic blob, mobile over-fetches,</text>
+    <text x="209" y="448" text-anchor="middle" class="cap" fill="#fca5a5" font-size="10">client stitches 3-5 calls over a slow link</text>
+
+    <rect x="386" y="416" width="330" height="38" rx="7" class="node" stroke="#16a34a"/>
+    <text x="551" y="433" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="10">Mobile BFF → user+feed+recs aggregated once,</text>
+    <text x="551" y="448" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="10">trimmed to the home screen, ONE round trip</text>
+  </g>
+
+  <!-- ============ BOTTOM CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="474" width="708" height="74" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="500" text-anchor="middle" class="hd">BFF = one edge per client experience</text>
+    <text x="380" y="520" text-anchor="middle" class="cap" fill="#5b21b6" font-size="11">tailored payloads · one round trip · frontend-team owned</text>
+    <text x="380" y="538" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">a specialization of the API gateway (gateway = shared cross-cutting edge; BFF = per-client)</text>
+  </g>
+</svg>

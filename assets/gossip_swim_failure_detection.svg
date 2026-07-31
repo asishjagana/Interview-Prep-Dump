@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="gsbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="gsG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="gsB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="gsA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <marker id="gsR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .hdl{font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="600" rx="16" fill="url(#gsbg)"/>
+  <text x="30" y="40" class="t">Gossip Protocol &amp; SWIM Failure Detection</text>
+  <text x="30" y="62" class="sub">state spreads like an epidemic in O(log N) rounds; SWIM + phi-accrual detect death without a coordinator</text>
+
+  <!-- ============ LEFT: GOSSIP SPREAD ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="80" width="352" height="330" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="202" y="104" text-anchor="middle" class="hdl" fill="#6ee7b7">GOSSIP SPREAD (epidemic)</text>
+    <text x="202" y="120" text-anchor="middle" class="cap" font-size="10">each round, infected nodes tell random peers</text>
+
+    <!-- Round labels -->
+    <text x="44" y="150" class="cap" fill="#94a3b8">Round 1: 1 node knows</text>
+    <text x="44" y="238" class="cap" fill="#94a3b8">Round 2: tells 2 peers → 3 know</text>
+    <text x="44" y="326" class="cap" fill="#94a3b8">Round 3: doubles again → 7 know</text>
+
+    <!-- Round 1: single infected node -->
+    <circle cx="90" cy="180" r="16" fill="#16a34a" stroke="#6ee7b7" stroke-width="2"/>
+    <text x="90" y="184" text-anchor="middle" class="lbl" font-size="11">A</text>
+
+    <!-- Round 2 -->
+    <circle cx="90" cy="270" r="15" fill="#16a34a" stroke="#6ee7b7" stroke-width="2" opacity="0.9"/>
+    <text x="90" y="274" text-anchor="middle" class="lbl" font-size="10">A</text>
+    <circle cx="180" cy="255" r="15" fill="#15803d" stroke="#6ee7b7" stroke-width="2" opacity="0.75"/>
+    <text x="180" y="259" text-anchor="middle" class="lbl" font-size="10">B</text>
+    <circle cx="180" cy="290" r="15" fill="#15803d" stroke="#6ee7b7" stroke-width="2" opacity="0.75"/>
+    <text x="180" y="294" text-anchor="middle" class="lbl" font-size="10">C</text>
+    <line x1="105" y1="266" x2="164" y2="256" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#gsG)"/>
+    <line x1="105" y1="274" x2="164" y2="289" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#gsG)"/>
+
+    <!-- Round 3 -->
+    <circle cx="70" cy="360" r="13" fill="#16a34a" stroke="#6ee7b7" stroke-width="2" opacity="0.9"/>
+    <text x="70" y="364" text-anchor="middle" class="lbl" font-size="9">A</text>
+    <circle cx="130" cy="350" r="13" fill="#15803d" stroke="#6ee7b7" stroke-width="2" opacity="0.7"/>
+    <text x="130" y="354" text-anchor="middle" class="lbl" font-size="9">B</text>
+    <circle cx="130" cy="380" r="13" fill="#15803d" stroke="#6ee7b7" stroke-width="2" opacity="0.7"/>
+    <text x="130" y="384" text-anchor="middle" class="lbl" font-size="9">C</text>
+    <circle cx="200" cy="342" r="13" fill="#166534" stroke="#6ee7b7" stroke-width="2" opacity="0.55"/>
+    <text x="200" y="346" text-anchor="middle" class="lbl" font-size="9">D</text>
+    <circle cx="200" cy="372" r="13" fill="#166534" stroke="#6ee7b7" stroke-width="2" opacity="0.55"/>
+    <text x="200" y="376" text-anchor="middle" class="lbl" font-size="9">E</text>
+    <circle cx="270" cy="350" r="13" fill="#166534" stroke="#6ee7b7" stroke-width="2" opacity="0.55"/>
+    <text x="270" y="354" text-anchor="middle" class="lbl" font-size="9">F</text>
+    <circle cx="270" cy="380" r="13" fill="#166534" stroke="#6ee7b7" stroke-width="2" opacity="0.55"/>
+    <text x="270" y="384" text-anchor="middle" class="lbl" font-size="9">G</text>
+    <line x1="143" y1="350" x2="187" y2="343" stroke="#6ee7b7" stroke-width="1.5" marker-end="url(#gsG)"/>
+    <line x1="143" y1="380" x2="187" y2="373" stroke="#6ee7b7" stroke-width="1.5" marker-end="url(#gsG)"/>
+    <line x1="213" y1="343" x2="257" y2="350" stroke="#6ee7b7" stroke-width="1.5" marker-end="url(#gsG)"/>
+    <line x1="213" y1="373" x2="257" y2="379" stroke="#6ee7b7" stroke-width="1.5" marker-end="url(#gsG)"/>
+
+    <text x="202" y="404" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="10">converges in O(log N) rounds — no coordinator</text>
+  </g>
+
+  <!-- ============ RIGHT: SWIM FAILURE DETECTION ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="382" y="80" width="352" height="330" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="558" y="104" text-anchor="middle" class="hdl" fill="#93c5fd">SWIM FAILURE DETECTION</text>
+    <text x="558" y="120" text-anchor="middle" class="cap" font-size="10">direct ping → indirect ping-req → suspect → dead</text>
+
+    <!-- Step 1: A pings B, no ack -->
+    <text x="400" y="150" class="cap" fill="#94a3b8">1. A pings B directly — no ACK</text>
+    <rect x="400" y="158" width="54" height="34" rx="8" class="node" stroke="#2563eb"/>
+    <text x="427" y="179" text-anchor="middle" class="lbl" font-size="11">A</text>
+    <rect x="540" y="158" width="54" height="34" rx="8" class="node" stroke="#d97706"/>
+    <text x="567" y="179" text-anchor="middle" class="lbl" font-size="11">B</text>
+    <line x1="454" y1="171" x2="536" y2="171" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#gsA)"/>
+    <text x="495" y="165" text-anchor="middle" class="cap" fill="#fbbf24" font-size="9">ping ✗</text>
+
+    <!-- Step 2: A asks k members to ping-req B -->
+    <text x="400" y="222" class="cap" fill="#94a3b8">2. A asks k peers to ping-req B (indirect)</text>
+    <rect x="400" y="230" width="50" height="32" rx="8" class="node" stroke="#2563eb"/>
+    <text x="425" y="250" text-anchor="middle" class="lbl" font-size="10">A</text>
+    <rect x="480" y="214" width="50" height="26" rx="6" class="node" stroke="#7c3aed"/>
+    <text x="505" y="231" text-anchor="middle" class="lbl" font-size="10">peer1</text>
+    <rect x="480" y="252" width="50" height="26" rx="6" class="node" stroke="#7c3aed"/>
+    <text x="505" y="269" text-anchor="middle" class="lbl" font-size="10">peer2</text>
+    <rect x="560" y="230" width="54" height="34" rx="8" class="node" stroke="#d97706"/>
+    <text x="587" y="251" text-anchor="middle" class="lbl" font-size="11">B</text>
+    <line x1="450" y1="242" x2="478" y2="228" stroke="#c4b5fd" stroke-width="1.6" marker-end="url(#gsB)"/>
+    <line x1="450" y1="250" x2="478" y2="264" stroke="#c4b5fd" stroke-width="1.6" marker-end="url(#gsB)"/>
+    <line x1="530" y1="227" x2="558" y2="240" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#gsA)"/>
+    <line x1="530" y1="265" x2="558" y2="252" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#gsA)"/>
+    <text x="640" y="250" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">still ✗</text>
+
+    <!-- Step 3: SUSPECT then DEAD -->
+    <text x="400" y="304" class="cap" fill="#94a3b8">3. No ACK anywhere → SUSPECT, then DEAD</text>
+    <rect x="400" y="312" width="130" height="42" rx="8" class="node" stroke="#d97706"/>
+    <text x="465" y="330" text-anchor="middle" class="lbl" fill="#fbbf24" font-size="11">B = SUSPECT</text>
+    <text x="465" y="346" text-anchor="middle" class="cap" font-size="9">refutable via gossip</text>
+    <rect x="560" y="312" width="150" height="42" rx="8" class="node" stroke="#dc2626"/>
+    <text x="635" y="330" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="11">B = DEAD</text>
+    <text x="635" y="346" text-anchor="middle" class="cap" font-size="9">piggybacked on gossip</text>
+    <line x1="530" y1="333" x2="558" y2="333" stroke="#fca5a5" stroke-width="2" marker-end="url(#gsR)"/>
+
+    <text x="558" y="392" text-anchor="middle" class="cap" fill="#93c5fd" font-size="10">indirect probes avoid false positives from blips</text>
+  </g>
+
+  <!-- ============ BOTTOM BAND: PHI-ACCRUAL ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.7s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="420" width="708" height="98" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="44" y="444" class="hdl" fill="#fbbf24">PHI-ACCRUAL — suspicion φ rises as the heartbeat gap grows</text>
+
+    <!-- axes -->
+    <line x1="60" y1="500" x2="470" y2="500" stroke="#475569" stroke-width="1.5"/>
+    <line x1="60" y1="460" x2="60" y2="500" stroke="#475569" stroke-width="1.5"/>
+    <text x="48" y="464" text-anchor="end" class="cap" font-size="9" fill="#94a3b8">φ</text>
+    <text x="265" y="514" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">time since last heartbeat →</text>
+    <!-- expected interval markers (heartbeats arriving) -->
+    <circle cx="90" cy="500" r="3" fill="#6ee7b7"/>
+    <circle cx="140" cy="500" r="3" fill="#6ee7b7"/>
+    <circle cx="190" cy="500" r="3" fill="#6ee7b7"/>
+    <text x="140" y="490" text-anchor="middle" class="cap" font-size="8" fill="#6ee7b7">regular beats → φ≈0</text>
+    <!-- rising phi curve as gap grows past expected -->
+    <path d="M190,500 C 300,498 360,470 460,462" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+    <line x1="190" y1="500" x2="190" y2="458" stroke="#475569" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="240" y="472" class="cap" font-size="9" fill="#fbbf24">gap exceeds expected → φ climbs</text>
+    <text x="462" y="458" class="cap" font-size="9" fill="#fca5a5">φ &gt; threshold → suspect</text>
+
+    <text x="490" y="466" class="cap" font-size="10" fill="#e2e8f0">Instead of a hard timeout boolean,</text>
+    <text x="490" y="482" class="cap" font-size="10" fill="#e2e8f0">φ is a continuous suspicion level from</text>
+    <text x="490" y="498" class="cap" font-size="10" fill="#e2e8f0">the distribution of inter-arrival times.</text>
+    <text x="490" y="514" class="cap" font-size="10" fill="#fbbf24">Used by Cassandra &amp; Akka.</text>
+  </g>
+
+  <!-- ============ BOTTOM CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="528" width="708" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="552" text-anchor="middle" class="hd">Gossip spreads state in O(log N) rounds, no coordinator, O(N) bandwidth per node</text>
+    <text x="380" y="572" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">SWIM + indirect ping-req + phi-accrual avoid false positives from GC pauses and network blips</text>
+  </g>
+</svg>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cqbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="cqarG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="cqarB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="cqarA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#cqbg)"/>
+  <text x="30" y="40" class="t">CQRS — split the write model from the read models</text>
+  <text x="30" y="62" class="sub">commands mutate one consistent write model; events project into many query-optimized read stores</text>
+
+  <!-- ============ LEFT: WRITE SIDE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="84" width="236" height="330" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="144" y="108" text-anchor="middle" class="hd" fill="#6ee7b7">WRITE SIDE (COMMANDS)</text>
+    <text x="144" y="124" text-anchor="middle" class="cap" font-size="10">optimized for consistency + validation</text>
+
+    <rect x="60" y="140" width="168" height="42" rx="8" class="node" stroke="#16a34a"/>
+    <text x="144" y="158" text-anchor="middle" class="lbl" font-size="11">Command</text>
+    <text x="144" y="173" text-anchor="middle" class="cap" font-size="9">PlaceOrder, UpdatePrice</text>
+
+    <rect x="60" y="202" width="168" height="42" rx="8" class="node" stroke="#16a34a"/>
+    <text x="144" y="220" text-anchor="middle" class="lbl" font-size="11">Command Handler</text>
+    <text x="144" y="235" text-anchor="middle" class="cap" font-size="9">loads aggregate, validates invariants</text>
+
+    <rect x="60" y="264" width="168" height="46" rx="8" class="node" stroke="#16a34a"/>
+    <text x="144" y="283" text-anchor="middle" class="lbl" font-size="11">Write DB / Event Store</text>
+    <text x="144" y="298" text-anchor="middle" class="cap" font-size="9">normalized aggregate, source of truth</text>
+
+    <line x1="144" y1="182" x2="144" y2="200" stroke="#6ee7b7" stroke-width="2" marker-end="url(#cqarG)"/>
+    <line x1="144" y1="244" x2="144" y2="262" stroke="#6ee7b7" stroke-width="2" marker-end="url(#cqarG)"/>
+
+    <text x="60" y="338" class="cap" fill="#6ee7b7">✓ single writer per aggregate</text>
+    <text x="60" y="356" class="cap" fill="#6ee7b7">✓ strong consistency on write</text>
+    <text x="60" y="374" class="cap" fill="#fbbf24">~ emits domain events on commit</text>
+    <text x="60" y="392" class="cap" fill="#fca5a5">✗ not shaped for fast varied reads</text>
+  </g>
+
+  <!-- ============ MIDDLE: EVENT BUS / PROJECTION PIPELINE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="278" y="150" width="204" height="120" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="380" y="174" text-anchor="middle" class="hd" fill="#fbbf24">EVENT BUS</text>
+    <text x="380" y="192" text-anchor="middle" class="cap" font-size="10">OrderPlaced, PriceUpdated ...</text>
+    <text x="380" y="212" text-anchor="middle" class="cap" font-size="10">projection workers subscribe</text>
+    <text x="380" y="232" text-anchor="middle" class="cap" font-size="10">and rebuild each read model</text>
+    <text x="380" y="254" text-anchor="middle" class="cap" fill="#fbbf24" font-size="10">async, replayable, idempotent</text>
+
+    <!-- write -> bus -->
+    <line x1="262" y1="287" x2="330" y2="270" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#cqarA)"/>
+
+    <!-- eventual-consistency lag callout -->
+    <rect x="292" y="286" width="176" height="34" rx="7" fill="#3b1d0a" stroke="#d97706" stroke-width="1.6"/>
+    <text x="380" y="300" text-anchor="middle" class="cap" fill="#fbbf24" font-size="10" font-weight="700">eventual-consistency lag</text>
+    <text x="380" y="314" text-anchor="middle" class="cap" fill="#fbbf24" font-size="9">tens of ms → seconds behind</text>
+  </g>
+
+  <!-- ============ RIGHT: READ SIDE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="498" y="84" width="236" height="330" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="616" y="108" text-anchor="middle" class="hd" fill="#93c5fd">READ SIDE (QUERIES)</text>
+    <text x="616" y="124" text-anchor="middle" class="cap" font-size="10">denormalized, scaled independently</text>
+
+    <rect x="520" y="140" width="192" height="46" rx="8" class="node" stroke="#2563eb"/>
+    <text x="616" y="159" text-anchor="middle" class="lbl" font-size="11">SQL read DB</text>
+    <text x="616" y="174" text-anchor="middle" class="cap" font-size="9">product/order views, 1 query = 1 row</text>
+
+    <rect x="520" y="200" width="192" height="46" rx="8" class="node" stroke="#2563eb"/>
+    <text x="616" y="219" text-anchor="middle" class="lbl" font-size="11">Elasticsearch</text>
+    <text x="616" y="234" text-anchor="middle" class="cap" font-size="9">full-text product search projection</text>
+
+    <rect x="520" y="260" width="192" height="46" rx="8" class="node" stroke="#2563eb"/>
+    <text x="616" y="279" text-anchor="middle" class="lbl" font-size="11">Redis cache</text>
+    <text x="616" y="294" text-anchor="middle" class="cap" font-size="9">counters / hot aggregates</text>
+
+    <!-- bus -> read models -->
+    <line x1="482" y1="200" x2="518" y2="163" stroke="#93c5fd" stroke-width="1.8" marker-end="url(#cqarB)"/>
+    <line x1="482" y1="216" x2="518" y2="222" stroke="#93c5fd" stroke-width="1.8" marker-end="url(#cqarB)"/>
+    <line x1="482" y1="232" x2="518" y2="282" stroke="#93c5fd" stroke-width="1.8" marker-end="url(#cqarB)"/>
+
+    <text x="520" y="336" class="cap" fill="#6ee7b7">✓ each store tailored to its query shape</text>
+    <text x="520" y="354" class="cap" fill="#6ee7b7">✓ scale read replicas to 100:1 traffic</text>
+    <text x="520" y="372" class="cap" fill="#93c5fd">✓ reads never touch the write model</text>
+    <text x="520" y="390" class="cap" fill="#fbbf24">~ may briefly serve stale data</text>
+  </g>
+
+  <!-- ============ BOTTOM CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="428" width="708" height="112" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="454" text-anchor="middle" class="hd">Writes optimized for consistency (validate against the aggregate)</text>
+    <text x="380" y="476" text-anchor="middle" class="hd">Reads optimized &amp; independently scaled (denormalized per query shape)</text>
+    <text x="380" y="498" text-anchor="middle" class="hd">Synced ASYNC via events → the two sides are eventually consistent</text>
+    <text x="380" y="522" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">Cost of the split: extra moving parts + a consistency lag. Skip CQRS when plain CRUD already serves both sides.</text>
+  </g>
+</svg>

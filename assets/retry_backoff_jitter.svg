@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="rbbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="rbarR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="rbarG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="rbarA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="600" rx="16" fill="url(#rbbg)"/>
+  <text x="30" y="40" class="t">Retry, Timeout &amp; Backoff — taming the retry storm</text>
+  <text x="30" y="62" class="sub">synchronized fixed retries hammer a failing server; exponential backoff + jitter spread the load so it recovers</text>
+
+  <!-- ============ LEFT: RETRY STORM ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="80" width="352" height="250" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="202" y="104" text-anchor="middle" class="hd" fill="#fca5a5">A. RETRY STORM (fixed interval, no jitter)</text>
+    <text x="202" y="120" text-anchor="middle" class="cap" font-size="10">every client retries at the SAME 1s beat</text>
+
+    <!-- time axis -->
+    <line x1="52" y1="270" x2="360" y2="270" stroke="#475569" stroke-width="1.5"/>
+    <text x="356" y="286" text-anchor="end" class="cap" font-size="9">time</text>
+    <!-- synchronized spikes: aligned bars piling up at t, t+1, t+2 -->
+    <!-- spike 1 -->
+    <rect x="88" y="150" width="8" height="120" fill="#fca5a5"/>
+    <rect x="98" y="150" width="8" height="120" fill="#dc2626"/>
+    <rect x="108" y="150" width="8" height="120" fill="#fca5a5"/>
+    <rect x="118" y="150" width="8" height="120" fill="#dc2626"/>
+    <text x="107" y="144" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">t=1s</text>
+    <!-- spike 2 -->
+    <rect x="188" y="140" width="8" height="130" fill="#fca5a5"/>
+    <rect x="198" y="140" width="8" height="130" fill="#dc2626"/>
+    <rect x="208" y="140" width="8" height="130" fill="#fca5a5"/>
+    <rect x="218" y="140" width="8" height="130" fill="#dc2626"/>
+    <text x="207" y="134" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">t=2s</text>
+    <!-- spike 3 -->
+    <rect x="288" y="134" width="8" height="136" fill="#fca5a5"/>
+    <rect x="298" y="134" width="8" height="136" fill="#dc2626"/>
+    <rect x="308" y="134" width="8" height="136" fill="#fca5a5"/>
+    <rect x="318" y="134" width="8" height="136" fill="#dc2626"/>
+    <text x="307" y="128" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">t=3s</text>
+
+    <text x="44" y="302" class="cap" fill="#fca5a5">&#8226; thundering herd — spikes align &amp; grow</text>
+    <text x="44" y="320" class="cap" fill="#fca5a5">&#10007; server never recovers, retries pile on</text>
+  </g>
+
+  <!-- ============ RIGHT: BACKOFF + JITTER ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="0.5s" fill="freeze"/>
+    <rect x="382" y="80" width="352" height="250" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="558" y="104" text-anchor="middle" class="hd" fill="#6ee7b7">B. EXPONENTIAL BACKOFF + JITTER</text>
+    <text x="558" y="120" text-anchor="middle" class="cap" font-size="10">delay = base &#215; 2^attempt, randomized</text>
+
+    <line x1="404" y1="270" x2="716" y2="270" stroke="#475569" stroke-width="1.5"/>
+    <text x="712" y="286" text-anchor="end" class="cap" font-size="9">time</text>
+    <!-- scattered short bars at growing, jittered offsets -->
+    <rect x="420" y="238" width="7" height="32" fill="#6ee7b7"/>
+    <rect x="436" y="244" width="7" height="26" fill="#6ee7b7"/>
+    <rect x="470" y="240" width="7" height="30" fill="#6ee7b7"/>
+    <rect x="500" y="248" width="7" height="22" fill="#6ee7b7"/>
+    <rect x="548" y="242" width="7" height="28" fill="#6ee7b7"/>
+    <rect x="590" y="250" width="7" height="20" fill="#6ee7b7"/>
+    <rect x="648" y="246" width="7" height="24" fill="#6ee7b7"/>
+    <rect x="694" y="252" width="7" height="18" fill="#6ee7b7"/>
+    <text x="423" y="230" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="9">1s</text>
+    <text x="503" y="230" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="9">2s</text>
+    <text x="593" y="230" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="9">4s</text>
+    <text x="697" y="230" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="9">8s</text>
+
+    <text x="400" y="302" class="cap" fill="#6ee7b7">&#10003; retries spread out &amp; thin over time</text>
+    <text x="400" y="320" class="cap" fill="#6ee7b7">&#10003; load drops, server recovers</text>
+  </g>
+
+  <!-- ============ BOTTOM: RETRY AMPLIFICATION TREE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="340" width="708" height="176" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2"/>
+    <text x="44" y="364" class="hd" fill="#fbbf24">C. RETRY AMPLIFICATION — retries multiply at every layer</text>
+
+    <!-- user -->
+    <rect x="54" y="410" width="96" height="42" rx="8" class="node" stroke="#2563eb"/>
+    <text x="102" y="431" text-anchor="middle" class="lbl" font-size="11">1 user req</text>
+    <text x="102" y="445" text-anchor="middle" class="cap" font-size="9">&#215;1</text>
+    <!-- layer A -->
+    <rect x="210" y="410" width="96" height="42" rx="8" class="node" stroke="#d97706"/>
+    <text x="258" y="431" text-anchor="middle" class="lbl" font-size="11">Layer A</text>
+    <text x="258" y="445" text-anchor="middle" class="cap" fill="#fbbf24" font-size="9">&#215;3 = 3</text>
+    <!-- layer B -->
+    <rect x="366" y="410" width="96" height="42" rx="8" class="node" stroke="#d97706"/>
+    <text x="414" y="431" text-anchor="middle" class="lbl" font-size="11">Layer B</text>
+    <text x="414" y="445" text-anchor="middle" class="cap" fill="#fbbf24" font-size="9">&#215;3 = 9</text>
+    <!-- layer C -->
+    <rect x="522" y="410" width="96" height="42" rx="8" class="node" stroke="#dc2626"/>
+    <text x="570" y="431" text-anchor="middle" class="lbl" font-size="11">Layer C (DB)</text>
+    <text x="570" y="445" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">&#215;3 = 27</text>
+    <!-- amplification arrows -->
+    <line x1="150" y1="431" x2="208" y2="431" stroke="#fbbf24" stroke-width="2" marker-end="url(#rbarA)"/>
+    <line x1="306" y1="431" x2="364" y2="431" stroke="#fbbf24" stroke-width="2" marker-end="url(#rbarA)"/>
+    <line x1="462" y1="431" x2="520" y2="431" stroke="#fca5a5" stroke-width="2" marker-end="url(#rbarR)"/>
+
+    <text x="648" y="424" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="22">27&#215;</text>
+    <text x="648" y="442" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">downstream load</text>
+
+    <text x="44" y="478" class="cap" fill="#fbbf24">3 layers &#215; 3 retries = up to 27&#215; the traffic hitting the already-struggling DB.</text>
+    <text x="44" y="496" class="cap" fill="#6ee7b7">&#10003; A retry budget (retries &#8804; 10% of requests) caps this &#8212; retry only at the edge, backoff, and fail fast.</text>
+  </g>
+
+  <!-- ============ BOTTOM CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="528" width="708" height="56" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="552" text-anchor="middle" class="hd">Timeout everything; retry only idempotent + transient; backoff WITH jitter</text>
+    <text x="380" y="572" text-anchor="middle" class="cap" fill="#5b21b6" font-size="11">cap with a retry budget; deadline-propagate so nested calls never outlive the parent's remaining time</text>
+  </g>
+</svg>

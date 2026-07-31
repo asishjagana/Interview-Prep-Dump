@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="idbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="idarR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="idarG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .cap2{fill:#94a3b8;font-size:10px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .seg{fill:#f8fafc;font-size:12px;font-weight:800}
+      .bits{fill:#f8fafc;font-size:11px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="560" rx="16" fill="url(#idbg)"/>
+  <text x="30" y="40" class="t">Distributed ID Generation — Snowflake 64-bit layout</text>
+  <text x="30" y="62" class="sub">time in the high bits = unique, coordination-free, and roughly time-sortable (K-sortable)</text>
+
+  <!-- ============ TOP: SNOWFLAKE 64-BIT BAR ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="84" width="708" height="176" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2"/>
+    <text x="44" y="108" class="hd" fill="#c4b5fd">A 64-bit signed integer, most-significant bit first</text>
+    <text x="44" y="126" class="cap2">high bits = time  →  sorting by id ≈ sorting by creation time</text>
+
+    <!-- segmented bar: total width 668 from x=46 to x=714 -->
+    <!-- 1 bit sign: grey -->
+    <rect x="46" y="140" width="40" height="56" rx="6" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+    <text x="66" y="166" text-anchor="middle" class="bits">1</text>
+    <text x="66" y="182" text-anchor="middle" class="cap2" font-size="9">sign</text>
+    <!-- 41 bits timestamp: blue -->
+    <rect x="90" y="140" width="330" height="56" rx="6" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="255" y="166" text-anchor="middle" class="seg" fill="#93c5fd">41 bits — timestamp (ms)</text>
+    <text x="255" y="184" text-anchor="middle" class="cap2" font-size="9">since custom epoch  ·  ~69-year range</text>
+    <!-- 10 bits machine id: purple -->
+    <rect x="424" y="140" width="150" height="56" rx="6" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="499" y="166" text-anchor="middle" class="seg" fill="#c4b5fd">10 bits — machine id</text>
+    <text x="499" y="184" text-anchor="middle" class="cap2" font-size="9">1024 nodes (2^10)</text>
+    <!-- 12 bits sequence: green -->
+    <rect x="578" y="140" width="136" height="56" rx="6" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="646" y="166" text-anchor="middle" class="seg" fill="#6ee7b7">12 bits — seq</text>
+    <text x="646" y="184" text-anchor="middle" class="cap2" font-size="9">4096 / ms (2^12)</text>
+
+    <!-- bit position ruler -->
+    <text x="66" y="216" text-anchor="middle" class="cap2" font-size="9">bit 63</text>
+    <text x="255" y="216" text-anchor="middle" class="cap2" font-size="9">bits 62..22</text>
+    <text x="499" y="216" text-anchor="middle" class="cap2" font-size="9">bits 21..12</text>
+    <text x="646" y="216" text-anchor="middle" class="cap2" font-size="9">bits 11..0</text>
+
+    <text x="380" y="244" text-anchor="middle" class="cap" fill="#fbbf24">id = (ms &lt;&lt; 22) | (machineId &lt;&lt; 12) | sequence   →   ~4M ids/sec/node, ~69-year epoch</text>
+  </g>
+
+  <!-- ============ BOTTOM: SORTABILITY COMPARISON ============ -->
+  <!-- LEFT: UUID v4 random -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="276" width="352" height="196" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="202" y="300" text-anchor="middle" class="hd" fill="#fca5a5">UUID v4 (random) — NOT sortable</text>
+    <text x="202" y="317" text-anchor="middle" class="cap2">122 random bits → each insert lands anywhere</text>
+
+    <!-- b-tree pages -->
+    <rect x="50"  y="332" width="72" height="34" rx="5" class="node" stroke="#dc2626"/>
+    <rect x="140" y="332" width="72" height="34" rx="5" class="node" stroke="#dc2626"/>
+    <rect x="230" y="332" width="72" height="34" rx="5" class="node" stroke="#dc2626"/>
+    <text x="86"  y="353" text-anchor="middle" class="cap2" font-size="9">page</text>
+    <text x="176" y="353" text-anchor="middle" class="cap2" font-size="9">page</text>
+    <text x="266" y="353" text-anchor="middle" class="cap2" font-size="9">page</text>
+    <!-- scattered inserts -->
+    <line x1="202" y1="316" x2="86"  y2="330" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#idarR)"/>
+    <line x1="202" y1="316" x2="266" y2="330" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#idarR)"/>
+    <line x1="202" y1="316" x2="176" y2="330" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#idarR)"/>
+    <!-- page split marker -->
+    <text x="86"  y="388" text-anchor="middle" class="cap" fill="#fca5a5" font-size="16">✂</text>
+    <text x="266" y="388" text-anchor="middle" class="cap" fill="#fca5a5" font-size="16">✂</text>
+    <text x="202" y="410" text-anchor="middle" class="cap" fill="#fca5a5">✗ page splits everywhere</text>
+    <text x="202" y="430" text-anchor="middle" class="cap" fill="#fca5a5">✗ poor cache locality, write amplification</text>
+    <text x="202" y="450" text-anchor="middle" class="cap2">unique &amp; coordination-free, but scatters writes</text>
+  </g>
+
+  <!-- RIGHT: Snowflake / UUID v7 sortable -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.5s" fill="freeze"/>
+    <rect x="382" y="276" width="352" height="196" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="558" y="300" text-anchor="middle" class="hd" fill="#6ee7b7">Snowflake / UUID v7 — time-sortable</text>
+    <text x="558" y="317" text-anchor="middle" class="cap2">time-prefixed → new ids append at the end</text>
+
+    <!-- b-tree pages -->
+    <rect x="406" y="332" width="72" height="34" rx="5" class="node" stroke="#16a34a"/>
+    <rect x="496" y="332" width="72" height="34" rx="5" class="node" stroke="#16a34a"/>
+    <rect x="586" y="332" width="72" height="34" rx="5" class="node" stroke="#16a34a"/>
+    <rect x="668" y="332" width="46" height="34" rx="5" class="node" stroke="#6ee7b7" stroke-dasharray="4 3"/>
+    <text x="442" y="353" text-anchor="middle" class="cap2" font-size="9">page</text>
+    <text x="532" y="353" text-anchor="middle" class="cap2" font-size="9">page</text>
+    <text x="622" y="353" text-anchor="middle" class="cap2" font-size="9">page</text>
+    <text x="691" y="353" text-anchor="middle" class="cap2" font-size="9">new</text>
+    <!-- sequential appends -->
+    <line x1="478" y1="349" x2="494" y2="349" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#idarG)"/>
+    <line x1="568" y1="349" x2="584" y2="349" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#idarG)"/>
+    <line x1="658" y1="349" x2="666" y2="349" stroke="#6ee7b7" stroke-width="1.8" marker-end="url(#idarG)"/>
+    <text x="558" y="410" text-anchor="middle" class="cap" fill="#6ee7b7">✓ sequential appends, few page splits</text>
+    <text x="558" y="430" text-anchor="middle" class="cap" fill="#6ee7b7">✓ good B-tree / LSM locality &amp; cache hits</text>
+    <text x="558" y="450" text-anchor="middle" class="cap2">UUID v7 = 48-bit ms prefix + random (modern default)</text>
+  </g>
+
+  <!-- ============ BOTTOM CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="486" width="708" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="510" text-anchor="middle" class="hd">Time-sortable IDs = no central bottleneck + index-friendly sequential writes</text>
+    <text x="380" y="531" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">UUIDv4 is unique but scatters index writes — prefer Snowflake or UUID v7 when the id is your primary key</text>
+  </g>
+</svg>
