@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 670" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="cobg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="coG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="coB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="coA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="670" rx="16" fill="url(#cobg)"/>
+  <text x="30" y="38" class="t">The Browser Security Model — SOP, CORS &amp; Security Headers</text>
+  <text x="30" y="58" class="sub">the same-origin policy blocks *reading* a cross-origin response, not *sending* the request — CORS is how a server opts out</text>
+
+  <!-- ============ PANEL A: SAME-ORIGIN POLICY ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="708" height="150" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. SAME-ORIGIN POLICY — the default that makes the web survivable</text>
+    <text x="44" y="109" class="cap" font-size="10">an "origin" is a strict triple; differ in any one and you are cross-origin</text>
+
+    <rect x="44" y="118" width="672" height="32" rx="7" fill="#0b2545" stroke="#2563eb" stroke-width="2"/>
+    <text x="380" y="139" text-anchor="middle" class="lbl" font-size="12">origin =  scheme  ‖  host  ‖  port      →   https://app.example.com:443  ≠  http://app.example.com  ≠  https://api.example.com</text>
+
+    <rect x="44" y="160" width="330" height="54" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="209" y="178" text-anchor="middle" class="lbl" fill="#6ee7b7" font-size="11">SOP BLOCKS: reading the response</text>
+    <text x="209" y="193" text-anchor="middle" class="cap" font-size="10">evil.com's JS cannot read your bank's HTML/JSON</text>
+    <text x="209" y="207" text-anchor="middle" class="cap" font-size="10" fill="#94a3b8">also blocks DOM access across frames, and cookie reads</text>
+
+    <rect x="396" y="160" width="320" height="54" rx="8" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="556" y="178" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="11">SOP ALLOWS: sending the request</text>
+    <text x="556" y="193" text-anchor="middle" class="cap" font-size="10">&lt;form&gt;, &lt;img&gt;, &lt;script&gt; fire cross-origin WITH cookies</text>
+    <text x="556" y="207" text-anchor="middle" class="cap" font-size="10" fill="#fca5a5">← this is exactly why CSRF exists</text>
+  </g>
+
+  <!-- ============ PANEL B: PREFLIGHT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="234" width="708" height="180" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="44" y="256" class="hd" fill="#c4b5fd">B. THE CORS PREFLIGHT — the browser asks permission BEFORE it sends anything risky</text>
+
+    <rect x="44" y="268" width="120" height="34" rx="7" class="node" stroke="#2563eb"/>
+    <text x="104" y="289" text-anchor="middle" class="lbl" font-size="11">Browser</text>
+    <rect x="596" y="268" width="120" height="34" rx="7" class="node" stroke="#16a34a"/>
+    <text x="656" y="289" text-anchor="middle" class="lbl" font-size="11">API server</text>
+
+    <line x1="104" y1="302" x2="104" y2="392" stroke="#334155" stroke-width="1.5"/>
+    <line x1="656" y1="302" x2="656" y2="392" stroke="#334155" stroke-width="1.5"/>
+
+    <line x1="106" y1="322" x2="652" y2="322" stroke="#c4b5fd" stroke-width="2" marker-end="url(#coB)"/>
+    <text x="380" y="317" text-anchor="middle" class="cap" font-size="9" fill="#c4b5fd">OPTIONS /orders/7 · Origin: https://app.example.com · Access-Control-Request-Method: PUT · -Request-Headers: content-type</text>
+
+    <line x1="652" y1="348" x2="108" y2="348" stroke="#6ee7b7" stroke-width="2" marker-end="url(#coG)"/>
+    <text x="380" y="343" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">204 · Access-Control-Allow-Origin: https://app.example.com · -Allow-Methods: PUT · -Allow-Headers: content-type · -Max-Age: 600</text>
+
+    <line x1="106" y1="374" x2="652" y2="374" stroke="#fbbf24" stroke-width="2" marker-end="url(#coA)"/>
+    <text x="380" y="369" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">only now: the real PUT (+ cookies if credentials:'include' and -Allow-Credentials: true)</text>
+
+    <text x="380" y="402" text-anchor="middle" class="cap" font-size="10" fill="#94a3b8">"simple" requests (GET/HEAD/POST with only form/text/plain content-types and no custom headers) skip the preflight entirely — the response is still gated by ACAO</text>
+  </g>
+
+  <!-- ============ PANEL C: MISCONFIG + HEADER STACK ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="426" width="708" height="170" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="44" y="448" class="hd" fill="#fbbf24">C. THE MISCONFIGURATION THAT KEEPS SHIPPING — and the fix</text>
+
+    <rect x="44" y="460" width="330" height="76" rx="8" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="209" y="478" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="11">ACAO: &lt;reflect whatever Origin says&gt;</text>
+    <text x="209" y="493" text-anchor="middle" class="cap" font-size="10">+ Access-Control-Allow-Credentials: true</text>
+    <text x="209" y="508" text-anchor="middle" class="cap" font-size="10" fill="#fca5a5">→ ANY site can read the victim's authenticated JSON</text>
+    <text x="209" y="524" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">the spec forbids "*" with credentials, so devs reflect — and reflect "null" too</text>
+
+    <rect x="396" y="460" width="320" height="76" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="556" y="478" text-anchor="middle" class="lbl" fill="#6ee7b7" font-size="11">allowlist EXACT origins, server-side</text>
+    <text x="556" y="493" text-anchor="middle" class="cap" font-size="10">echo only if origin ∈ allowlist; add Vary: Origin</text>
+    <text x="556" y="508" text-anchor="middle" class="cap" font-size="10">never reflect · never allow "null" · no regex suffix match</text>
+    <text x="556" y="524" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">CORS is NOT authorization — it only decides who may READ the reply</text>
+  </g>
+
+  <!-- ============ HEADER STACK ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.5s" fill="freeze"/>
+    <rect x="44" y="546" width="672" height="34" rx="7" fill="#0b2545" stroke="#2563eb" stroke-width="2"/>
+    <text x="380" y="561" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#93c5fd">the response-header defence stack (set these once, at the edge):</text>
+    <text x="380" y="574" text-anchor="middle" class="cap" font-size="9">Content-Security-Policy (nonce + strict-dynamic) · Strict-Transport-Security · frame-ancestors · X-Content-Type-Options: nosniff · Referrer-Policy · Permissions-Policy · COOP/COEP/CORP</text>
+  </g>
+
+  <!-- ============ CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="608" width="708" height="50" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="631" text-anchor="middle" class="hd">CORS *relaxes* the same-origin policy — it is a read permission, never an access control</text>
+    <text x="380" y="649" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">a non-browser client ignores CORS entirely · your API still needs authentication, authorization and CSRF defence</text>
+  </g>
+</svg>

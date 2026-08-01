@@ -89,12 +89,16 @@ async function rateLimiter(req, res, next) {
 
 ## 12. Interview Perspective
 - **What interviewers expect**: The difference between **Rate Limiting** (Application level) and **DoS Protection** (Network level). Knowledge of **429 status code**. Understanding of **Redis-based counters**.
-- **Common question**: "How do you stop a user from brute-forcing passwords?" (Answer: Rate limiting by IP and username, and implementing account lockouts).
+- **Common question**: "How do you stop a user from brute-forcing passwords?" (Answer: Rate limit on **both** keys — per IP *and* per username — with **exponential backoff and step-up verification** rather than a hard lockout. A hard lockout triggered by unauthenticated input lets an attacker with a credential dump lock every customer out of their own account: a self-inflicted DoS. See [Bot Detection & CAPTCHA Challenges](./Bot_Detection_CAPTCHA_Challenges.md).)
 
 ## 13. Connections to Other Topics
 - **Load Balancing**: LBs often handle the first layer of limiting.
 - **Authentication**: Protecting the login flow.
 - **Caching**: Rate limiting metadata must be stored in a fast cache (Redis).
+- [Rate Limiting](../02_API_Interface_Design/Rate_Limiting.md) — **the algorithms and the client contract live there**: token bucket vs sliding window, distributed counters, and the `429`/`Retry-After` behaviour clients must implement. This file stays on the security angle (brute force, volumetric vs L7 abuse).
+- [Bot Detection & CAPTCHA Challenges](./Bot_Detection_CAPTCHA_Challenges.md) — why per-IP limits alone fail against residential proxies, and the risk-scoring funnel that sits on top of these counters.
+- [MFA, Passwordless & WebAuthn](./MFA_Passwordless_WebAuthn.md) — rate limiting keeps a 6-digit TOTP code from being brute-forced and push prompts from being spammed.
+- [Session Management & Cookie Security](./Session_Management_Cookie_Security.md) — the idle/absolute timeouts that bound abuse *after* a successful login.
 
 ## 14. Visual Aids
 - **The Turnstile**: One person at a time vs a crowd.

@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 630" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="scbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="scG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="scB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="scR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="630" rx="16" fill="url(#scbg)"/>
+  <text x="30" y="38" class="t">Session Management &amp; Cookie Security</text>
+  <text x="30" y="58" class="sub">the session ID *is* the password after login — protect it with cookie attributes, rotate it, and be able to revoke it</text>
+
+  <!-- ============ PANEL A: SET-COOKIE ATTRIBUTES ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="708" height="158" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. LOGIN → Set-Cookie: the four attributes that carry the security</text>
+    <text x="44" y="109" class="cap" font-size="10">the ID itself must be ≥128 bits of CSPRNG randomness — guessable IDs make every other control pointless</text>
+
+    <rect x="44" y="120" width="120" height="40" rx="8" class="node" stroke="#2563eb"/>
+    <text x="104" y="145" text-anchor="middle" class="lbl" font-size="11">Browser</text>
+
+    <rect x="596" y="120" width="120" height="40" rx="8" class="node" stroke="#16a34a"/>
+    <text x="656" y="145" text-anchor="middle" class="lbl" font-size="11">Server</text>
+
+    <line x1="166" y1="132" x2="592" y2="132" stroke="#93c5fd" stroke-width="2" marker-end="url(#scB)"/>
+    <text x="380" y="127" text-anchor="middle" class="cap" font-size="9" fill="#93c5fd">POST /login (credentials, once)</text>
+    <line x1="592" y1="150" x2="168" y2="150" stroke="#6ee7b7" stroke-width="2" marker-end="url(#scG)"/>
+    <text x="380" y="166" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">Set-Cookie: sid=&lt;128-bit random&gt;;  attributes ↓</text>
+
+    <rect x="44" y="176" width="164" height="44" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="126" y="193" text-anchor="middle" class="cap" fill="#c4b5fd" font-size="11" font-weight="700">HttpOnly</text>
+    <text x="126" y="206" text-anchor="middle" class="cap" font-size="9">JS can't read document.cookie</text>
+    <text x="126" y="216" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">→ blunts XSS cookie theft</text>
+
+    <rect x="220" y="176" width="164" height="44" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="302" y="193" text-anchor="middle" class="cap" fill="#c4b5fd" font-size="11" font-weight="700">Secure</text>
+    <text x="302" y="206" text-anchor="middle" class="cap" font-size="9">sent only over HTTPS</text>
+    <text x="302" y="216" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">→ no plaintext sniffing</text>
+
+    <rect x="396" y="176" width="164" height="44" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="478" y="193" text-anchor="middle" class="cap" fill="#c4b5fd" font-size="11" font-weight="700">SameSite=Lax / Strict</text>
+    <text x="478" y="206" text-anchor="middle" class="cap" font-size="9">not sent on cross-site POST</text>
+    <text x="478" y="216" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">→ kills most CSRF</text>
+
+    <rect x="572" y="176" width="144" height="44" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="644" y="193" text-anchor="middle" class="cap" fill="#c4b5fd" font-size="11" font-weight="700">__Host- prefix</text>
+    <text x="644" y="206" text-anchor="middle" class="cap" font-size="9">host-locked, Path=/</text>
+    <text x="644" y="216" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">→ no subdomain overwrite</text>
+  </g>
+
+  <!-- ============ PANEL B: SESSION FIXATION ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="242" width="708" height="196" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="44" y="264" class="hd" fill="#fbbf24">B. SESSION FIXATION — the attacker plants the ID *before* you log in</text>
+
+    <rect x="44" y="280" width="150" height="54" rx="7" class="node" stroke="#334155"/>
+    <text x="119" y="299" text-anchor="middle" class="cap" font-size="10" font-weight="700">① attacker gets sid=ABC</text>
+    <text x="119" y="313" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">a normal anonymous visit</text>
+    <text x="119" y="325" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">is enough to be issued one</text>
+
+    <rect x="210" y="280" width="150" height="54" rx="7" class="node" stroke="#334155"/>
+    <text x="285" y="299" text-anchor="middle" class="cap" font-size="10" font-weight="700">② victim made to use ABC</text>
+    <text x="285" y="313" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">?sid=ABC link, or injected</text>
+    <text x="285" y="325" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">via a subdomain / XSS</text>
+
+    <rect x="376" y="280" width="150" height="54" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="451" y="299" text-anchor="middle" class="cap" fill="#fca5a5" font-size="10" font-weight="700">③ victim logs in</text>
+    <text x="451" y="313" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">server KEEPS the same ID</text>
+    <text x="451" y="325" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">ABC is now authenticated</text>
+
+    <rect x="542" y="280" width="174" height="54" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="629" y="299" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="11">④ attacker replays ABC</text>
+    <text x="629" y="313" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">full account takeover —</text>
+    <text x="629" y="325" text-anchor="middle" class="cap" fill="#fca5a5" font-size="9">no password ever needed</text>
+
+    <line x1="194" y1="307" x2="208" y2="307" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#scR)"/>
+    <line x1="360" y1="307" x2="374" y2="307" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#scR)"/>
+    <line x1="526" y1="307" x2="540" y2="307" stroke="#fca5a5" stroke-width="1.8" marker-end="url(#scR)"/>
+
+    <rect x="44" y="348" width="672" height="36" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="380" y="364" text-anchor="middle" class="lbl" fill="#6ee7b7" font-size="11">FIX: regenerate the session ID on every privilege change (login, step-up, role switch) and invalidate the old one</text>
+    <text x="380" y="378" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">also never accept a session ID from the URL or a request body — cookie only</text>
+
+    <rect x="44" y="394" width="672" height="30" rx="7" class="node" stroke="#334155"/>
+    <text x="380" y="413" text-anchor="middle" class="cap" font-size="10">HIJACKING (stealing a live ID): HttpOnly blocks XSS reads · Secure blocks sniffing · short idle timeout + absolute lifetime · re-auth for sensitive actions</text>
+  </g>
+
+  <!-- ============ PANEL C: SESSION vs JWT REVOCATION ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="450" width="708" height="104" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="44" y="472" class="hd" fill="#c4b5fd">C. SERVER-SIDE SESSION vs STATELESS JWT — the same choice, seen from revocation</text>
+
+    <rect x="44" y="484" width="330" height="60" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="209" y="502" text-anchor="middle" class="lbl" fill="#6ee7b7" font-size="11">Server session:  sid → Redis/DB record</text>
+    <text x="209" y="518" text-anchor="middle" class="cap" font-size="10">revoke = DELETE the key → instant logout-everywhere</text>
+    <text x="209" y="534" text-anchor="middle" class="cap" font-size="10" fill="#94a3b8">cost: one store lookup on every request</text>
+
+    <rect x="396" y="484" width="320" height="60" rx="8" fill="#3a2a0a" stroke="#d97706" stroke-width="2"/>
+    <text x="556" y="502" text-anchor="middle" class="lbl" fill="#fbbf24" font-size="11">Stateless JWT:  self-contained claims</text>
+    <text x="556" y="518" text-anchor="middle" class="cap" font-size="10">valid until exp — you cannot un-issue it</text>
+    <text x="556" y="534" text-anchor="middle" class="cap" font-size="10" fill="#94a3b8">needs a denylist (= state again) or short TTL + refresh</text>
+  </g>
+
+  <!-- ============ CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="566" width="708" height="50" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="589" text-anchor="middle" class="hd">After login the session ID is a bearer credential — treat it like a password</text>
+    <text x="380" y="607" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">128-bit random · HttpOnly + Secure + SameSite + __Host- · rotate on login · idle + absolute timeout · server-side revocation</text>
+  </g>
+</svg>

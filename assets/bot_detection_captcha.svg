@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 660" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="bdbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="bdG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="bdB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="bdA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <marker id="bdR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="760" height="660" rx="16" fill="url(#bdbg)"/>
+  <text x="30" y="38" class="t">Bot Detection &amp; CAPTCHA Challenges</text>
+  <text x="30" y="58" class="sub">no single layer stops automation — you stack cheap filters first, spend the expensive challenge on the survivors</text>
+
+  <!-- ============ PANEL A: THE FUNNEL ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="708" height="200" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#fca5a5">A. THE CREDENTIAL-STUFFING FUNNEL — each layer is cheaper than the one below it</text>
+    <text x="44" y="109" class="cap" font-size="10">illustrative volumes for one attack run against a login endpoint; the point is the shape, not the exact numbers</text>
+
+    <rect x="44" y="118" width="672" height="24" rx="5" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="56" y="135" class="cap" fill="#fca5a5" font-size="10" font-weight="700">1,000,000 stolen credential pairs from a public dump — attempted at ~2% valid rate</text>
+
+    <rect x="44" y="148" width="430" height="24" rx="5" fill="#3a2a0a" stroke="#d97706" stroke-width="2"/>
+    <text x="56" y="165" class="cap" fill="#fbbf24" font-size="10" font-weight="700">① IP / ASN reputation + rate limits</text>
+    <text x="486" y="165" class="cap" font-size="10" fill="#fbbf24">~400,000 survive (residential proxies defeat IP limits)</text>
+
+    <rect x="44" y="178" width="300" height="24" rx="5" fill="#0b2545" stroke="#2563eb" stroke-width="2"/>
+    <text x="56" y="195" class="cap" fill="#93c5fd" font-size="10" font-weight="700">② TLS/HTTP2 + device fingerprint</text>
+    <text x="356" y="195" class="cap" font-size="10" fill="#93c5fd">~60,000 survive (headless browsers get patched)</text>
+
+    <rect x="44" y="208" width="190" height="24" rx="5" fill="#3b2560" stroke="#7c3aed" stroke-width="2"/>
+    <text x="56" y="225" class="cap" fill="#c4b5fd" font-size="10" font-weight="700">③ behaviour + challenge</text>
+    <text x="246" y="225" class="cap" font-size="10" fill="#c4b5fd">~8,000 survive (solver farms: ~$1 per 1,000 solves)</text>
+
+    <rect x="44" y="238" width="90" height="24" rx="5" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="56" y="255" class="cap" fill="#6ee7b7" font-size="10" font-weight="700">④ MFA</text>
+    <text x="146" y="255" class="cap" font-size="10" fill="#6ee7b7">~200 correct passwords found — and MFA stops nearly all of them from mattering</text>
+  </g>
+
+  <!-- ============ PANEL B: RISK SCORING ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="284" width="708" height="176" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="306" class="hd" fill="#93c5fd">B. RISK SCORING — challenge the suspicious, never the whole population</text>
+
+    <rect x="44" y="318" width="190" height="124" rx="8" class="node" stroke="#334155"/>
+    <text x="139" y="336" text-anchor="middle" class="cap" font-size="10" font-weight="700">SIGNALS (cheap, passive)</text>
+    <text x="56" y="353" class="cap" font-size="9" fill="#94a3b8">· IP/ASN reputation, datacentre?</text>
+    <text x="56" y="368" class="cap" font-size="9" fill="#94a3b8">· TLS JA4 + HTTP/2 frame order</text>
+    <text x="56" y="383" class="cap" font-size="9" fill="#94a3b8">· header order &amp; UA consistency</text>
+    <text x="56" y="398" class="cap" font-size="9" fill="#94a3b8">· canvas/WebGL/font entropy</text>
+    <text x="56" y="413" class="cap" font-size="9" fill="#94a3b8">· mouse/typing cadence, timing</text>
+    <text x="56" y="428" class="cap" font-size="9" fill="#94a3b8">· velocity per account / per fp</text>
+
+    <rect x="262" y="352" width="170" height="56" rx="8" fill="#0b2545" stroke="#2563eb" stroke-width="2"/>
+    <text x="347" y="373" text-anchor="middle" class="lbl" fill="#93c5fd" font-size="11">RISK SCORE  0.0 → 1.0</text>
+    <text x="347" y="390" text-anchor="middle" class="cap" font-size="9">a probability, never a verdict</text>
+    <text x="347" y="402" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">log it, tune the thresholds</text>
+
+    <rect x="460" y="318" width="256" height="36" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="588" y="333" text-anchor="middle" class="cap" fill="#6ee7b7" font-size="10" font-weight="700">low risk → ALLOW silently</text>
+    <text x="588" y="347" text-anchor="middle" class="cap" font-size="9">~97% of real users see nothing at all</text>
+
+    <rect x="460" y="362" width="256" height="36" rx="7" fill="#3a2a0a" stroke="#d97706" stroke-width="2"/>
+    <text x="588" y="377" text-anchor="middle" class="cap" fill="#fbbf24" font-size="10" font-weight="700">medium → CHALLENGE / step-up</text>
+    <text x="588" y="391" text-anchor="middle" class="cap" font-size="9">invisible check, PoW, or MFA prompt</text>
+
+    <rect x="460" y="406" width="256" height="36" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="588" y="421" text-anchor="middle" class="cap" fill="#fca5a5" font-size="10" font-weight="700">high → BLOCK / tarpit / shadow-ban</text>
+    <text x="588" y="435" text-anchor="middle" class="cap" font-size="9">slow responses leak less than a hard 403</text>
+
+    <line x1="234" y1="380" x2="258" y2="380" stroke="#93c5fd" stroke-width="1.8" marker-end="url(#bdB)"/>
+    <line x1="432" y1="368" x2="456" y2="340" stroke="#6ee7b7" stroke-width="1.6" marker-end="url(#bdG)"/>
+    <line x1="432" y1="380" x2="456" y2="380" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#bdA)"/>
+    <line x1="432" y1="392" x2="456" y2="420" stroke="#fca5a5" stroke-width="1.6" marker-end="url(#bdR)"/>
+  </g>
+
+  <!-- ============ PANEL C: ECONOMICS ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="472" width="708" height="110" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="44" y="494" class="hd" fill="#fbbf24">C. THE ECONOMICS — you are not building a wall, you are raising a price</text>
+
+    <rect x="44" y="506" width="330" height="64" rx="8" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="209" y="524" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="11">the attacker's cost sheet</text>
+    <text x="209" y="539" text-anchor="middle" class="cap" font-size="10">human solver farms: ~$1 per 1,000 CAPTCHAs</text>
+    <text x="209" y="553" text-anchor="middle" class="cap" font-size="10">residential proxies: a few $ per GB, millions of IPs</text>
+    <text x="209" y="566" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">→ a CAPTCHA is a toll booth, never a wall</text>
+
+    <rect x="396" y="506" width="320" height="64" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="556" y="524" text-anchor="middle" class="lbl" fill="#6ee7b7" font-size="11">where to spend YOUR defence budget</text>
+    <text x="556" y="539" text-anchor="middle" class="cap" font-size="10">per-ACCOUNT limits (not per-IP) · breached-password</text>
+    <text x="556" y="553" text-anchor="middle" class="cap" font-size="10">check (k-anonymity) · MFA · proof-of-work · attestation</text>
+    <text x="556" y="566" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">→ make the attack unprofitable, not impossible</text>
+  </g>
+
+  <!-- ============ CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="594" width="708" height="50" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="380" y="617" text-anchor="middle" class="hd">Every bot control taxes real users too — measure the false-positive rate, not just the block rate</text>
+    <text x="380" y="635" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">image CAPTCHAs are an accessibility barrier and a conversion tax · invisible signals + risk-based challenges are the modern default</text>
+  </g>
+</svg>
