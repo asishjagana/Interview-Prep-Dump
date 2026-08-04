@@ -96,6 +96,9 @@ output {
 - **Monitoring vs Logging**: Logging is the "Why" to the Metric's "What."
 - **Distributed Tracing**: Traces often include the "Log ID" to link text to the path.
 - **Kubernetes**: Logging is a core part of the K8s observability stack.
+- [Structured Logging & Sampling Strategies](./Structured_Logging_Sampling_Strategies.md) — what you put *into* this pipeline and how much of it you keep. ELK is the tooling; that file is the content, the volume, and the cost decision (86 TB/day at 1M QPS).
+- [Audit Logging & Security Events](./Audit_Logging_Security_Events.md) — the class of logs that must never flow through a sampled, mutable, 14-day index: they need their own immutable pipeline.
+- [APM & Observability Tooling Landscape](./APM_Tools_Landscape.md) — logs are almost always the largest line item on the bill, which makes them the first pillar teams self-host.
 
 ## 14. Visual Aids
 - **The Pipeline**: [Apps] -> [Agents/Beats] -> [Logstash] -> [Elasticsearch] -> [Kibana].

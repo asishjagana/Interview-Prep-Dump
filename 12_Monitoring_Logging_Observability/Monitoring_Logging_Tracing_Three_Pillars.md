@@ -104,6 +104,9 @@ try {
 - **Distributed Tracing**: The tool for Pillar #3.
 - **Grafana**: The tool for Pillar #1.
 - **Jaeger**: Specifically for Pillar #3.
+- [Metrics Design & Cardinality](./Metrics_Design_Cardinality.md) and [Structured Logging & Sampling Strategies](./Structured_Logging_Sampling_Strategies.md) — the same decision made twice: an unbounded field like `user_id` is free in a log and fatal as a metric label. Choosing which pillar carries which field is the practical form of "use all three."
+- [Real User Monitoring (RUM)](./Real_User_Monitoring_RUM.md) — the fourth vantage point: all three pillars measured in the browser, where server p99 and lived experience differ by 10–50×.
+- [Audit Logging & Security Events](./Audit_Logging_Security_Events.md) — the reminder that not everything shaped like a log *is* one; audit records are evidence and follow the opposite rules.
 
 ## 14. Visual Aids
 - **The Venn Diagram**: Monitoring, Logging, and Tracing overlapping in the center to form "True Observability."

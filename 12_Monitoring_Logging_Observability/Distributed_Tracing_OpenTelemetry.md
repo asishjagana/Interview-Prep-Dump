@@ -99,6 +99,10 @@ async function handleRequest(req) {
 - **Observability Pillars**: Tracing is Pillar #3.
 - **gRPC / REST**: Tracing headers must be injected into these protocols.
 - **Service Mesh**: Istio can automatically generate traces for you.
+- [Distributed Tracing with Jaeger](../10_Microservices_Distributed_Systems/Distributed_Tracing_Jaeger.md) — **the deliberate split**: that file owns the *distributed-systems problem* (one request across 50 services) and Jaeger as a backend; this file owns the *OpenTelemetry standard* — the SDKs, context propagation, semantic conventions, and the collector pipeline. Read both; don't expect either to repeat the other.
+- [Structured Logging & Sampling Strategies](./Structured_Logging_Sampling_Strategies.md) — where head vs tail sampling is decided, why the sampler must be deterministic across services, and the two-tier collector that tail sampling requires.
+- [Metrics Design & Cardinality](./Metrics_Design_Cardinality.md) — traces are the correct home for the high-cardinality fields metrics can't carry; **exemplars** are the link back from a histogram bucket to a real trace.
+- [APM & Observability Tooling Landscape](./APM_Tools_Landscape.md) — OTel is the seam that makes your tracing backend a swappable, competitively-priced component.
 
 ## 14. Visual Aids
 - **The Gantt Chart**: Showing bars of different lengths representing service calls.

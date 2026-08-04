@@ -94,6 +94,7 @@ groups:
 - **Monitoring (Pillar 1)**: Alerts are built on top of Metrics.
 - **Golden Signals**: The primary source of "What" to alert on.
 - **SLO/SLI**: Alerts fire when you are close to breaking your SLO.
+- [Anomaly Detection & Alert Correlation](./Anomaly_Detection_Alert_Correlation.md) — the machinery underneath this file: multi-window burn-rate rules instead of static thresholds, and the dedupe → group → inhibit → enrich funnel that turns a 240-alert failover storm into one page.
 
 ## 14. Visual Aids
 - **The Escalation Ladder**: Engineer -> Senior -> Lead -> Manager.

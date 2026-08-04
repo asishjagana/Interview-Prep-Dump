@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 730" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="aubg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="auG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="auR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="auB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .mono{font-family:'Consolas','Courier New',monospace;font-size:10px;fill:#e2e8f0}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="780" height="730" rx="16" fill="url(#aubg)"/>
+  <text x="30" y="38" class="t">Audit Logging &amp; Security Events</text>
+  <text x="30" y="58" class="sub">not telemetry — evidence · never sampled · written with the change · and the actor must not be able to erase it</text>
+
+  <!-- ============ PANEL A: ANATOMY OF A RECORD ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="728" height="164" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. FIVE QUESTIONS, ANSWERED ON EVERY RECORD — or it isn't an audit log</text>
+
+    <rect x="44" y="104" width="136" height="86" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="112" y="122" text-anchor="middle" class="cap" font-size="11" font-weight="700" fill="#c4b5fd">WHO</text>
+    <text x="112" y="138" text-anchor="middle" class="mono" font-size="9">actor.id / .type</text>
+    <text x="112" y="151" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">on_behalf_of</text>
+    <text x="112" y="164" text-anchor="middle" class="mono" font-size="9">auth.method, session</text>
+    <text x="112" y="180" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">impersonation must be visible</text>
+
+    <rect x="188" y="104" width="152" height="86" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="264" y="122" text-anchor="middle" class="cap" font-size="11" font-weight="700" fill="#c4b5fd">WHAT</text>
+    <text x="264" y="138" text-anchor="middle" class="mono" font-size="9">user.role.granted</text>
+    <text x="264" y="151" text-anchor="middle" class="mono" font-size="9">resource.type / .id</text>
+    <text x="264" y="164" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">changes: before → after</text>
+    <text x="264" y="180" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">stable enum, not free text</text>
+
+    <rect x="348" y="104" width="136" height="86" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="416" y="122" text-anchor="middle" class="cap" font-size="11" font-weight="700" fill="#c4b5fd">WHEN</text>
+    <text x="416" y="138" text-anchor="middle" class="mono" font-size="9">ts: UTC, SERVER clock</text>
+    <text x="416" y="151" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">seq: 4,002</text>
+    <text x="416" y="167" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">a sequence makes GAPS</text>
+    <text x="416" y="178" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">detectable — timestamps don't</text>
+
+    <rect x="492" y="104" width="136" height="86" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="560" y="122" text-anchor="middle" class="cap" font-size="11" font-weight="700" fill="#c4b5fd">WHERE</text>
+    <text x="560" y="138" text-anchor="middle" class="mono" font-size="9">source.ip, user_agent</text>
+    <text x="560" y="151" text-anchor="middle" class="mono" font-size="9">tenant_id, geo</text>
+    <text x="560" y="164" text-anchor="middle" class="mono" font-size="9" fill="#93c5fd">trace_id</text>
+    <text x="560" y="180" text-anchor="middle" class="cap" font-size="8" fill="#93c5fd">links to traces + logs</text>
+
+    <rect x="636" y="104" width="118" height="86" rx="7" fill="#3a2a0a" stroke="#d97706" stroke-width="2.5"/>
+    <text x="695" y="122" text-anchor="middle" class="cap" font-size="11" font-weight="700" fill="#fbbf24">OUTCOME</text>
+    <text x="695" y="138" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">allowed | denied</text>
+    <text x="695" y="151" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">| error + policy_id</text>
+    <text x="695" y="167" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">DENIED is the most</text>
+    <text x="695" y="178" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">forgotten record type</text>
+
+    <rect x="44" y="198" width="710" height="26" rx="6" class="node" stroke="#334155"/>
+    <text x="399" y="215" text-anchor="middle" class="cap" font-size="10">Also log sensitive <tspan font-weight="700">READS</tspan> with row counts — exfiltration is a read, and a trail of only writes misses it entirely &#160;·&#160; align to OCSF/ECS so the SIEM can correlate</text>
+  </g>
+
+  <!-- ============ PANEL B: TAMPER EVIDENCE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="248" width="728" height="196" rx="10" fill="#0b1220" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="44" y="270" class="hd" fill="#fca5a5">B. TAMPER EVIDENCE (hashing) + IMMUTABILITY (storage) — you want both, they defend different things</text>
+
+    <rect x="44" y="282" width="118" height="52" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="103" y="300" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#6ee7b7">seq 1</text>
+    <text x="103" y="315" text-anchor="middle" class="mono" font-size="9">prev: 0000…</text>
+    <text x="103" y="328" text-anchor="middle" class="mono" font-size="9" fill="#bbf7d0">hash: a91f…</text>
+
+    <rect x="180" y="282" width="118" height="52" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="239" y="300" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#6ee7b7">seq 2</text>
+    <text x="239" y="315" text-anchor="middle" class="mono" font-size="9">prev: a91f…</text>
+    <text x="239" y="328" text-anchor="middle" class="mono" font-size="9" fill="#bbf7d0">hash: 7c30…</text>
+
+    <rect x="316" y="282" width="118" height="52" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="375" y="300" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#fca5a5">seq 3 ✎ EDITED</text>
+    <text x="375" y="315" text-anchor="middle" class="mono" font-size="9" fill="#fecaca">prev: 7c30…</text>
+    <text x="375" y="328" text-anchor="middle" class="mono" font-size="9" fill="#fecaca">hash: e5b2… ≠ stored</text>
+
+    <rect x="452" y="282" width="118" height="52" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="511" y="300" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#fca5a5">seq 4 ✗ broken</text>
+    <text x="511" y="315" text-anchor="middle" class="mono" font-size="9" fill="#fecaca">prev no longer</text>
+    <text x="511" y="328" text-anchor="middle" class="mono" font-size="9" fill="#fecaca">matches seq 3</text>
+
+    <rect x="588" y="282" width="166" height="52" rx="7" fill="#2e1065" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="671" y="300" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#c4b5fd">nightly verifier</text>
+    <text x="671" y="315" text-anchor="middle" class="cap" font-size="9" fill="#c4b5fd">detects the break AND</text>
+    <text x="671" y="328" text-anchor="middle" class="cap" font-size="9" fill="#c4b5fd">any missing seq number</text>
+
+    <line x1="164" y1="308" x2="176" y2="308" stroke="#6ee7b7" stroke-width="2" marker-end="url(#auG)"/>
+    <line x1="300" y1="308" x2="312" y2="308" stroke="#6ee7b7" stroke-width="2" marker-end="url(#auG)"/>
+    <line x1="436" y1="308" x2="448" y2="308" stroke="#fca5a5" stroke-width="2" marker-end="url(#auR)"/>
+    <line x1="572" y1="308" x2="584" y2="308" stroke="#fca5a5" stroke-width="2" marker-end="url(#auR)"/>
+
+    <rect x="44" y="346" width="348" height="42" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="218" y="363" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd" font-weight="700">…but full write access could recompute the whole chain</text>
+    <text x="218" y="378" text-anchor="middle" class="cap" font-size="9">→ ANCHOR: publish today's head hash somewhere they don't control</text>
+
+    <rect x="406" y="346" width="348" height="42" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="580" y="363" text-anchor="middle" class="cap" font-size="10" fill="#6ee7b7" font-weight="700">S3 Object Lock, COMPLIANCE mode + retention</text>
+    <text x="580" y="378" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">not even the root account can delete it before expiry</text>
+
+    <rect x="44" y="398" width="710" height="34" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="399" y="415" text-anchor="middle" class="lbl" fill="#fca5a5" font-size="11">THE RULE: the credentials that can perform the action must NOT be able to erase the record of it</text>
+    <text x="399" y="428" text-anchor="middle" class="cap" font-size="9" fill="#fca5a5">separate account · grant s3:PutObject and NOT s3:DeleteObject · "clear the logs" is MITRE ATT&amp;CK T1562.008, the documented first move</text>
+  </g>
+
+  <!-- ============ PANEL C: THE PIPELINE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="456" width="728" height="212" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="44" y="478" class="hd" fill="#6ee7b7">C. THE PIPELINE — commit the record with the change, then fan out to investigate / retain / detect</text>
+
+    <rect x="44" y="490" width="176" height="62" rx="7" fill="#0c2b3f" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="132" y="508" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#93c5fd">ONE transaction</text>
+    <text x="132" y="523" text-anchor="middle" class="mono" font-size="9" fill="#bfdbfe">UPDATE user_roles …</text>
+    <text x="132" y="536" text-anchor="middle" class="mono" font-size="9" fill="#bfdbfe">INSERT audit_outbox …</text>
+    <text x="132" y="548" text-anchor="middle" class="cap" font-size="8" fill="#93c5fd">both, or neither — no dual write</text>
+
+    <rect x="248" y="490" width="166" height="62" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="331" y="508" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#c4b5fd">relay (outbox / CDC)</text>
+    <text x="331" y="523" text-anchor="middle" class="cap" font-size="9">at-least-once + idempotency key</text>
+    <text x="331" y="537" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">backpressure = BLOCK or spill</text>
+    <text x="331" y="548" text-anchor="middle" class="cap" font-size="8" fill="#fbbf24">(debug logs drop; audit must not)</text>
+
+    <rect x="442" y="490" width="150" height="62" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="517" y="508" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#6ee7b7">append-only store</text>
+    <text x="517" y="523" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">SEPARATE cloud account</text>
+    <text x="517" y="537" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">PutObject only, WORM lock</text>
+
+    <line x1="222" y1="521" x2="244" y2="521" stroke="#93c5fd" stroke-width="2" marker-end="url(#auB)"/>
+    <line x1="416" y1="521" x2="438" y2="521" stroke="#6ee7b7" stroke-width="2" marker-end="url(#auG)"/>
+
+    <rect x="604" y="484" width="150" height="26" rx="6" class="node" stroke="#2563eb"/>
+    <text x="679" y="501" text-anchor="middle" class="cap" font-size="9" fill="#93c5fd">hot index · 30–90 d · investigate</text>
+    <rect x="604" y="516" width="150" height="26" rx="6" class="node" stroke="#16a34a"/>
+    <text x="679" y="533" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">Parquet on S3 · years · $0.023/GB·mo</text>
+    <rect x="604" y="548" width="150" height="26" rx="6" class="node" stroke="#d97706"/>
+    <text x="679" y="565" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">SIEM · detections only (per-GB $$)</text>
+    <line x1="594" y1="515" x2="600" y2="499" stroke="#93c5fd" stroke-width="1.6" marker-end="url(#auB)"/>
+    <line x1="594" y1="521" x2="600" y2="529" stroke="#6ee7b7" stroke-width="1.6" marker-end="url(#auG)"/>
+    <line x1="594" y1="530" x2="600" y2="558" stroke="#93c5fd" stroke-width="1.6" marker-end="url(#auB)"/>
+
+    <rect x="44" y="564" width="548" height="42" rx="7" fill="#3a2a0a" stroke="#d97706" stroke-width="2"/>
+    <text x="318" y="581" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24" font-weight="700">Detections worth the SIEM bill: privilege escalation · MFA or logging disabled · mass export</text>
+    <text x="318" y="596" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">impossible travel · first-ever export by an actor · and the ABSENCE of events (dead-man's switch)</text>
+
+    <rect x="44" y="616" width="710" height="40" rx="7" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+    <text x="399" y="633" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd" font-weight="700">GDPR erasure vs an immutable trail — resolve it at write time, never by deleting rows</text>
+    <text x="399" y="648" text-anchor="middle" class="cap" font-size="9" fill="#c4b5fd">store a pseudonymous subject_ref, or encrypt per-subject and destroy the key (crypto-shredding): the chain stays intact, the plaintext is gone</text>
+  </g>
+
+  <!-- ============ CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="676" width="728" height="42" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="390" y="696" text-anchor="middle" class="hd">Debug logs are telemetry: sample them, drop them, expire them. Audit logs are records: never any of the three.</text>
+    <text x="390" y="711" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">"we must assume all 40M records were accessed" is the sentence you say when you can't prove otherwise — that sentence is what makes a breach expensive</text>
+  </g>
+</svg>

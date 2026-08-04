@@ -101,6 +101,8 @@ app.get('/metrics', async (req, res) => {
 - **Golden Signals**: Prometheus is where you track Latency, Traffic, etc.
 - **Service Discovery**: Prometheus uses Consul/Kubernetes to find what to monitor.
 - **Autoscaling**: K8s HPA usually scales based on Prometheus metrics.
+- [Metrics Design & Cardinality](./Metrics_Design_Cardinality.md) — the design discipline that keeps this system alive: instrument selection, RED/USE, and the label arithmetic (`series = the product of label value counts`) that decides whether Prometheus survives the next release.
+- [Anomaly Detection & Alert Correlation](./Anomaly_Detection_Alert_Correlation.md) — what to do with these metrics beyond a static threshold, and why burn-rate rules beat detectors on the pager.
 
 ## 14. Visual Aids
 - **The Scrape Loop**: [Prometheus] --HTTP GET--> [/metrics].

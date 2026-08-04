@@ -100,6 +100,8 @@ except Exception as e:
 - **Monitoring Pillars**: This is a pro-active part of Monitoring (Pillar 1).
 - **Load Balancing**: LBs use health checks (mini-synthetics) to route traffic.
 - **CI/CD**: Running synthetics as a "Smoke Test" after a deployment.
+- [Real User Monitoring (RUM)](./Real_User_Monitoring_RUM.md) — the other half of the pair: synthetic is the lab (controlled, repeatable, works at zero traffic), RUM is the field (real devices, real networks, no control). Synthetic asks "did we break it?"; RUM asks "who does it hurt?"
+- [Anomaly Detection & Alert Correlation](./Anomaly_Detection_Alert_Correlation.md) — the dead-man's switch pattern generalizes: a watchdog whose *silence* is the alert also catches a dead detection pipeline or an expired silence.
 
 ## 14. Visual Aids
 - **The World Map**: Showing green/red dots across various continents.
