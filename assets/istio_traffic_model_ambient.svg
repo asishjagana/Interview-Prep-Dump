@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 748" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="ist_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="ist_arrG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="ist_arrB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="ist_arrA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <marker id="ist_arrP" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c4b5fd"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .mono{font-family:'Consolas','Courier New',monospace;font-size:10px;fill:#e2e8f0}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="780" height="748" rx="16" fill="url(#ist_bg)"/>
+  <text x="30" y="38" class="t">Istio Deep Dive — Traffic Model, Identity, Ambient</text>
+  <text x="30" y="58" class="sub">VirtualService decides WHERE · DestinationRule decides HOW · a canary needs both objects</text>
+
+  <!-- ============ PANEL A: THE LAYERED TRAFFIC MODEL ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="728" height="216" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. THE LAYERED TRAFFIC MODEL — four objects, and only two of them make a canary work</text>
+
+    <rect x="42" y="106" width="146" height="100" rx="8" class="node" stroke="#334155"/>
+    <text x="115" y="124" text-anchor="middle" class="lbl" font-size="11" fill="#cbd5e1">Gateway</text>
+    <text x="115" y="140" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">what the edge ACCEPTS</text>
+    <text x="115" y="156" text-anchor="middle" class="mono" font-size="9">port 443 · hosts</text>
+    <text x="115" y="170" text-anchor="middle" class="mono" font-size="9">tls: credentialName</text>
+    <text x="115" y="184" text-anchor="middle" class="mono" font-size="9">selector: ingressgw</text>
+    <text x="115" y="198" text-anchor="middle" class="cap" font-size="9" fill="#64748b">no routing rules here</text>
+
+    <line x1="190" y1="156" x2="204" y2="156" stroke="#93c5fd" stroke-width="2" marker-end="url(#ist_arrB)"/>
+
+    <rect x="208" y="106" width="178" height="100" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="297" y="124" text-anchor="middle" class="lbl" font-size="11" fill="#6ee7b7">VirtualService</text>
+    <text x="297" y="140" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">WHERE does it go?</text>
+    <text x="297" y="156" text-anchor="middle" class="mono" font-size="9" fill="#bbf7d0">match: uri/header — ORDERED</text>
+    <text x="297" y="170" text-anchor="middle" class="mono" font-size="9" fill="#bbf7d0">route: v1 90 / v2 10</text>
+    <text x="297" y="184" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24" font-weight="700">↑ THE WEIGHTS LIVE HERE</text>
+    <text x="297" y="198" text-anchor="middle" class="mono" font-size="9" fill="#bbf7d0">retries · timeout · fault · mirror</text>
+
+    <line x1="388" y1="156" x2="402" y2="156" stroke="#6ee7b7" stroke-width="2" marker-end="url(#ist_arrG)"/>
+
+    <rect x="406" y="106" width="178" height="100" rx="8" fill="#3a2a06" stroke="#d97706" stroke-width="2.5"/>
+    <text x="495" y="124" text-anchor="middle" class="lbl" font-size="11" fill="#fbbf24">DestinationRule</text>
+    <text x="495" y="140" text-anchor="middle" class="cap" font-size="9" fill="#fbbf24">HOW is it sent?</text>
+    <text x="495" y="156" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">subsets: v1,v2 — by POD LABEL</text>
+    <text x="495" y="170" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7" font-weight="700">↑ THE SUBSETS LIVE HERE</text>
+    <text x="495" y="184" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">loadBalancer · connectionPool</text>
+    <text x="495" y="198" text-anchor="middle" class="mono" font-size="9" fill="#fde68a">outlierDetection · tls: MUTUAL</text>
+
+    <line x1="586" y1="156" x2="600" y2="156" stroke="#fbbf24" stroke-width="2" marker-end="url(#ist_arrA)"/>
+
+    <rect x="604" y="106" width="148" height="100" rx="8" class="node" stroke="#334155"/>
+    <text x="678" y="124" text-anchor="middle" class="lbl" font-size="11" fill="#cbd5e1">Endpoints (EDS)</text>
+    <text x="678" y="140" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">the actual pod IPs</text>
+    <text x="678" y="156" text-anchor="middle" class="mono" font-size="9">v1: 8 pods</text>
+    <text x="678" y="170" text-anchor="middle" class="mono" font-size="9">v2: 1 pod</text>
+    <text x="678" y="184" text-anchor="middle" class="mono" font-size="9">locality priority 0/1/2</text>
+    <text x="678" y="198" text-anchor="middle" class="cap" font-size="9" fill="#f87171">panic threshold 50%</text>
+
+    <rect x="42" y="214" width="404" height="62" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="54" y="232" class="cap" font-size="10" font-weight="700" fill="#fca5a5">The mistake everyone makes once</text>
+    <text x="54" y="247" class="cap" font-size="9">Weights in the VirtualService referencing a subset that no</text>
+    <text x="54" y="259" class="cap" font-size="9">DestinationRule defines → Envoy has no matching cluster →</text>
+    <text x="54" y="271" class="cap" font-size="9" fill="#fca5a5">503 with response flag NR. The YAML applied cleanly.</text>
+
+    <rect x="456" y="214" width="296" height="62" rx="7" class="node" stroke="#7c3aed"/>
+    <text x="468" y="232" class="cap" font-size="10" font-weight="700" fill="#c4b5fd">The two objects nobody configures until it hurts</text>
+    <text x="468" y="247" class="cap" font-size="9">ServiceEntry — pull an external host INTO the mesh</text>
+    <text x="468" y="259" class="cap" font-size="9">Sidecar / exportTo — scope which config a proxy gets</text>
+    <text x="468" y="271" class="cap" font-size="9" fill="#c4b5fd">default = EVERY service's config in EVERY proxy</text>
+  </g>
+
+  <!-- ============ PANEL B: IDENTITY AND mTLS ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="300" width="728" height="200" rx="10" fill="#0b1220" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="44" y="322" class="hd" fill="#6ee7b7">B. WHERE A WORKLOAD CERTIFICATE COMES FROM — and what it does not prove</text>
+
+    <rect x="42" y="332" width="428" height="24" rx="5" class="node" stroke="#7c3aed"/>
+    <text x="54" y="348" class="cap" font-size="9.5"><tspan fill="#c4b5fd" font-weight="700">1</tspan>  Pod runs as ServiceAccount <tspan class="mono" font-size="9" fill="#c4b5fd">checkout</tspan> → projected SA token, aud=istio-ca</text>
+
+    <rect x="42" y="360" width="428" height="24" rx="5" class="node" stroke="#2563eb"/>
+    <text x="54" y="376" class="cap" font-size="9.5"><tspan fill="#93c5fd" font-weight="700">2</tspan>  istio-agent makes a keypair IN MEMORY, sends CSR + that token to istiod</text>
+
+    <rect x="42" y="388" width="428" height="24" rx="5" class="node" stroke="#2563eb"/>
+    <text x="54" y="404" class="cap" font-size="9.5"><tspan fill="#93c5fd" font-weight="700">3</tspan>  istiod (Citadel role) validates via TokenReview, signs a ~24 h cert</text>
+
+    <rect x="42" y="416" width="428" height="24" rx="5" class="node" stroke="#16a34a"/>
+    <text x="54" y="432" class="cap" font-size="9.5"><tspan fill="#6ee7b7" font-weight="700">4</tspan>  SDS hands cert to Envoy over a local socket — private key NEVER on disk</text>
+
+    <rect x="42" y="444" width="428" height="24" rx="5" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="54" y="460" class="cap" font-size="9.5"><tspan fill="#6ee7b7" font-weight="700">5</tspan>  STRICT mTLS proxy↔proxy · agent re-rotates at roughly half of the TTL</text>
+
+    <rect x="486" y="332" width="266" height="136" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="498" y="350" class="cap" font-size="10" font-weight="700" fill="#fca5a5">The identity you get</text>
+    <text x="498" y="366" class="mono" font-size="8.5" fill="#fecaca">spiffe://cluster.local/ns/shop/sa/checkout</text>
+    <text x="498" y="382" class="cap" font-size="9">= trust domain + namespace + ServiceAccount.</text>
+    <text x="498" y="394" class="cap" font-size="9">That is the AuthorizationPolicy principal.</text>
+    <text x="498" y="414" class="cap" font-size="10" font-weight="700" fill="#fca5a5">The limit that trips people up</text>
+    <text x="498" y="429" class="cap" font-size="9">mTLS proves WHICH WORKLOAD is calling.</text>
+    <text x="498" y="441" class="cap" font-size="9">It says nothing about WHICH USER.</text>
+    <text x="498" y="456" class="cap" font-size="9" fill="#fbbf24">→ RequestAuthentication (JWT) supplies the user</text>
+
+    <text x="44" y="486" class="cap" font-size="10" fill="#6ee7b7" font-weight="700">Zero trust needs the pair: PeerAuthentication authenticates the workload · RequestAuthentication authenticates the end user · AuthorizationPolicy decides using both</text>
+  </g>
+
+  <!-- ============ PANEL C: THREE DATA PLANES ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="512" width="728" height="216" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="44" y="534" class="hd" fill="#c4b5fd">C. THREE DATA-PLANE ARCHITECTURES — what you pay, and where the blast radius lands</text>
+
+    <rect x="42" y="546" width="228" height="142" rx="8" class="node" stroke="#2563eb"/>
+    <text x="156" y="564" text-anchor="middle" class="lbl" font-size="11" fill="#93c5fd">SIDECAR (Envoy per pod)</text>
+    <text x="54" y="582" class="cap" font-size="9">L7: full Envoy, every filter</text>
+    <text x="54" y="596" class="cap" font-size="9">cost: ~40 MB + 0.35 vCPU per</text>
+    <text x="54" y="608" class="cap" font-size="9">      1k rps — PER POD</text>
+    <text x="54" y="624" class="cap" font-size="9" fill="#6ee7b7">blast radius: ONE POD</text>
+    <text x="54" y="638" class="cap" font-size="9" fill="#f87171">upgrade: restart every pod</text>
+    <text x="54" y="652" class="cap" font-size="9">hops: 2 proxies per call</text>
+    <text x="54" y="666" class="cap" font-size="9">interception: iptables or CNI</text>
+    <text x="54" y="680" class="cap" font-size="9" fill="#94a3b8">1,000 pods = 1,000 proxies</text>
+
+    <rect x="282" y="546" width="228" height="142" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="396" y="564" text-anchor="middle" class="lbl" font-size="11" fill="#6ee7b7">AMBIENT (ztunnel + waypoint)</text>
+    <text x="294" y="582" class="cap" font-size="9">L7: only where a waypoint is</text>
+    <text x="294" y="596" class="cap" font-size="9">cost: 1 ztunnel PER NODE,</text>
+    <text x="294" y="608" class="cap" font-size="9">      waypoint per namespace</text>
+    <text x="294" y="624" class="cap" font-size="9" fill="#f87171">blast radius: THE WHOLE NODE</text>
+    <text x="294" y="638" class="cap" font-size="9" fill="#6ee7b7">upgrade: no app restart</text>
+    <text x="294" y="652" class="cap" font-size="9">hops: L4 ztunnel, +waypoint L7</text>
+    <text x="294" y="666" class="cap" font-size="9">transport: HBONE (H2 CONNECT)</text>
+    <text x="294" y="680" class="cap" font-size="9" fill="#94a3b8">pay for L7 only where used</text>
+
+    <rect x="522" y="546" width="228" height="142" rx="8" fill="#3a2a06" stroke="#d97706" stroke-width="2.5"/>
+    <text x="636" y="564" text-anchor="middle" class="lbl" font-size="11" fill="#fbbf24">eBPF (Cilium mesh)</text>
+    <text x="534" y="582" class="cap" font-size="9">L7: kernel nails L4 routing;</text>
+    <text x="534" y="596" class="cap" font-size="9">      HTTP still needs a</text>
+    <text x="534" y="608" class="cap" font-size="9">      userspace proxy anyway</text>
+    <text x="534" y="624" class="cap" font-size="9" fill="#f87171">blast radius: NODE / KERNEL</text>
+    <text x="534" y="638" class="cap" font-size="9">upgrade: roll the node agent</text>
+    <text x="534" y="652" class="cap" font-size="9" fill="#6ee7b7">hops: 0 for pure L4 policy</text>
+    <text x="534" y="666" class="cap" font-size="9">needs: recent kernel, CO-RE</text>
+    <text x="534" y="680" class="cap" font-size="9" fill="#94a3b8">identity per node, not per pod</text>
+
+    <rect x="42" y="694" width="708" height="26" rx="6" fill="#2e1065" stroke="#7c3aed" stroke-width="2"/>
+    <text x="396" y="711" text-anchor="middle" class="cap" font-size="9.5" fill="#ddd6fe">Pick by what dominates: per-pod L7 everywhere → sidecar · baseline cost + restart-free upgrades → ambient · mostly L4 identity and policy → eBPF</text>
+  </g>
+</svg>

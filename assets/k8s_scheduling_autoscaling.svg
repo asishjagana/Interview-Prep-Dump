@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 830" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="ksa_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="ksa_aG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="ksa_aR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="ksa_aB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="ksa_aA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <pattern id="ksa_hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="8" fill="#3a0f12"/>
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#dc2626" stroke-width="3"/>
+    </pattern>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .mono{font-family:'Consolas','Courier New',monospace;font-size:10px;fill:#e2e8f0}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="780" height="830" rx="16" fill="url(#ksa_bg)"/>
+  <text x="30" y="38" class="t">Kubernetes Scheduling &amp; Autoscaling</text>
+  <text x="30" y="58" class="sub">requests schedule · limits enforce · CPU throttles and memory dies · four autoscalers on four different axes</text>
+
+  <!-- ============ PANEL A: REQUESTS vs LIMITS vs REALITY ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="728" height="232" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. REQUESTS vs LIMITS vs REALITY — the scheduler only ever adds up REQUESTS</text>
+
+    <text x="44" y="112" class="cap" font-size="10" fill="#94a3b8">one node, 8 vCPU allocatable (capacity − kube-reserved − system-reserved − eviction threshold)</text>
+    <line x1="60" y1="119" x2="742" y2="119" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ksa_aA)"/>
+    <text x="736" y="115" text-anchor="end" class="cap" font-size="9" fill="#fbbf24">Σ limits = 19 vCPU — 2.4× overcommit, and the scheduler never sees it</text>
+
+    <rect x="60" y="124" width="640" height="30" rx="5" class="node" stroke="#334155"/>
+    <rect x="60" y="124" width="608" height="30" rx="5" fill="#0c2b3f" stroke="#2563eb" stroke-width="2"/>
+    <rect x="60" y="130" width="136" height="18" rx="3" fill="#16a34a"/>
+    <text x="272" y="143" class="mono" font-size="10" fill="#bfdbfe">Σ requests = 7.6 vCPU  →  95% ALLOCATED  →  next pod is Pending</text>
+    <text x="712" y="143" class="cap" font-size="9" fill="#64748b">8.0</text>
+
+    <text x="62" y="170" class="cap" font-size="10" fill="#6ee7b7">▲ actual usage = 1.7 vCPU (21%) — this number drives NOTHING in scheduling</text>
+    <text x="44" y="186" class="cap" font-size="10" fill="#fbbf24">requests → SCHEDULING (a sum, checked once at admission) · limits → RUNTIME (a cgroup ceiling, checked every 100 ms) · usage → neither</text>
+
+    <rect x="44" y="194" width="228" height="74" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="158" y="210" text-anchor="middle" class="lbl" font-size="11" fill="#6ee7b7">GUARANTEED</text>
+    <text x="54" y="225" class="cap" font-size="9">requests == limits, EVERY container, cpu AND mem</text>
+    <text x="54" y="238" class="cap" font-size="9">oom_score_adj = −997 · evicted LAST</text>
+    <text x="54" y="251" class="cap" font-size="9" fill="#6ee7b7">integer CPU + static policy → exclusive core pinning</text>
+    <text x="54" y="263" class="cap" font-size="9" fill="#94a3b8">use for latency-sensitive and stateful workloads</text>
+
+    <rect x="282" y="194" width="228" height="74" rx="7" class="node" stroke="#d97706"/>
+    <text x="396" y="210" text-anchor="middle" class="lbl" font-size="11" fill="#fbbf24">BURSTABLE</text>
+    <text x="292" y="225" class="cap" font-size="9">≥1 request set, and requests &lt; limits somewhere</text>
+    <text x="292" y="238" class="cap" font-size="9">oom_score_adj = 1000 − 1000×(memReq/nodeMem)</text>
+    <text x="292" y="251" class="cap" font-size="9">clamped to 2…999 · evicted SECOND</text>
+    <text x="292" y="263" class="cap" font-size="9" fill="#94a3b8">biggest over-its-request offender goes first</text>
+
+    <rect x="520" y="194" width="234" height="74" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="637" y="210" text-anchor="middle" class="lbl" font-size="11" fill="#fca5a5">BESTEFFORT</text>
+    <text x="530" y="225" class="cap" font-size="9">no requests and no limits anywhere in the pod</text>
+    <text x="530" y="238" class="cap" font-size="9">oom_score_adj = 1000 → first thing the kernel kills</text>
+    <text x="530" y="251" class="cap" font-size="9" fill="#fca5a5">evicted FIRST on any node memory pressure</text>
+    <text x="530" y="263" class="cap" font-size="9" fill="#94a3b8">scheduler assumes it is free → it always fits</text>
+
+    <rect x="44" y="274" width="710" height="24" rx="6" class="node" stroke="#dc2626"/>
+    <text x="399" y="290" text-anchor="middle" class="cap" font-size="10">node under memory pressure → kubelet evicts &#160;<tspan fill="#fca5a5" font-weight="700">BestEffort</tspan>&#160; then &#160;<tspan fill="#fbbf24" font-weight="700">Burstable (most over its request)</tspan>&#160; then &#160;<tspan fill="#6ee7b7" font-weight="700">Guaranteed</tspan>&#160; — QoS is derived, never declared</text>
+  </g>
+
+  <!-- ============ PANEL B: COMPRESSIBLE vs NOT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="316" width="728" height="228" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="44" y="338" class="hd" fill="#fbbf24">B. CPU IS COMPRESSIBLE, MEMORY IS NOT — the same word "limit", two completely different kernels</text>
+
+    <rect x="42" y="348" width="352" height="184" rx="8" class="node" stroke="#d97706"/>
+    <text x="52" y="366" class="cap" font-size="10" font-weight="700" fill="#fbbf24">CPU — the CFS bandwidth quota</text>
+    <text x="52" y="380" class="mono" font-size="9" fill="#fde68a">limits.cpu: 1  →  cpu.max = 100000 100000</text>
+    <text x="52" y="392" class="cap" font-size="9">100 ms of CPU time per 100 ms period · app has 4 runnable threads</text>
+
+    <rect x="54" y="400" width="300" height="26" rx="4" class="node" stroke="#334155"/>
+    <rect x="54" y="400" width="75" height="26" rx="4" fill="#16a34a"/>
+    <rect x="129" y="400" width="225" height="26" fill="url(#ksa_hatch)" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="91" y="417" text-anchor="middle" class="cap" font-size="9" font-weight="700">RUN</text>
+    <text x="243" y="417" text-anchor="middle" class="cap" font-size="10" font-weight="700" fill="#fca5a5">THROTTLED — hard stall</text>
+    <text x="54" y="438" class="cap" font-size="8" fill="#64748b">0</text>
+    <text x="129" y="438" text-anchor="middle" class="cap" font-size="8" fill="#64748b">25 ms</text>
+    <text x="354" y="438" text-anchor="end" class="cap" font-size="8" fill="#64748b">100 ms</text>
+
+    <text x="52" y="456" class="cap" font-size="9">4 threads × 25 ms = the whole 100 ms quota, burned in 25 ms of wall clock</text>
+    <text x="52" y="469" class="cap" font-size="9">every runnable thread is then dequeued until the period rolls over</text>
+    <text x="52" y="486" class="cap" font-size="10" fill="#fbbf24">average CPU reads 1.00 core = "healthy" · p99 latency +75 ms per period</text>
+    <text x="52" y="502" class="mono" font-size="9" fill="#fde68a">rate(container_cpu_cfs_throttled_seconds_total[5m])</text>
+    <text x="52" y="521" class="cap" font-size="9" fill="#94a3b8">the live debate: drop CPU limits, keep CPU requests (shares still protect neighbours)</text>
+
+    <rect x="402" y="348" width="336" height="184" rx="8" class="node" stroke="#dc2626"/>
+    <text x="412" y="366" class="cap" font-size="10" font-weight="700" fill="#fca5a5">MEMORY — no quota, no grace, no negotiation</text>
+    <text x="412" y="380" class="mono" font-size="9" fill="#fecaca">limits.memory: 512Mi  →  memory.max = 536870912</text>
+
+    <line x1="418" y1="396" x2="724" y2="396" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="5 4"/>
+    <text x="724" y="392" text-anchor="end" class="cap" font-size="8" fill="#fca5a5">memory.max — 512Mi</text>
+    <polyline points="418,444 452,438 486,430 520,432 554,420 588,408 622,398 648,392" fill="none" stroke="#6ee7b7" stroke-width="2"/>
+    <line x1="418" y1="446" x2="724" y2="446" stroke="#334155" stroke-width="1.5"/>
+    <path d="M642,386 L656,400 M656,386 L642,400" stroke="#fca5a5" stroke-width="3"/>
+    <text x="668" y="398" class="cap" font-size="10" font-weight="700" fill="#fca5a5">OOMKill</text>
+    <text x="668" y="410" class="cap" font-size="8" fill="#fca5a5">no warning</text>
+
+    <text x="412" y="463" class="cap" font-size="9">kernel OOM killer fires inside the cgroup → SIGKILL, not SIGTERM</text>
+    <text x="412" y="476" class="mono" font-size="9" fill="#fecaca">exit code 137 (128+9) · reason: OOMKilled</text>
+    <text x="412" y="489" class="cap" font-size="9">restart → CrashLoopBackOff, backoff 10 s → 20 s → 40 s … capped at 5 min</text>
+    <text x="412" y="506" class="cap" font-size="10" fill="#fca5a5">a memory limit is not a hint — it is the exact byte at which you die</text>
+    <text x="412" y="521" class="cap" font-size="9" fill="#94a3b8">so: set memory requests == limits and never overcommit memory</text>
+  </g>
+
+  <!-- ============ PANEL C: FOUR AUTOSCALERS ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="556" width="728" height="204" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="44" y="578" class="hd" fill="#c4b5fd">C. FOUR AUTOSCALERS, FOUR AXES — say which one you mean before you say "it autoscales"</text>
+
+    <rect x="44" y="588" width="170" height="100" rx="7" fill="#0c2b3f" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="129" y="604" text-anchor="middle" class="lbl" font-size="11" fill="#93c5fd">HPA → POD COUNT</text>
+    <text x="52" y="619" class="cap" font-size="9">signal: avg CPU% of REQUEST</text>
+    <text x="52" y="631" class="cap" font-size="9">loop 15 s · tolerance ±10%</text>
+    <text x="52" y="643" class="mono" font-size="8" fill="#bfdbfe">ceil(cur × obs / target)</text>
+    <text x="52" y="655" class="cap" font-size="9">down window 300 s · up 0 s</text>
+    <text x="52" y="669" class="cap" font-size="9" fill="#93c5fd">reacts in ~30–90 s</text>
+    <text x="52" y="681" class="cap" font-size="8" fill="#94a3b8">wrong signal for queue workers</text>
+
+    <rect x="224" y="588" width="170" height="100" rx="7" fill="#2e1065" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="309" y="604" text-anchor="middle" class="lbl" font-size="11" fill="#c4b5fd">VPA → POD SIZE</text>
+    <text x="232" y="619" class="cap" font-size="9">signal: usage histogram</text>
+    <text x="232" y="631" class="cap" font-size="9">24 h half-life decay</text>
+    <text x="232" y="643" class="cap" font-size="9">target ≈ p90 + 15% margin</text>
+    <text x="232" y="655" class="cap" font-size="9" fill="#fca5a5">updater EVICTS to apply</text>
+    <text x="232" y="669" class="cap" font-size="9" fill="#c4b5fd">reacts in minutes–hours</text>
+    <text x="232" y="681" class="cap" font-size="8" fill="#94a3b8">in-place resize: beta in 1.33</text>
+
+    <rect x="404" y="588" width="170" height="100" rx="7" fill="#052e1a" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="489" y="604" text-anchor="middle" class="lbl" font-size="11" fill="#6ee7b7">CA / KARPENTER → NODES</text>
+    <text x="412" y="619" class="cap" font-size="9">signal: Pending pods only</text>
+    <text x="412" y="631" class="cap" font-size="9">CA: fixed groups, simulate fit</text>
+    <text x="412" y="643" class="cap" font-size="9">Karpenter: picks instance type</text>
+    <text x="412" y="655" class="cap" font-size="9">down: &lt;50% util for 10 min</text>
+    <text x="412" y="669" class="cap" font-size="9" fill="#6ee7b7">reacts in 1–5 min</text>
+    <text x="412" y="681" class="cap" font-size="8" fill="#94a3b8">API → boot → kubelet → image pull</text>
+
+    <rect x="584" y="588" width="170" height="100" rx="7" fill="#3d2a04" stroke="#d97706" stroke-width="2.5"/>
+    <text x="669" y="604" text-anchor="middle" class="lbl" font-size="11" fill="#fbbf24">KEDA → EVENTS</text>
+    <text x="592" y="619" class="cap" font-size="9">signal: queue depth, Kafka lag</text>
+    <text x="592" y="631" class="cap" font-size="9">cron, HTTP RPS, 60+ scalers</text>
+    <text x="592" y="643" class="cap" font-size="9">poll 30 s · cooldown 300 s</text>
+    <text x="592" y="655" class="cap" font-size="9" fill="#fbbf24">SCALE TO ZERO (0↔1 itself)</text>
+    <text x="592" y="669" class="cap" font-size="9">≥1: drives a generated HPA</text>
+    <text x="592" y="681" class="cap" font-size="8" fill="#94a3b8">the right signal for a worker</text>
+
+    <rect x="44" y="696" width="710" height="56" rx="7" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="54" y="712" class="cap" font-size="10" font-weight="700" fill="#fca5a5">⚠ WHERE THEY FIGHT — the payoff insight</text>
+    <text x="54" y="726" class="cap" font-size="9">HPA + VPA both on CPU → VPA cuts requests, CPU% of request climbs, HPA adds pods, VPA cuts again. Rule: HPA on CPU, VPA on MEMORY only.</text>
+    <text x="54" y="738" class="cap" font-size="9">HPA reacts in ~60 s but a new node needs ~3 min → bridge the gap with pause pods at NEGATIVE PriorityClass (overprovisioning headroom).</text>
+    <text x="54" y="749" class="cap" font-size="9">CA wants to drain a &lt;50%-used node · PodDisruptionBudget refuses the eviction → node cordoned for hours, fully paid for, holding nothing.</text>
+  </g>
+
+  <!-- ============ CALLOUT ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="772" width="728" height="44" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="390" y="792" text-anchor="middle" class="hd">A request is a promise to the scheduler. A limit is a threat from the kernel.</text>
+    <text x="390" y="807" text-anchor="middle" class="cap" fill="#5b21b6" font-size="10">a cluster can be 100% allocated at 20% utilised — that gap is the entire Kubernetes cost conversation</text>
+  </g>
+</svg>

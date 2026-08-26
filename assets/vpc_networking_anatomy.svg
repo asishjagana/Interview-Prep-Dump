@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 770" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="vpc_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="vpc_arrowG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="vpc_arrowR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="vpc_arrowB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#93c5fd"/></marker>
+    <marker id="vpc_arrowA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .mono{font-family:'Consolas','Courier New',monospace;font-size:10px;fill:#e2e8f0}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="780" height="770" rx="16" fill="url(#vpc_bg)"/>
+  <text x="30" y="38" class="t">VPC Anatomy — Subnets, Route Tables, Filters &amp; Private Paths</text>
+  <text x="30" y="58" class="sub">a subnet is "public" only because of its route table · the CIDR you pick today is permanent</text>
+
+  <!-- ============ PANEL A: THE VPC ACROSS TWO AZs ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="728" height="272" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. ONE VPC, TWO AZs — and the routes that decide what "public" means</text>
+
+    <text x="60" y="120" class="cap" font-size="10" fill="#94a3b8">public internet</text>
+    <line x1="128" y1="116" x2="304" y2="116" stroke="#93c5fd" stroke-width="1.6" marker-end="url(#vpc_arrowB)"/>
+    <rect x="310" y="102" width="160" height="26" rx="6" fill="#1e3a5f" stroke="#2563eb" stroke-width="2"/>
+    <text x="390" y="119" text-anchor="middle" class="lbl" font-size="11" fill="#93c5fd">INTERNET GATEWAY</text>
+    <text x="560" y="112" class="cap" font-size="9" fill="#94a3b8">IGW is free, horizontally scaled,</text>
+    <text x="560" y="124" class="cap" font-size="9" fill="#94a3b8">and does 1:1 NAT for public IPs</text>
+
+    <rect x="44" y="138" width="692" height="196" rx="8" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="56" y="155" class="cap" font-size="10" font-weight="700" fill="#cbd5e1">VPC 10.0.0.0/16 · 65,536 addresses · the CIDR can never be shrunk or moved</text>
+
+    <!-- AZ a -->
+    <rect x="56" y="162" width="332" height="166" rx="7" fill="#111c31" stroke="#334155" stroke-width="1.5"/>
+    <text x="66" y="178" class="cap" font-size="10" fill="#94a3b8">us-east-1a</text>
+    <rect x="64" y="184" width="316" height="68" rx="6" class="node" stroke="#16a34a"/>
+    <text x="74" y="199" class="cap" font-size="10" font-weight="700" fill="#6ee7b7">PUBLIC SUBNET 10.0.0.0/24 — 251 usable (AWS keeps 5)</text>
+    <rect x="74" y="205" width="140" height="26" rx="5" fill="#052e1a" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="144" y="222" text-anchor="middle" class="cap" font-size="10" fill="#6ee7b7">ALB (public IP)</text>
+    <rect x="228" y="205" width="144" height="26" rx="5" fill="#3a2a05" stroke="#d97706" stroke-width="1.5"/>
+    <text x="300" y="222" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24">NAT GW (per AZ)</text>
+    <text x="74" y="245" class="mono" font-size="9" fill="#6ee7b7">rt: 0.0.0.0/0 → igw-0a1  ⇒ THIS is what makes it public</text>
+
+    <rect x="64" y="258" width="316" height="66" rx="6" class="node" stroke="#7c3aed"/>
+    <text x="74" y="273" class="cap" font-size="10" font-weight="700" fill="#c4b5fd">PRIVATE SUBNET 10.0.16.0/20 — 4,091 usable</text>
+    <rect x="74" y="279" width="140" height="26" rx="5" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="144" y="296" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd">app / EKS pods</text>
+    <rect x="228" y="279" width="144" height="26" rx="5" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="300" y="296" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd">RDS primary</text>
+    <text x="74" y="318" class="mono" font-size="9" fill="#c4b5fd">rt: 0.0.0.0/0 → nat-a · s3 pl-id → vpce (free)</text>
+
+    <!-- AZ b -->
+    <rect x="396" y="162" width="328" height="166" rx="7" fill="#111c31" stroke="#334155" stroke-width="1.5"/>
+    <text x="406" y="178" class="cap" font-size="10" fill="#94a3b8">us-east-1b</text>
+    <rect x="404" y="184" width="312" height="68" rx="6" class="node" stroke="#16a34a"/>
+    <text x="414" y="199" class="cap" font-size="10" font-weight="700" fill="#6ee7b7">PUBLIC SUBNET 10.0.1.0/24</text>
+    <rect x="414" y="205" width="138" height="26" rx="5" fill="#052e1a" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="483" y="222" text-anchor="middle" class="cap" font-size="10" fill="#6ee7b7">ALB (same ALB)</text>
+    <rect x="566" y="205" width="142" height="26" rx="5" fill="#3a2a05" stroke="#d97706" stroke-width="1.5"/>
+    <text x="637" y="222" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24">NAT GW (per AZ)</text>
+    <text x="414" y="245" class="mono" font-size="9" fill="#6ee7b7">rt: 0.0.0.0/0 → igw-0a1  (same IGW, own table)</text>
+
+    <rect x="404" y="258" width="312" height="66" rx="6" class="node" stroke="#7c3aed"/>
+    <text x="414" y="273" class="cap" font-size="10" font-weight="700" fill="#c4b5fd">PRIVATE SUBNET 10.0.32.0/20</text>
+    <rect x="414" y="279" width="138" height="26" rx="5" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="483" y="296" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd">app / EKS pods</text>
+    <rect x="566" y="279" width="142" height="26" rx="5" fill="#2e1065" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="637" y="296" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd">RDS standby</text>
+    <text x="414" y="318" class="mono" font-size="9" fill="#fca5a5">0.0.0.0/0 → nat-b, NOT nat-a: cross-AZ NAT costs $0.01/GB</text>
+
+    <!-- inbound packet -->
+    <circle r="4.5" cx="390" cy="132" fill="#93c5fd">
+      <animate attributeName="opacity" values="0;1;1;1;0" dur="2.6s" begin="1.0s" repeatCount="indefinite"/>
+      <animateMotion path="M0,0 L-246,86 L-246,150" dur="2.6s" begin="1.0s" repeatCount="indefinite"/>
+    </circle>
+    <!-- outbound packet -->
+    <circle r="4.5" cx="144" cy="292" fill="#fbbf24">
+      <animate attributeName="opacity" values="0;1;1;1;0" dur="2.6s" begin="2.2s" repeatCount="indefinite"/>
+      <animateMotion path="M0,0 L156,-74 L246,-164" dur="2.6s" begin="2.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ============ PANEL B: SG (STATEFUL) vs NACL (STATELESS) ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="356" width="728" height="196" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="44" y="378" class="hd" fill="#fbbf24">B. STATEFUL vs STATELESS — why "the request goes out but nothing comes back"</text>
+
+    <rect x="44" y="390" width="336" height="150" rx="8" fill="#071a12" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="212" y="408" text-anchor="middle" class="lbl" font-size="11" fill="#6ee7b7">SECURITY GROUP — STATEFUL</text>
+    <text x="56" y="424" class="mono" font-size="9" fill="#bbf7d0">inbound  allow tcp/443 from sg-alb   ← reference an SG,</text>
+    <text x="56" y="436" class="mono" font-size="9" fill="#bbf7d0">                                        not a CIDR</text>
+    <line x1="62" y1="456" x2="356" y2="456" stroke="#6ee7b7" stroke-width="2" marker-end="url(#vpc_arrowG)"/>
+    <text x="70" y="451" class="cap" font-size="9" fill="#6ee7b7">SYN  src :51922 → dst :443   ✓ matches inbound rule</text>
+    <line x1="356" y1="480" x2="62" y2="480" stroke="#6ee7b7" stroke-width="2" marker-end="url(#vpc_arrowG)"/>
+    <text x="70" y="475" class="cap" font-size="9" fill="#6ee7b7">SYN-ACK src :443 → dst :51922  ✓ AUTO-ALLOWED</text>
+    <text x="56" y="500" class="cap" font-size="9" fill="#e2e8f0">the connection is tracked, so the reply needs NO rule.</text>
+    <text x="56" y="513" class="cap" font-size="9" fill="#e2e8f0">Allow-only (no deny) · attached to the ENI · 60 rules,</text>
+    <text x="56" y="526" class="cap" font-size="9" fill="#e2e8f0">5 SGs per ENI by default. THIS is your primary control.</text>
+
+    <rect x="400" y="390" width="336" height="150" rx="8" fill="#20090b" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="568" y="408" text-anchor="middle" class="lbl" font-size="11" fill="#fca5a5">NETWORK ACL — STATELESS</text>
+    <text x="412" y="424" class="mono" font-size="9" fill="#fecaca">100 inbound   ALLOW tcp/443  0.0.0.0/0</text>
+    <text x="412" y="436" class="mono" font-size="9" fill="#fecaca">100 outbound  ALLOW tcp/443  0.0.0.0/0   ← looks right…</text>
+    <line x1="418" y1="456" x2="712" y2="456" stroke="#6ee7b7" stroke-width="2" marker-end="url(#vpc_arrowG)"/>
+    <text x="426" y="451" class="cap" font-size="9" fill="#6ee7b7">SYN  src :51922 → dst :443   ✓ rule 100 inbound</text>
+    <line x1="712" y1="480" x2="418" y2="480" stroke="#fca5a5" stroke-width="3" marker-end="url(#vpc_arrowR)" stroke-dasharray="7,5">
+      <animate attributeName="stroke-opacity" values="1;0.25;1" dur="1.4s" begin="1.8s" repeatCount="indefinite"/>
+    </line>
+    <text x="426" y="475" class="cap" font-size="9" fill="#fca5a5" font-weight="700">SYN-ACK dst :51922 ✗ DENIED — no outbound rule matches</text>
+    <text x="412" y="500" class="cap" font-size="9" fill="#e2e8f0">Every packet is judged alone, in ascending rule order, and</text>
+    <text x="412" y="513" class="cap" font-size="9" fill="#e2e8f0">the reply's destination is an EPHEMERAL port.</text>
+    <text x="412" y="526" class="cap" font-size="9" fill="#fbbf24" font-weight="700">FIX: outbound ALLOW tcp 1024–65535 to 0.0.0.0/0</text>
+  </g>
+
+  <!-- ============ PANEL C: THE CONNECTIVITY LADDER ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="564" width="728" height="188" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="44" y="586" class="hd" fill="#c4b5fd">C. THE CONNECTIVITY LADDER — climb only when transitivity or overlap forces you to</text>
+
+    <text x="60" y="604" class="cap" font-size="9" font-weight="700" fill="#94a3b8">OPTION</text>
+    <text x="258" y="604" class="cap" font-size="9" font-weight="700" fill="#94a3b8">TRANSITIVE?</text>
+    <text x="360" y="604" class="cap" font-size="9" font-weight="700" fill="#94a3b8">OVERLAP OK?</text>
+    <text x="466" y="604" class="cap" font-size="9" font-weight="700" fill="#94a3b8">COST / CEILING (us-east-1, list)</text>
+
+    <rect x="56" y="610" width="692" height="24" rx="4" fill="#111c31" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="64" y="626" class="cap" font-size="10" fill="#6ee7b7" font-weight="700">VPC Peering</text>
+    <text x="258" y="626" class="cap" font-size="10" fill="#fca5a5">✗ never</text>
+    <text x="360" y="626" class="cap" font-size="10" fill="#fca5a5">✗ blocks it</text>
+    <text x="466" y="626" class="mono" font-size="9">$0/hr · data at normal AZ/region rates · 125 peers/VPC</text>
+
+    <rect x="56" y="638" width="692" height="24" rx="4" fill="#111c31" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="64" y="654" class="cap" font-size="10" fill="#93c5fd" font-weight="700">Transit Gateway</text>
+    <text x="258" y="654" class="cap" font-size="10" fill="#6ee7b7">✓ hub-spoke</text>
+    <text x="360" y="654" class="cap" font-size="10" fill="#fca5a5">✗ blocks it</text>
+    <text x="466" y="654" class="mono" font-size="9">$0.05/attachment-hr + $0.02/GB · ~$36/mo per VPC + data</text>
+
+    <rect x="56" y="666" width="692" height="24" rx="4" fill="#111c31" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="64" y="682" class="cap" font-size="10" fill="#c4b5fd" font-weight="700">PrivateLink endpoint</text>
+    <text x="258" y="682" class="cap" font-size="10" fill="#fbbf24">n/a — 1 service</text>
+    <text x="360" y="682" class="cap" font-size="10" fill="#6ee7b7">✓ YES</text>
+    <text x="466" y="682" class="mono" font-size="9">~$0.01/hr per AZ per endpoint + ~$0.01/GB · unidirectional</text>
+
+    <rect x="56" y="694" width="692" height="24" rx="4" fill="#111c31" stroke="#d97706" stroke-width="1.5"/>
+    <text x="64" y="710" class="cap" font-size="10" fill="#fbbf24" font-weight="700">Site-to-Site VPN</text>
+    <text x="258" y="710" class="cap" font-size="10" fill="#fbbf24">via TGW only</text>
+    <text x="360" y="710" class="cap" font-size="10" fill="#fbbf24">only with NAT</text>
+    <text x="466" y="710" class="mono" font-size="9">$0.05/conn-hr · ~1.25 Gbps PER TUNNEL · minutes to build</text>
+
+    <rect x="56" y="722" width="692" height="24" rx="4" fill="#111c31" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="64" y="738" class="cap" font-size="10" fill="#67e8f9" font-weight="700">Direct Connect</text>
+    <text x="258" y="738" class="cap" font-size="10" fill="#fbbf24">via DXGW/TGW</text>
+    <text x="360" y="738" class="cap" font-size="10" fill="#fbbf24">only with NAT</text>
+    <text x="466" y="738" class="mono" font-size="9">port-hr + LOWEST, predictable egress · 1/10/100G · WEEKS</text>
+  </g>
+</svg>

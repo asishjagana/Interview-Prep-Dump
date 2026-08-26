@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 780" font-family="'Segoe UI',Arial,sans-serif">
+  <defs>
+    <linearGradient id="mvs_bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+    <marker id="mvs_arrowG" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6ee7b7"/></marker>
+    <marker id="mvs_arrowR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fca5a5"/></marker>
+    <marker id="mvs_arrowA" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <style>
+      .t{fill:#f8fafc;font-size:20px;font-weight:700}
+      .sub{fill:#94a3b8;font-size:12px}
+      .hd{fill:#0f172a;font-size:13px;font-weight:800}
+      .cap{fill:#e2e8f0;font-size:11px}
+      .lbl{fill:#f8fafc;font-size:12px;font-weight:700}
+      .mono{font-family:'Consolas','Courier New',monospace;font-size:10px;fill:#e2e8f0}
+      .node{fill:#0b1220;stroke-width:2}
+      .fade{opacity:0}
+    </style>
+  </defs>
+  <rect width="780" height="780" rx="16" fill="url(#mvs_bg)"/>
+  <text x="30" y="38" class="t">Managed vs Self-Hosted — the TCO that decides it</text>
+  <text x="30" y="58" class="sub">the sticker price is never the decision · engineer-hours, 3 AM risk, and the cost of leaving are</text>
+
+  <!-- ============ PANEL A: THE TWO COST STACKS ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="72" width="728" height="240" rx="10" fill="#0b1220" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="44" y="94" class="hd" fill="#93c5fd">A. WORKED TCO — one production PostgreSQL, 500 GB, Multi-AZ, mid-size company (annual)</text>
+
+    <!-- axis -->
+    <line x1="56" y1="290" x2="286" y2="290" stroke="#334155" stroke-width="1.5"/>
+
+    <!-- MANAGED stack -->
+    <text x="102" y="246" text-anchor="middle" class="lbl" font-size="11" fill="#6ee7b7">MANAGED (Aurora/RDS)</text>
+    <text x="102" y="259" text-anchor="middle" class="lbl" font-size="13" fill="#6ee7b7">$69k / yr</text>
+    <rect x="64" y="268" width="76" height="22" fill="#1e3a8a" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="64" y="253" width="76" height="15" fill="#78350f" stroke="#b45309" stroke-width="1.5"/>
+    <text x="102" y="302" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8">sticker = 59% of true cost</text>
+
+    <!-- SELF-HOSTED stack -->
+    <text x="214" y="122" text-anchor="middle" class="lbl" font-size="11" fill="#fca5a5">SELF-HOSTED (EC2 + EBS)</text>
+    <text x="214" y="136" text-anchor="middle" class="lbl" font-size="13" fill="#fca5a5">$274k / yr</text>
+    <rect x="176" y="280" width="76" height="10" fill="#1e3a8a" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="176" y="204" width="76" height="76" fill="#78350f" stroke="#b45309" stroke-width="1.5">
+      <animate attributeName="y" from="280" to="204" begin="1.0s" dur="0.5s" fill="freeze"/>
+      <animate attributeName="height" from="0" to="76" begin="1.0s" dur="0.5s" fill="freeze"/>
+    </rect>
+    <rect x="176" y="190" width="76" height="14" fill="#7f1d1d" stroke="#dc2626" stroke-width="1.5">
+      <animate attributeName="y" from="204" to="190" begin="1.3s" dur="0.4s" fill="freeze"/>
+      <animate attributeName="height" from="0" to="14" begin="1.3s" dur="0.4s" fill="freeze"/>
+    </rect>
+    <rect x="176" y="157" width="76" height="33" fill="#4c1d95" stroke="#7c3aed" stroke-width="1.5">
+      <animate attributeName="y" from="190" to="157" begin="1.6s" dur="0.4s" fill="freeze"/>
+      <animate attributeName="height" from="0" to="33" begin="1.6s" dur="0.4s" fill="freeze"/>
+    </rect>
+    <rect x="176" y="141" width="76" height="16" fill="#831843" stroke="#db2777" stroke-width="1.5">
+      <animate attributeName="y" from="157" to="141" begin="1.9s" dur="0.4s" fill="freeze"/>
+      <animate attributeName="height" from="0" to="16" begin="1.9s" dur="0.4s" fill="freeze"/>
+    </rect>
+    <text x="214" y="302" text-anchor="middle" class="cap" font-size="9" fill="#fca5a5">sticker = 7% of true cost</text>
+
+    <!-- breakdown table -->
+    <text x="310" y="118" class="cap" font-size="9" fill="#94a3b8">LINE ITEM</text>
+    <text x="618" y="118" text-anchor="middle" class="cap" font-size="9" fill="#6ee7b7">MANAGED</text>
+    <text x="706" y="118" text-anchor="middle" class="cap" font-size="9" fill="#fca5a5">SELF-HOST</text>
+
+    <rect x="304" y="128" width="10" height="9" fill="#1e3a8a" stroke="#2563eb"/>
+    <text x="320" y="137" class="cap" font-size="10">infrastructure: instances · storage · IOPS</text>
+    <text x="618" y="137" text-anchor="middle" class="cap" font-size="10" fill="#93c5fd">$41k</text>
+    <text x="706" y="137" text-anchor="middle" class="cap" font-size="10" fill="#93c5fd">$19k</text>
+
+    <rect x="304" y="146" width="10" height="9" fill="#0e7490" stroke="#22d3ee"/>
+    <text x="320" y="155" class="cap" font-size="10">licence / managed-service premium</text>
+    <text x="618" y="155" text-anchor="middle" class="cap" font-size="10">included</text>
+    <text x="706" y="155" text-anchor="middle" class="cap" font-size="10">$0</text>
+
+    <rect x="304" y="164" width="10" height="9" fill="#78350f" stroke="#b45309"/>
+    <text x="320" y="173" class="cap" font-size="10">engineer time, FULLY LOADED (~$280k/FTE)</text>
+    <text x="618" y="173" text-anchor="middle" class="cap" font-size="10" fill="#fbbf24">$28k</text>
+    <text x="706" y="173" text-anchor="middle" class="lbl" font-size="10" fill="#fbbf24">$140k</text>
+
+    <rect x="304" y="182" width="10" height="9" fill="#7f1d1d" stroke="#dc2626"/>
+    <text x="320" y="191" class="cap" font-size="10">on-call rotation share (the 3 AM tax)</text>
+    <text x="618" y="191" text-anchor="middle" class="cap" font-size="10">~$0</text>
+    <text x="706" y="191" text-anchor="middle" class="cap" font-size="10" fill="#fca5a5">$25k</text>
+
+    <rect x="304" y="200" width="10" height="9" fill="#4c1d95" stroke="#7c3aed"/>
+    <text x="320" y="209" class="cap" font-size="10">opportunity cost: the features not built</text>
+    <text x="618" y="209" text-anchor="middle" class="cap" font-size="10">$0</text>
+    <text x="706" y="209" text-anchor="middle" class="cap" font-size="10" fill="#c4b5fd">$60k</text>
+
+    <rect x="304" y="218" width="10" height="9" fill="#831843" stroke="#db2777"/>
+    <text x="320" y="227" class="cap" font-size="10">expected incident cost, amortised / yr</text>
+    <text x="618" y="227" text-anchor="middle" class="cap" font-size="10">$0</text>
+    <text x="706" y="227" text-anchor="middle" class="cap" font-size="10" fill="#f9a8d4">$30k</text>
+
+    <line x1="304" y1="236" x2="746" y2="236" stroke="#475569" stroke-width="1.2"/>
+    <text x="320" y="251" class="lbl" font-size="11">TRUE TOTAL COST OF OWNERSHIP</text>
+    <text x="618" y="251" text-anchor="middle" class="lbl" font-size="12" fill="#6ee7b7">$69k</text>
+    <text x="706" y="251" text-anchor="middle" class="lbl" font-size="12" fill="#fca5a5">$274k</text>
+
+    <rect x="304" y="262" width="442" height="42" rx="6" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="316" y="277" class="cap" font-size="10" fill="#6ee7b7">Managed costs <tspan font-weight="700">2.1× MORE</tspan> on the invoice ($41k vs $19k) and <tspan font-weight="700">4× LESS</tspan> in total.</text>
+    <text x="316" y="292" class="cap" font-size="10" fill="#bbf7d0">A service needing 0.5 FTE of care costs $140k/yr before a single instance is billed.</text>
+  </g>
+
+  <!-- ============ PANEL B: GIVE / TAKE ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.1s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="324" width="728" height="196" rx="10" fill="#0b1220" stroke="#d97706" stroke-width="2.5"/>
+    <text x="44" y="346" class="hd" fill="#fbbf24">B. WHAT MANAGED BUYS YOU — and what it takes away (the trade is real, not free)</text>
+
+    <rect x="42" y="356" width="340" height="118" rx="8" fill="#052e1a" stroke="#16a34a" stroke-width="2"/>
+    <text x="56" y="374" class="cap" font-size="11" font-weight="700" fill="#6ee7b7">✓ IT BUYS (the undifferentiated work)</text>
+    <text x="56" y="391" class="cap" font-size="9.5">OS + engine patching, CVE response, in your window</text>
+    <text x="56" y="405" class="cap" font-size="9.5">minor-version upgrades you don't orchestrate</text>
+    <text x="56" y="419" class="cap" font-size="9.5">automated backups + PITR to any second in N days</text>
+    <text x="56" y="433" class="cap" font-size="9.5">Multi-AZ failover you did not write or test</text>
+    <text x="56" y="447" class="cap" font-size="9.5">a published SLA with service credits</text>
+    <text x="56" y="461" class="cap" font-size="9.5">a support contract with a real escalation path</text>
+
+    <rect x="396" y="356" width="344" height="118" rx="8" fill="#3a0f12" stroke="#dc2626" stroke-width="2"/>
+    <text x="410" y="374" class="cap" font-size="11" font-weight="700" fill="#fca5a5">✗ IT TAKES AWAY (the clever things)</text>
+    <text x="410" y="391" class="cap" font-size="9.5">superuser / root · no kernel, GC or fsync tuning</text>
+    <text x="410" y="405" class="cap" font-size="9.5">arbitrary extensions, patched builds, custom modules</text>
+    <text x="410" y="419" class="cap" font-size="9.5">version freshness — managed trails upstream by</text>
+    <text x="410" y="431" class="cap" font-size="9.5">months to years, and you pay to stay on EOL</text>
+    <text x="410" y="445" class="cap" font-size="9.5">OS logs, filesystem, strace/perf while debugging</text>
+    <text x="410" y="459" class="cap" font-size="9.5">anything the API simply does not expose</text>
+
+    <rect x="42" y="482" width="698" height="30" rx="6" fill="#78350f" stroke="#fbbf24" stroke-width="2"/>
+    <text x="56" y="495" class="cap" font-size="10" fill="#fde68a"><tspan font-weight="700">AN SLA IS A REFUND POLICY, NOT A RELIABILITY GUARANTEE.</tspan>  RDS Multi-AZ promises 99.95%/month = ~22 min of allowed downtime.</text>
+    <text x="56" y="507" class="cap" font-size="10" fill="#fde68a">Breach it and you get ~10% of that month's bill back (25% below 99%, 100% below 95%). Your revenue loss is not refunded — build your own redundancy anyway.</text>
+  </g>
+
+  <!-- ============ PANEL C: THE COST-vs-SCALE CROSSOVER ============ -->
+  <g class="fade"><animate attributeName="opacity" from="0" to="1" begin="1.9s" dur="0.5s" fill="freeze"/>
+    <rect x="26" y="532" width="728" height="232" rx="10" fill="#0b1220" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="44" y="554" class="hd" fill="#c4b5fd">C. THE CROSSOVER IS REAL — and it sits much further out than engineers assume</text>
+
+    <rect x="78" y="562" width="366" height="26" rx="5" fill="#052e1a" stroke="#16a34a" stroke-width="1.8"/>
+    <text x="261" y="579" text-anchor="middle" class="cap" font-size="10" fill="#6ee7b7">MANAGED WINS — the FTE floor dominates (almost everyone)</text>
+    <rect x="450" y="562" width="80" height="26" rx="5" fill="#78350f" stroke="#fbbf24" stroke-width="1.8"/>
+    <text x="490" y="579" text-anchor="middle" class="cap" font-size="10" fill="#fde68a">CROSSOVER</text>
+    <rect x="536" y="562" width="124" height="26" rx="5" fill="#3a0f12" stroke="#dc2626" stroke-width="1.8"/>
+    <text x="598" y="579" text-anchor="middle" class="cap" font-size="10" fill="#fca5a5">SELF-HOST WINS</text>
+
+    <!-- crossover band behind the curves -->
+    <rect x="450" y="592" width="80" height="120" fill="#78350f" opacity="0.28"/>
+
+    <!-- axes -->
+    <line x1="78" y1="712" x2="668" y2="712" stroke="#475569" stroke-width="1.5"/>
+    <line x1="78" y1="592" x2="78" y2="712" stroke="#475569" stroke-width="1.5"/>
+    <text x="70" y="652" text-anchor="middle" class="cap" font-size="9" fill="#94a3b8" transform="rotate(-90 70 652)">annual TCO →</text>
+    <text x="660" y="706" text-anchor="end" class="cap" font-size="9" fill="#94a3b8">scale · throughput · data volume →</text>
+
+    <!-- curves -->
+    <polyline points="84,646 170,642 260,637 350,630 440,622 530,612 620,600" fill="none" stroke="#fca5a5" stroke-width="2.6" stroke-dasharray="900" >
+      <animate attributeName="stroke-dashoffset" from="900" to="0" begin="2.3s" dur="1.1s" fill="freeze"/>
+    </polyline>
+    <polyline points="84,708 150,704 215,698 280,689 335,678 380,666 420,652 455,637 490,621 525,606 560,596 600,592" fill="none" stroke="#6ee7b7" stroke-width="2.6" stroke-dasharray="900">
+      <animate attributeName="stroke-dashoffset" from="900" to="0" begin="2.3s" dur="1.1s" fill="freeze"/>
+    </polyline>
+
+    <!-- legend -->
+    <line x1="96" y1="602" x2="118" y2="602" stroke="#fca5a5" stroke-width="2.6"/>
+    <text x="124" y="606" class="cap" font-size="9.5" fill="#fca5a5">self-hosted: a fixed FTE floor you pay at EVERY scale, then a shallow slope</text>
+    <line x1="96" y1="618" x2="118" y2="618" stroke="#6ee7b7" stroke-width="2.6"/>
+    <text x="124" y="622" class="cap" font-size="9.5" fill="#6ee7b7">managed: near-zero floor, cost grows with usage — a % of an ever-larger number</text>
+
+    <!-- in-plot callouts -->
+    <text x="100" y="666" class="cap" font-size="9" fill="#93c5fd">EKS/GKE control plane: $0.10/hr ≈ $73/month per cluster</text>
+    <text x="100" y="678" class="cap" font-size="9" fill="#93c5fd">vs your own kubeadm + etcd quorum + cert rotation</text>
+    <text x="100" y="690" class="cap" font-size="9" fill="#6ee7b7">→ the one curve that never crosses. Always buy this.</text>
+    <line x1="352" y1="672" x2="392" y2="660" stroke="#93c5fd" stroke-width="1.4" marker-end="url(#mvs_arrowG)"/>
+
+    <text x="548" y="676" class="cap" font-size="9" fill="#fca5a5">at 10–100× scale a</text>
+    <text x="548" y="688" class="cap" font-size="9" fill="#fca5a5">percentage margin</text>
+    <text x="548" y="700" class="cap" font-size="9" fill="#fca5a5">beats a salary</text>
+
+    <rect x="42" y="722" width="698" height="36" rx="6" class="node" stroke="#7c3aed"/>
+    <text x="54" y="734" class="cap" font-size="9" fill="#c4b5fd"><tspan font-weight="700">REPATRIATION — reported figures, their numbers not yours:</tspan> Dropbox's Magic Pocket moved ~90% of data off S3; its S-1 disclosed $74.6M saved over two years.</text>
+    <text x="54" y="745" class="cap" font-size="9" fill="#c4b5fd">37signals left the cloud on ~$600k of hardware, publicly projecting ~$7–10M saved over five years, then moved ~10 PB off S3 as well.</text>
+    <text x="54" y="756" class="cap" font-size="9" fill="#fbbf24">…and it flips BACK: Zynga built its own zCloud, then migrated back to AWS in 2015 when traffic fell. Re-derive the crossover every year.</text>
+  </g>
+</svg>
